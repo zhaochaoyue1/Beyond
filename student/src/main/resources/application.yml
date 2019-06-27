@@ -1,0 +1,41 @@
+#������������
+server:
+  #�˿�
+  port: 8021
+  #port: 80
+  tomcat:
+    uri-encoding: utf-8
+logging:
+  config: classpath:logback-spring.xml
+  level:
+    com.example: debug
+    org.springframework: WARN
+    org.spring.springboot.dao: debug
+#Spring����
+spring:
+  data:
+    solr:
+    host: http://47.105.200.200:8080/solr
+  thymeleaf:
+    mode: LEGACYHTML5
+    cache: false
+  messages:
+    #���ʻ���Դ�ļ�·��
+    basename: i18n/messages
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  profiles:
+    #active: druid
+    active: dev
+  devtools:
+    restart:
+      enabled: true
+# MyBatis
+mybatis:
+  # ����ָ��������
+  typeAliasesPackage: com.example.student
+  # ����mapper��ɨ�裬�ҵ����е�mapper.xmlӳ���ļ�
+  mapperLocations: classpath*:mybatis/**/*Mapper.xml
+  # ����ȫ�ֵ������ļ�
+  configLocation: classpath*:mybatis/mybatis-config.xml

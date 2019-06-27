@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.student.project.dao.PeopleDao">
+    <resultMap id="PeopleRusult" type="com.example.student.project.domain.People">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="count" column="count"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <select id="getPeople" resultMap="PeopleRusult">
+        select * from people
+    </select>
+    <select id="getPeopleDesc" resultMap="PeopleRusult">
+        select * from people
+        order by create_time desc
+        limit 1
+    </select>
+    <update id="updatePeople">
+        update people
+        set count=#{count} ,update_time=#{updateTime}
+        where name=#{name}
+    </update>
+    <insert id="insertPeople" >
+        insert into people
+        (name,count ,create_time,update_time)
+        values
+        (#{name},#{count},#{createTime},#{updateTime})
+    </insert>
+</mapper>
