@@ -6,6 +6,15 @@ public class Student implements Serializable {
     private Integer id;
     private String name;
     private Integer age;
+    private School school;
+
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
+    }
 
     public Integer getId() {
         return id;

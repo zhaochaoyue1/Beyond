@@ -1,13 +1,10 @@
 package com.example.student.time;
 
-import com.alibaba.fastjson.JSON;
 import com.example.student.project.dao.PeopleDao;
 import com.example.student.project.domain.People;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;

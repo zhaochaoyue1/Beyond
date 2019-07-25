@@ -2,6 +2,8 @@
 server:
   #�˿�
   port: 8021
+  #servlet:
+    #context-path: /spring-basic
   #port: 80
   tomcat:
     uri-encoding: utf-8
@@ -13,12 +15,19 @@ logging:
     org.spring.springboot.dao: debug
 #Spring����
 spring:
+#  mvc:
+#    view:
+#      prefix: /
+#      suffix: .jsp
   data:
     solr:
     host: http://47.105.200.200:8080/solr
   thymeleaf:
     mode: LEGACYHTML5
     cache: false
+    prefix: classpath:/templates
+    suffix: .html
+    encoding: UTF-8
   messages:
     #���ʻ���Դ�ļ�·��
     basename: i18n/messages

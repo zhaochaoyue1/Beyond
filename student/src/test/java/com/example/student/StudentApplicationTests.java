@@ -1,7 +1,7 @@
 package com.example.student;
 
 import com.alibaba.fastjson.JSON;
-import com.example.student.project.dao.PeopleDao;
+import lombok.extern.log4j.Log4j;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -11,6 +11,9 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -18,76 +21,88 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+import static org.apache.solr.common.params.CommonParams.TAG;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest()
 public class StudentApplicationTests {
     @Value("${spring.datasource.url}")
     private String url;
-    @Resource
-    private PeopleDao peopleDao;
+    //    @Resource
+//    private PeopleDao peopleDao;
+    private static Logger log = LoggerFactory.getLogger(StudentApplicationTests.class);
+    private static ExecutorService executorService = Executors.newFixedThreadPool(4);
+
     @Test
     public void contextLoads() {
 
     }
+
     @Test
-    public void testConcurrenry(){
-        RunableTest runableTest1 = new RunableTest(peopleDao);
-        RunableTest runableTest2= new RunableTest(peopleDao);
-        runableTest1.run();
-        runableTest2.run();
+    public void testConcurrenry() {
+//        RunableTest runableTest1 = new RunableTest(peopleDao);
+//        RunableTest runableTest2= new RunableTest(peopleDao);
+//        runableTest1.run();
+//        runableTest2.run();
 
     }
+
     @Test
-    public void TestSkipList(){
+    public void TestSkipList() {
         ConcurrentSkipListMap<Integer, Object> skipListMap = new ConcurrentSkipListMap<>();
         //ConcurrentHashMap<Integer, Object> hashMap = new ConcurrentHashMap<>();
         long l = System.currentTimeMillis();
-        for(int i=1 ;i<=16000;i++){
+        for (int i = 1; i <= 16000; i++) {
             Student student = new Student();
             student.setId(i);
-            student.setName("赵超越"+i);
+            student.setName("赵超越" + i);
             student.setAge(i);
-            skipListMap.put(i,student);
+            skipListMap.put(i, student);
         }
 
         long l1 = System.currentTimeMillis();
-        System.out.println("---------------------------------"+(l1-l));
+        System.out.println("---------------------------------" + (l1 - l));
         long l2 = System.nanoTime();
         Object o = skipListMap.get(13568);
         long l3 = System.nanoTime();
-        System.out.println("-----------------------------------"+(l3-l2));
+        System.out.println("-----------------------------------" + (l3 - l2));
     }
+
     @Test
-    public void testYUSEFU(){
+    public void testYUSEFU() {
         //先给这41个人按顺序排列，初始数值是key值；
         //Map<Integer,Integer> map=new HashMap<>();
-        List list=new LinkedList();
-        for(int i=1;i<42;i++){
+        List list = new LinkedList();
+        for (int i = 1; i < 42; i++) {
             //map.put(i,i);
             list.add(i);
         }
 
-        for(list.size();list.size()>2;){
+        for (list.size(); list.size() > 2; ) {
             int i1 = list.size() / 3;
-            for(int i=0;i<i1;i++){
+            for (int i = 0; i < i1; i++) {
 
             }
 
         }
     }
+
     @Test
-    public void testString(){
-        String name="小明";
-        name=stringToSwap(name);
+    public void testString() {
+        String name = "小明";
+        name = stringToSwap(name);
         System.out.println(name);
     }
-    private String stringToSwap(String name){
-        if(name.equals("小明")){
-            name="小红";
+
+    private String stringToSwap(String name) {
+        if (name.equals("小明")) {
+            name = "小红";
         }
         return name;
     }
@@ -96,16 +111,16 @@ public class StudentApplicationTests {
     public void solrTest() throws IOException, SolrServerException {
         SolrQuery sq = new SolrQuery();
         //sq.setParam("name","肉");
-        sq.set("q","name:肉");
+        sq.set("q", "name:肉");
         //sq.setParam("indent",true);
         //sq.setParam("wt","json");
-        sq.set("indent","true");
-        sq.set("wt","json");
-        sq.set("start",0);
-        sq.set("rows",10);
+        sq.set("indent", "true");
+        sq.set("wt", "json");
+        sq.set("start", 0);
+        sq.set("rows", 10);
         //sq.set("fl","name,updateTime,title,lable");
-        sq.set("fl","name");
-        sq.set("qf","name^10");
+        sq.set("fl", "name");
+        sq.set("qf", "name^10");
         //sq.setStart(0);
         //sq.setRows(10);
         sq.addSort("updateTime", SolrQuery.ORDER.desc);
@@ -115,7 +130,7 @@ public class StudentApplicationTests {
 
         QueryResponse query = solrClient.query(sq);
         SolrDocumentList results = query.getResults();
-        for(SolrDocument solr:results){
+        for (SolrDocument solr : results) {
             //String name = (String )solr.get("name");
             System.out.println(JSON.toJSONString(solr));
             //System.out.println(name);
@@ -123,7 +138,7 @@ public class StudentApplicationTests {
     }
 
     @Test
-    public void testSort(){
+    public void testSort() {
         long l = System.nanoTime();
         Set<Long> longs = new HashSet<>();
         longs.add(1L);
@@ -133,13 +148,103 @@ public class StudentApplicationTests {
         Object[] objects = longs.toArray();
         Arrays.sort(objects);
         long l1 = System.nanoTime();
-        System.out.println(l1-l);
+        System.out.println(l1 - l);
         System.out.println(JSON.toJSONString(longs));
     }
 
     @Test
-    public void testList(){
+    public void executors() {
+        long l = System.currentTimeMillis();
+        long l1;
+        boolean bn = false;
+        try {
 
+            for (int i = 0; i < 20; i++) {
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        /*Logger.logMsg(1,Thread.currentThread().getName());*/
+                        log.info(Thread.currentThread().getName());
+                    }
+                };
+                executorService.submit(runnable);
+            }
+            try {
+                executorService.shutdown();
+                bn = executorService.awaitTermination(5000, TimeUnit.MILLISECONDS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
+        } finally {
+            if (bn) {
+                l1 = System.currentTimeMillis();
+                log.info("---------------------------------------------------------------------------------");
+                log.info((l1 - l) + "");
+            }
+        }
+
+    }
+
+    @Test
+    public void testCallables() {
+        long l = System.currentTimeMillis();
+        List<Future<TestCallable>> futures = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            TestCallable testCallable = new TestCallable();
+            futures.add(executorService.submit(testCallable));
+        }
+        for (int i = 0; i < 20; i++) {
+            try {
+                futures.get(i).get(1, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (TimeoutException e) {
+                e.printStackTrace();
+            }
+        }
+        long l1 = System.currentTimeMillis();
+        log.info((l1 - l) + "ms");
+    }
+
+    @Test
+    public void testTimeStamp() {
+        Lock lock = new ReentrantLock();
+        try {
+            if (lock.tryLock(4, TimeUnit.SECONDS)) {
+                long l = System.nanoTime();
+                long l1 = System.currentTimeMillis();
+                System.out.println(l);
+                System.out.println(l1);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    @Test
+    public void testList()throws Exception {
+        String s="{\"member\":{\"balance\":0.00,\"balancePwd\":\"\",\"canReceiveEmail\":1,\"canReceiveSms\":1,\"customerToken\":\"q6TVP2dWBNe2ABXH7TWTKPQK4OsRpGlMyZ8tTgcilJ8d3kagqluG5muBk8m58TAnbiSDd4U9WpYgCnEewuqa1w==\",\"email\":\"\",\"emailVerifyCode\":\"\",\"grade\":1,\"gradeValue\":0,\"id\":18559,\"integral\":0,\"isEmailVerify\":0,\"isSmsVerify\":1,\"lastLoginIp\":\"114.254.143.198\",\"lastLoginTime\":1546945660000,\"loginNumber\":0,\"mobile\":\"18515430634\",\"name\":\"小碗ibbe\",\"password\":\"e10adc3949ba59abbe56e057f20f883e\",\"phone\":\"18515430634\",\"phoneType\":\"HUAWEI\",\"pic\":\"https://xiaowan-image.oss-cn-beijing.aliyuncs.com/user_info.jpg\",\"pwdErrCount\":0,\"registerTime\":1546945660000,\"registrationId\":\"\",\"smsVerifyCode\":\"\",\"source\":2,\"status\":1,\"updateTime\":1563522148000},\"token\":\"memberSession_c5e244b8b3964f7eb1b3fbddc207719f\"}";
+        Object s1=JSON.parse(s);
+        Field member2 = s1.getClass().getDeclaredField("member");
+
+        //Object member = parse.get("member");
+        //Member member1 = JSON.parseObject(member.toString(), Member.class);
+        //System.out.println(member1);
+    }
+
+}
+
+class TestCallable implements Callable {
+    private static Logger log = LoggerFactory.getLogger(TestCallable.class);
+
+    @Override
+    public Object call() throws Exception {
+        log.info(Thread.currentThread().getName());
+        return null;
     }
 }
