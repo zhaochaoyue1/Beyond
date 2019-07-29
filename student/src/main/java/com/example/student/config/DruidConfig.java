@@ -22,8 +22,8 @@ import java.sql.SQLException;
 
 /**
  * Druid数据库信息配置加载
- * 
- * @author ruoyi
+ *
+ *  @author ruoyi
  */
 @Configuration
 @MapperScan(basePackages = {"com.example.**.dao" },sqlSessionFactoryRef="primarySqlSessionFactory")

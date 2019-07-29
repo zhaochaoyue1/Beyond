@@ -1,6 +1,8 @@
 package com.example.student;
 
 import com.alibaba.fastjson.JSON;
+import com.example.student.project.dao.PeopleDao;
+import com.example.student.solr.ShortVedio;
 import lombok.extern.log4j.Log4j;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -11,33 +13,40 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.solr.core.SolrTemplate;
+import org.springframework.data.solr.core.query.Query;
+import org.springframework.data.solr.core.query.SimpleQuery;
+import org.springframework.data.solr.core.query.result.ScoredPage;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static org.apache.solr.common.params.CommonParams.TAG;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest()
+@Log4j
 public class StudentApplicationTests {
     @Value("${spring.datasource.url}")
     private String url;
-    //    @Resource
-//    private PeopleDao peopleDao;
-    private static Logger log = LoggerFactory.getLogger(StudentApplicationTests.class);
-    private static ExecutorService executorService = Executors.newFixedThreadPool(4);
+    @Resource
+    private PeopleDao peopleDao;
+    @Resource
+    private SolrTemplate solrTemplate;
+
+    @Test
+    public void TestSolrLenove() {
+        Query query = new SimpleQuery("*:*");
+        ScoredPage<ShortVedio> shortVedios = solrTemplate.queryForPage(query, ShortVedio.class);
+        System.out.println(JSON.toJSON(shortVedios));
+    }
 
     @Test
     public void contextLoads() {
@@ -154,7 +163,7 @@ public class StudentApplicationTests {
 
     @Test
     public void executors() {
-        long l = System.currentTimeMillis();
+        /*long l = System.currentTimeMillis();
         long l1;
         boolean bn = false;
         try {
@@ -163,7 +172,7 @@ public class StudentApplicationTests {
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
-                        /*Logger.logMsg(1,Thread.currentThread().getName());*/
+                        *//*Logger.logMsg(1,Thread.currentThread().getName());*//*
                         log.info(Thread.currentThread().getName());
                     }
                 };
@@ -174,21 +183,21 @@ public class StudentApplicationTests {
                 bn = executorService.awaitTermination(5000, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
 
-        } finally {
+        /*} finally {
             if (bn) {
                 l1 = System.currentTimeMillis();
                 log.info("---------------------------------------------------------------------------------");
                 log.info((l1 - l) + "");
             }
-        }
+        }*/
 
     }
 
     @Test
     public void testCallables() {
-        long l = System.currentTimeMillis();
+        /*long l = System.currentTimeMillis();
         List<Future<TestCallable>> futures = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             TestCallable testCallable = new TestCallable();
@@ -206,7 +215,7 @@ public class StudentApplicationTests {
             }
         }
         long l1 = System.currentTimeMillis();
-        log.info((l1 - l) + "ms");
+        log.info((l1 - l) + "ms");*/
     }
 
     @Test
@@ -237,14 +246,6 @@ public class StudentApplicationTests {
         //System.out.println(member1);
     }
 
-}
 
-class TestCallable implements Callable {
-    private static Logger log = LoggerFactory.getLogger(TestCallable.class);
-
-    @Override
-    public Object call() throws Exception {
-        log.info(Thread.currentThread().getName());
-        return null;
     }
-}
+

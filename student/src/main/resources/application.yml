@@ -21,7 +21,8 @@ spring:
 #      suffix: .jsp
   data:
     solr:
-    host: http://47.105.200.200:8080/solr
+      host: http://testsolr.ecosystemwan.com:8099/solr/mysolr
+      core: mysolr
   thymeleaf:
     mode: LEGACYHTML5
     cache: false
