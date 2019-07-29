@@ -1,9 +1,11 @@
 package com.example.student.solr;
 
+import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +15,7 @@ import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @program: student
@@ -42,9 +45,13 @@ public class TestSort {
         solrQuery.setStart(0);
         QueryResponse response = solrClient.query(solrQuery);
         SolrDocumentList documentList = response.getResults();
-        for (SolrDocument solrDocument : documentList) {
+        Gson gson = new Gson();
+        String listString = gson.toJson(documentList);
+        List<ShortVedio> list = gson.fromJson(listString, new TypeToken<List<ShortVedio>>() {}.getType());
+        /*for (SolrDocument solrDocument : documentList) {
             System.out.println("solrDocument==============" +solrDocument);
-        }
+        }*/
+        System.out.println(JSON.toJSON(list));
 
     }
     @Test
