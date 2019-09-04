@@ -23,6 +23,13 @@
         set count=#{count} ,update_time=#{updateTime}
         where name=#{name}
     </update>
+    <update id="batchUpdat">
+        <foreach collection="peoples" item="people" separator=";">
+            update people
+            set count=#{people.count}
+            where id=#{people.id}
+        </foreach>
+    </update>
     <insert id="insertPeople" >
         insert into people
         (name,count ,create_time,update_time)

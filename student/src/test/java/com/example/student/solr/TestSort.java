@@ -99,13 +99,13 @@ public class TestSort {
         String name="name:"+"\""+"红烧肉"+"\"";
         //query.setQuery(name);
         // 返回列
-        query.setFields("name");
+        query.setFields("authorId,authorName,introduction");
         query.set("q",name);
         // 开启group的分组查询
         query.setParam(GroupParams.GROUP, true);
         // 设置分组的字段
-        query.setParam(GroupParams.GROUP_FIELD, "name");
-        query.setParam(GroupParams.GROUP_LIMIT,"10");
+        query.setParam(GroupParams.GROUP_FIELD, "authorId");
+        query.setParam(GroupParams.GROUP_LIMIT,"20");
         // 设置返回行数
         query.setRows(10);
         QueryResponse qr = solrClient.query(query);
@@ -122,6 +122,43 @@ public class TestSort {
                 for (SolrDocument solrDocument : result) {
                     Object name2 = solrDocument.getFieldValue("name");
                     System.out.println("groupName: "+groupName+"; name2: "+name2);
+                }
+            }
+        }
+
+
+    }
+    @Test
+    public void testSolrClient3()throws Exception {
+        // 设置查询条件
+        SolrQuery query = new SolrQuery();
+        String authorName="authorName:"+"\""+"美"+"\"";
+        //query.setQuery(name);
+        // 返回列
+        query.setFields("authorId,authorName,introduction");
+        query.set("q",authorName);
+        // 开启group的分组查询
+        query.setParam(GroupParams.GROUP, true);
+        // 设置分组的字段
+        query.setParam(GroupParams.GROUP_FIELD, "authorId");
+        query.setParam(GroupParams.GROUP_LIMIT,"10");
+        // 设置返回行数
+        //query.setStart(0);
+        query.setRows(10);
+        QueryResponse qr = solrClient.query(query);
+        GroupResponse groupResponse = qr.getGroupResponse();
+        // 分组字段种类的list
+        List<GroupCommand> values = groupResponse.getValues();
+        for (GroupCommand groupCommand : values) {
+            String groupName = groupCommand.getName();
+            // 每种分类字段下包含多少个值
+            List<Group> groupValue = groupCommand.getValues();
+            for (Group group : groupValue) {
+                // 搜索结果
+                SolrDocumentList result = group.getResult();
+                for (SolrDocument solrDocument : result) {
+                    Object authorName2 = solrDocument.getFieldValue("authorName");
+                    System.out.println("groupName: "+groupName+"; name2: "+authorName2);
                 }
             }
         }

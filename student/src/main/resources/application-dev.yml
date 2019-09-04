@@ -8,7 +8,9 @@ spring:
     #测试环境
     #url: jdbc:mysql://127.0.0.1:3306/ry1?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
     #读写分离库
-    url: jdbc:mysql://rm-m5ew0fp38tm118428no.mysql.rds.aliyuncs.com:3306/ry1?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    #url: jdbc:mysql://rm-m5ew0fp38tm118428no.mysql.rds.aliyuncs.com:3306/ry1?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    #测试环境
+    url: jdbc:mysql://rm-m5ew0fp38tm118428no.mysql.rds.aliyuncs.com:3306/ry?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
     username: yitong
     password: 123@wepartner
     #url: jdbc:mysql://127.0.0.1:3306/ry?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
@@ -23,22 +25,27 @@ spring:
     # 配置获取连接等待超时的时间
     maxWait: 60000
     # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-    timeBetweenEvictionRunsMillis: 60000
+    timeBetweenEvictionRunsMillis: 3600000
     # 配置一个连接在池中最小生存的时间，单位是毫秒
-    minEvictableIdleTimeMillis: 30000
+    minEvictableIdleTimeMillis: 3600000
     validationQuery: select 'x'
     testWhileIdle: true
-    testOnBorrow: false
+    testOnBorrow: true
     testOnReturn: false
     # 打开PSCache，并且指定每个连接上PSCache的大小
     poolPreparedStatements: true
     maxPoolPreparedStatementPerConnectionSize: 20
     # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-    filters: stat,slf4j
+    filters: stat,wall,slf4j
     # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
     # 合并多个DruidDataSource的监控数据
-    #useGlobalDataSourceStat: true
+    useGlobalDataSourceStat: true
+druid:
+  config:
+    user-name: root
+    password: root
+    url-mapping: /druid/*
   redis:
     #host: 120.27.18.22
     host: 127.0.0.1

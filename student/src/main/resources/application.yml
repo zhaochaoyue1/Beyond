@@ -46,6 +46,6 @@ mybatis:
   # ����ָ��������
   typeAliasesPackage: com.example.student
   # ����mapper��ɨ�裬�ҵ����е�mapper.xmlӳ���ļ�
-  mapperLocations: classpath*:mybatis/**/*Mapper.xml
+  mapperLocations: classpath*:mybatis/*/*Mapper.xml
   # ����ȫ�ֵ������ļ�
   configLocation: classpath*:mybatis/mybatis-config.xml
