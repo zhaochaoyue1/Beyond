@@ -1,6 +1,7 @@
 package com.example.student;
 
 public class School {
+    private static Integer nextId = 1;
     private Integer id;
     private String name;
     private String address;
@@ -27,5 +28,13 @@ public class School {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Integer getNextId() {
+        return nextId;
+    }
+
+    public void setNextId() {
+        nextId++;
     }
 }

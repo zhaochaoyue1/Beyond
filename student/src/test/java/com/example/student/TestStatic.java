@@ -1,5 +1,7 @@
 package com.example.student;
 
+import com.alibaba.fastjson.JSON;
+
 public class TestStatic {
     public static void test(Integer i){
         if(i==null){
@@ -21,9 +23,15 @@ public class TestStatic {
 //        }else{
 //            System.out.println("不正确");
 //        }
-        String url="https://image.ecosystemwan.com/operation/video/2019-06-20/32/a13e9e8d-96c1-4158-ac41-636135eecf37(big).jpg";
-        String s = testPic(url, 540, 960);
-        System.out.println("url--------------:"+s);
+        //String url="https://image.ecosystemwan.com/operation/video/2019-06-20/32/a13e9e8d-96c1-4158-ac41-636135eecf37(big).jpg";
+        //String s = testPic(url, 540, 960);
+        School school = new School();
+        school.setNextId();
+        School school1 = new School();
+        school1.setNextId();
+        System.out.println("1:"+ school.getNextId());
+        System.out.println("2:"+ school.getNextId());
+
     }
 
     private static String testPic(String oriUrl,int width,int height){
