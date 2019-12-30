@@ -2,6 +2,10 @@ package com.example.student;
 
 import com.alibaba.fastjson.JSON;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.*;
+
 public class TestStatic {
     public static void test(Integer i){
         if(i==null){
@@ -26,12 +30,18 @@ public class TestStatic {
         //String url="https://image.ecosystemwan.com/operation/video/2019-06-20/32/a13e9e8d-96c1-4158-ac41-636135eecf37(big).jpg";
         //String s = testPic(url, 540, 960);
         School school = new School();
-        school.setNextId();
         School school1 = new School();
-        school1.setNextId();
         System.out.println("1:"+ school.getNextId());
         System.out.println("2:"+ school.getNextId());
+        ExecutorService executorService = Executors.newFixedThreadPool(4);
+        List<Future<RunableTest>> futures = new ArrayList<>();
 
+        Future submit = executorService.submit(new RunableTest());
+        try {
+            Object v = submit.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static String testPic(String oriUrl,int width,int height){

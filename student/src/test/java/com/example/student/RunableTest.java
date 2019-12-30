@@ -7,11 +7,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.util.Date;
-public class RunableTest implements Runnable{
+import java.util.concurrent.Callable;
 
+public class RunableTest implements Callable {
     private PeopleDao peopleDao;
     @Override
-    public void run() {
+    public Object call() throws Exception {
         People peopleDesc = peopleDao.getPeopleDesc();
         Date createTime = peopleDesc.getCreateTime();
         Date date = new Date();
@@ -21,6 +22,7 @@ public class RunableTest implements Runnable{
             peopleDesc.setUpdateTime(date);
             peopleDao.insertPeople(peopleDesc);
         }
+        return null;
     }
 
     public PeopleDao getPeopleDao() {

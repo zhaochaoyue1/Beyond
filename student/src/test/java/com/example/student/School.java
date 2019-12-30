@@ -1,8 +1,15 @@
 package com.example.student;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+@Builder
+@AllArgsConstructor
 public class School {
     private static Integer nextId = 1;
-    private Integer id;
+    private static volatile Integer volatileId= 1;
+    private Integer id = 1;
     private String name;
     private String address;
 
@@ -11,7 +18,7 @@ public class School {
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.id++;
     }
 
     public String getName() {
@@ -33,8 +40,12 @@ public class School {
     public Integer getNextId() {
         return nextId;
     }
+    public Integer getVolatileId(){
+        return volatileId;
+    }
 
-    public void setNextId() {
+    public School(){
         nextId++;
+        volatileId++;
     }
 }
