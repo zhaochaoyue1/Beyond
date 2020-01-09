@@ -148,7 +148,7 @@
 
 
     <build>
-        <plugins>
+        <!--<plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -156,17 +156,17 @@
                     <executable>true</executable>
                 </configuration>
             </plugin>
-            <!--maven只打包不执行测试用例-->
+            &lt;!&ndash;maven只打包不执行测试用例&ndash;&gt;
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.20.1</version>
                 <configuration>
-                    <!-- 不指定单元测试 -->
+                    &lt;!&ndash; 不指定单元测试 &ndash;&gt;
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-        </plugins>
+        </plugins>-->
         <resources>
             <resource>
                 <directory>/src/main/resources</directory>
