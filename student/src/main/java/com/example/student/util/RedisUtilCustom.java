@@ -9,6 +9,7 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.util.CollectionUtils;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
 
 import java.lang.reflect.Method;
@@ -22,6 +23,7 @@ public class RedisUtilCustom {
    // private RedisTemplate<String, Object> redisTemplate;
     private StringRedisTemplate redisTemplate;
     private JedisPool jedisPool;
+    private JedisCluster jedisCluster;
 
 
     public void setJedisPool(JedisPool jedisPool) {
@@ -275,4 +277,13 @@ public class RedisUtilCustom {
             return false;
         }
     }
+
+    public String set(String key, String value, String nxxx, String expx, long time) {
+        return jedisCluster.set(key, value, nxxx, expx, time);
+    }
+
+    public Object eval(String script, List<String> keys, List<String> args) {
+        return jedisCluster.eval(script, keys, args);
+    }
+
 }

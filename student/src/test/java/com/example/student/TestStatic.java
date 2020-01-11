@@ -3,6 +3,7 @@ package com.example.student;
 import com.alibaba.fastjson.JSON;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -29,7 +30,8 @@ public class TestStatic {
 //        }
         //String url="https://image.ecosystemwan.com/operation/video/2019-06-20/32/a13e9e8d-96c1-4158-ac41-636135eecf37(big).jpg";
         //String s = testPic(url, 540, 960);
-        School school = new School();
+
+        /*School school = new School();
         School school1 = new School();
         System.out.println("1:"+ school.getNextId());
         System.out.println("2:"+ school.getNextId());
@@ -41,7 +43,12 @@ public class TestStatic {
             Object v = submit.get();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
+        }*/
+        long l = 1L << 3;
+        long l1 = 112 | l;
+        System.out.println(l1);
+        System.out.println(l);
+
     }
 
     private static String testPic(String oriUrl,int width,int height){
