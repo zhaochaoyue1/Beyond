@@ -1,7 +1,12 @@
 package com.example.student;
 
 import com.alibaba.fastjson.JSON;
+import com.example.student.util.MD5Utils;
+import org.apache.commons.codec.digest.DigestUtils;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -44,10 +49,16 @@ public class TestStatic {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }*/
-        long l = 1L << 3;
-        long l1 = 112 | l;
-        System.out.println(l1);
-        System.out.println(l);
+        LocalDate now = LocalDate.now(ZoneId.of("Asia/Shanghai"));
+        String format = now.format(DateTimeFormatter.BASIC_ISO_DATE);
+        System.out.println(format);
+        String s2 = new StringBuilder().append(6510).append("oNYjDvIn$6Pp&JH3").append(1000).toString();
+        System.out.println(MD5Utils.getMd5Sum(s2));
+        String s = 6510+""+ 100 + "123" + 600000;
+        String s1 = DigestUtils.md5Hex(s);
+        System.out.println(s1);
+        boolean equals = MD5Utils.getMd5Sum(s).equals(s1);
+        System.out.println(equals);
 
     }
 
