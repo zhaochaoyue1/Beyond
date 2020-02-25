@@ -1,18 +1,9 @@
 package com.example.jdkStream;
 
 import com.alibaba.fastjson.JSON;
-import com.example.student.School;
 import com.example.student.Student;
-import org.apache.zookeeper.Op;
 import org.assertj.core.util.Lists;
-import org.springframework.util.StopWatch;
-import sun.jvm.hotspot.StackTrace;
-
-import java.math.BigDecimal;
 import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * https://blog.csdn.net/kenzyq/article/details/88540663（简单实用示例）

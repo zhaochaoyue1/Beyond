@@ -1,10 +1,7 @@
 package com.example.bigdecimal;
 
-import org.apache.commons.lang3.math.NumberUtils;
-import sun.lwawt.macosx.CSystemTray;
 
 import java.math.BigDecimal;
-import java.text.NumberFormat;
 
 public class TestBigDecimal {
     public static void main(String[] args) {
