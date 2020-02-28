@@ -1,10 +1,14 @@
 package com.example.student;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.example.student.project.dao.CaladerDao;
 import com.example.student.project.dao.PeopleDao;
 import com.example.student.project.domain.People;
 import com.example.student.project.dao.PeopleDao;
+import com.example.student.project.service.CalenderService;
 import com.example.student.solr.ShortVedio;
+import com.example.student.util.DateTimeUtils;
 import lombok.extern.log4j.Log4j;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -13,6 +17,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.common.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -26,6 +31,9 @@ import org.springframework.data.solr.core.query.result.ScoredPage;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
@@ -42,6 +50,8 @@ public class StudentApplicationTests {
     private PeopleDao peopleDao;
     @Resource
     private SolrTemplate solrTemplate;
+    @Resource
+    private CaladerDao calenderService;
 
     @Test
     public void TestSolrLenove() {
@@ -255,6 +265,77 @@ public class StudentApplicationTests {
         //Object member = parse.get("member");
         //Member member1 = JSON.parseObject(member.toString(), Member.class);
         //System.out.println(member1);
+    }
+
+
+
+    @Test
+    public void testFile(){
+        String lu = "/Users/coohua/Downloads/hl";
+        getAllFileName(lu);
+    }
+
+    @Test
+    public void testFile2(){
+        //String calendar = calenderService.getCalendar("2020-11-18");
+        //JSONObject parse = JSONObject.parseObject(calendar);
+        //System.out.println(parse);
+        Date date = DateTimeUtils.parseYYYYMMDD("2020-2-5");
+        System.out.println(date);
+    }
+
+
+    public  void getAllFileName(String path){
+        File file = new File(path);
+        File [] files = file.listFiles();
+        String [] names = file.list();
+        if(names != null){
+            for(int i=0;i<names.length;i++){
+                String name = names[i];
+                String[] split = name.split("\\.");
+                String fileName=path+"/"+name;
+                getFile(split[0],fileName);
+            }
+        }
+
+        //查询子文件夹
+        /*for(File a:files){
+            if(a.isDirectory()){//如果文件夹下有子文件夹，获取子文件夹下的所有文件全路径。
+                getAllFileName(a.getAbsolutePath()+"\\");
+            }
+        }*/
+    }
+
+    public  void getFile(String id,String fileName){
+        File file = new File(fileName);
+        BufferedReader reader = null;
+        StringBuffer sbf = new StringBuffer();
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            String tempStr;
+            while ((tempStr = reader.readLine()) != null) {
+                sbf.append(tempStr);
+            }
+            reader.close();
+            String text = sbf.toString();
+            if(StringUtils.isEmpty(id)){
+                return;
+            }
+            Date date = DateTimeUtils.parseYYYYMMDD(id);
+            String dailyVersion = DateTimeUtils.getDailyVersion(date);
+            long time = date.getTime();
+            calenderService.saveCalender(dailyVersion,text,time);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
     }
 
 }
