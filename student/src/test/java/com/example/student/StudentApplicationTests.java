@@ -2,6 +2,7 @@ package com.example.student;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.student.project.dao.AdBoundUserDao;
 import com.example.student.project.dao.CaladerDao;
 import com.example.student.project.dao.PeopleDao;
 import com.example.student.project.domain.People;
@@ -9,6 +10,7 @@ import com.example.student.project.dao.PeopleDao;
 import com.example.student.project.service.CalenderService;
 import com.example.student.solr.ShortVedio;
 import com.example.student.util.DateTimeUtils;
+import com.example.student.util.RandomUtil;
 import lombok.extern.log4j.Log4j;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -44,14 +46,41 @@ import java.util.concurrent.locks.ReentrantLock;
 @RunWith(SpringRunner.class)
 @SpringBootTest()
 public class StudentApplicationTests {
-    @Value("${spring.datasource.url}")
-    private String url;
+    /*@Value("${spring.datasource.url}")
+    private String url;*/
     @Resource
     private PeopleDao peopleDao;
     @Resource
     private SolrTemplate solrTemplate;
     @Resource
     private CaladerDao calenderService;
+    @Resource
+    private AdBoundUserDao adBoundUserDao;
+
+    @Test
+    public void testAdBoundUser(){
+        for(int i=1;i<=996;i++){
+            int h = RandomUtil.random(2,22);
+            int m = RandomUtil.random(0, 60);
+            String  s = "00";
+            StringBuilder sb = new StringBuilder(" ");
+            if(h>=10){
+                sb.append(h);
+            }else {
+                sb.append(0).append(h);
+            }
+            sb.append(":");
+            if(m>=10){
+                sb.append(m);
+            }else {
+                sb.append(0).append(m);
+            }
+            sb.append(":");
+            String s1 = sb.append(s).toString();
+            adBoundUserDao.update(i,s1);
+        }
+    }
+
 
     @Test
     public void TestSolrLenove() {
@@ -271,7 +300,7 @@ public class StudentApplicationTests {
 
     @Test
     public void testFile(){
-        String lu = "/Users/coohua/Downloads/hl";
+        String lu = "/Users/coohua/Downloads/hl20";
         getAllFileName(lu);
     }
 

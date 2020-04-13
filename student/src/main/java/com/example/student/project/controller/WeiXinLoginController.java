@@ -53,11 +53,17 @@ public class WeiXinLoginController {
         //通过code获取access_token
         //String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code"
         StringBuffer loginUrl = new StringBuffer();
+        //url拼接
+        // WX_AUTH_LOGIN_URL = "https://api.weixin.qq.com/sns/oauth2/access_token"
+        //AppId：应用唯一标识，在微信开放平台提交应用审核通过后获得
+        //WX_APP_ID = "wx9ecd6f7******";
+        //AppSecret：应用密钥AppSecret，在微信开放平台提交应用审核通过后获得
+        //WX_APP_KEY = "c1bf387181aaf6e5ff********";
         loginUrl.append(WX_AUTH_LOGIN_URL).append("?appid=")  //AppId
                 .append(WX_APP_ID).append("&secret=")  //AppSecret
                 .append(WX_APP_KEY).append("&code=").append(code)  //填写第二步获取的code参数
                 .append("&grant_type=authorization_code");  //填authorization_code(固定，来自于官方文档)
-        String loginRet = WeiXinLoginController.get(loginUrl.toString());
+        String loginRet = get(loginUrl.toString());
         JSONObject grantObj = new JSONObject(loginRet);
         String errcode = grantObj.optString("errcode");
         if (!StringUtils.isEmpty(errcode))
@@ -81,8 +87,9 @@ public class WeiXinLoginController {
         StringBuffer userUrl = new StringBuffer();
         // String url = "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID";
         // 第三步获取的access_token ; OPENID:第三步获取的openId
+        //WX_USERINFO_URL = "https://api.weixin.qq.com/sns/userinfo"
         userUrl.append(WX_USERINFO_URL).append("?access_token=").append(accessToken).append("&openid=").append(openId);
-        String userRet = WeiXinLoginController.get(userUrl.toString());
+        String userRet = get(userUrl.toString());
         JSONObject userObj = new JSONObject(userRet);
         WXUserInfoData userInfo = new WXUserInfoData();
         userInfo.setOpenId(openId);  // 用户标识

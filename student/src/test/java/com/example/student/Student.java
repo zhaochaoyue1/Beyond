@@ -10,9 +10,18 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Student implements Serializable {
+public class Student implements Serializable,Cloneable {
     private Integer id;
     private String name;
     private Integer age;
     private School school;
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            return null;
+        }
+    }
+
+
 }

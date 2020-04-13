@@ -62,13 +62,14 @@ public class StudentSchool {
         //Map<Integer, Student> collect = students.stream().filter(s -> s.getId() > 9).collect(Collectors.toMap(Student::getId, n -> n));
 
         //查询年纪最大的学生
-        Student student = students.stream().max(Comparator.comparing(Student::getAge)).orElse(null);
+        //Student student = students.stream().max(Comparator.comparing(Student::getAge)).orElse(null);
+        long count = students.stream().filter(s -> s.getAge() == 1).count();
 
         /*boolean present = Optional.ofNullable(students)
                 .map(s -> s.get(0))
                 .map(Student::getName)
                 .map(s -> s.toUpperCase())
                 .isPresent();*/
-        System.out.println(JSON.toJSONString(student));
+        System.out.println(JSON.toJSONString(count));
     }
 }

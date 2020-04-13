@@ -14,13 +14,13 @@ import java.io.IOException;
 @RunWith(SpringRunner.class)
 @SpringBootTest()
 public class FileTest {
-    //@Resource
-    //private CalenderService calenderService;
+    @Resource
+    private CalenderService calenderService;
 
     @Test
     public void testFile(){
-        String lu = "/Users/coohua/Downloads/hl";
-        getAllFileName(lu,null);
+        String lu = "/Users/coohua/Downloads/hl20";
+        getAllFileName(lu,calenderService);
     }
 
 
@@ -58,7 +58,7 @@ public class FileTest {
             }
             reader.close();
             String text = sbf.toString();
-            //bean.saveCalender(id,text);
+            bean.saveCalender(id,text,System.currentTimeMillis());
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
