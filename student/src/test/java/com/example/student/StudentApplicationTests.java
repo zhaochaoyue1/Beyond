@@ -58,6 +58,13 @@ public class StudentApplicationTests {
     private AdBoundUserDao adBoundUserDao;
 
     @Test
+    public void testDuplicate(){
+        Boolean userIsExist = adBoundUserDao.getUserIsExist(1L);
+        System.out.println(userIsExist);
+    }
+
+
+    @Test
     public void testAdBoundUser(){
         for(int i=1;i<=996;i++){
             int h = RandomUtil.random(2,22);

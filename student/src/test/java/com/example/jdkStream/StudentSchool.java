@@ -49,7 +49,8 @@ public class StudentSchool {
         //Integer reduce = students.stream().map(Student::getAge).reduce((sum, item) -> sum + item).get();
 
 
-        /*List<Integer> nums = Lists.newArrayList(1, 1, null, 2, 3, 4, null, 5, 6, 7, 8, 9, 10);
+        /*List<Integer> nums = Lists.newArrayList(1, 1, null, 2, 3, 4, null, 5, 6
+        , 7, 8, 9, 10);
         List<Integer> numsWithoutNull = nums.stream().filter(num -> num != null).
                 collect(() -> new ArrayList<Integer>(),
                         (list, item) -> list.add(item),
