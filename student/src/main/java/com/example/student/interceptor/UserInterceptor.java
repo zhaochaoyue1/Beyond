@@ -1,4 +1,4 @@
-package com.example.student.userInterceptor;
+package com.example.student.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

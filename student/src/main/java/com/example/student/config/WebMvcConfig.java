@@ -1,6 +1,6 @@
 package com.example.student.config;
 
-import com.example.student.userInterceptor.UserInterceptor;
+import com.example.student.interceptor.UserInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

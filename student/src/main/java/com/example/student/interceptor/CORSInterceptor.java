@@ -1,4 +1,4 @@
-package com.example.student.userInterceptor;
+package com.example.student.interceptor;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.CrossOrigin;
