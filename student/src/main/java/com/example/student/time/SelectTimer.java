@@ -49,7 +49,7 @@ public class SelectTimer {
         //log.info(JSON.toJSONString(people));*/
     }
 
-    @Scheduled(fixedRate = 60000*30)
+    //@Scheduled(fixedRate = 60000*30)
     public void solr(){
         String url="http://testsolr.ecosystemwan.com:8099/solr/mysolr/dataimport?command=full-import";
         RestTemplate template=new RestTemplate();
