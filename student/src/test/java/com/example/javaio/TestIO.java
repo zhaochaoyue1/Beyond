@@ -1,7 +1,5 @@
 package com.example.javaio;
 
-import com.example.linkend.ListNode;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
