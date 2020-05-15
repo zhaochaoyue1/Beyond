@@ -114,4 +114,25 @@ public class ListNode {
         prev.next = prev.next.next;
         size--;
     }
+
+    /**
+     * 原地翻转
+     */
+    public void reverseList() {
+        if (size == 0) {
+            System.out.println("空链表");
+            return;
+        }
+        if (size == 1) {
+            return;
+        }
+        Node prev = head;
+        Node pCur = head.next;
+        while (pCur != null) {
+            prev.next = pCur.next;
+            pCur.next = head;
+            head = pCur;
+            pCur = prev.next;
+        }
+    }
 }

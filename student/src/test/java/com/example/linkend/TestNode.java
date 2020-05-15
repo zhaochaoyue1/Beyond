@@ -8,7 +8,8 @@ public class TestNode {
         //addHeadNode(listNode);
         //addEndNode(listNode);
         //addIndexNode(listNode);
-        deleteIndexNode(listNode);
+        //deleteIndexNode(listNode);
+        reverseList(listNode);
     }
 
     /**
@@ -53,6 +54,19 @@ public class TestNode {
         listNode.addHeadNode(4);
         listNode.deleteIndexNode(1);
         System.out.println(listNode);
+    }
+
+    /**
+     * 原地翻转
+     */
+    public static void reverseList(ListNode listNode){
+        listNode.addHeadNode(1);
+        listNode.addHeadNode(2);
+        listNode.addHeadNode(3);
+        listNode.addHeadNode(4);
+        System.out.println(JSONObject.toJSONString(listNode));
+        listNode.reverseList();
+        System.out.println(JSONObject.toJSONString(listNode));
     }
 
 }
