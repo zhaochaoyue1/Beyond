@@ -1,6 +1,7 @@
 package com.example.classloader;
 
 public class CodeBlockForJava extends BaseCodeBlock{
+    Other o = new Other();
     {
         System.out.println("这是子类的普通代码块");
     }
@@ -21,9 +22,9 @@ public class CodeBlockForJava extends BaseCodeBlock{
 
     public static void main(String[] args) {
         BaseCodeBlock b = new CodeBlockForJava();
-        b.msg();
+        //b.msg();
         // b.msg2();
     }
-    Other o = new Other();
+
 }
 
