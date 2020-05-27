@@ -7,6 +7,7 @@ import java.util.HashSet;
 /**
  * description: 单向链表是否有循环
  * 学习：https://blog.csdn.net/u010983881/article/details/78896293
+ *      https://blog.csdn.net/sinat_35261315/article/details/79205157
  * date: 2020/5/26 下午3:12
  * author: zcy
  * version: 1.0
