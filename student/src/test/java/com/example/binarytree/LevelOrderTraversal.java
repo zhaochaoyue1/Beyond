@@ -24,6 +24,9 @@ public class LevelOrderTraversal {
     }
 
     public static void levelOrderTraversal(List<Object> list, TreeNode treeNode) {
+        if (treeNode == null) {
+            return;
+        }
         Queue<TreeNode> queue = new LinkedList<>();
         queue.offer(treeNode);
         while (!queue.isEmpty()) {
