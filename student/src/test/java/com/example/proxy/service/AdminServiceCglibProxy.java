@@ -7,12 +7,15 @@ import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
 
+/**
+ * cglib底层用的是asm
+ */
 public class AdminServiceCglibProxy implements MethodInterceptor {
 private Object targetObject;
 
     public Object getProxy(Object obj){
         this.targetObject = obj;
-        // 创建Enhancer对象
+        // 创建Enhancer对象(增强)
         Enhancer enhancer = new Enhancer();
         //设置代理目标对象
         enhancer.setSuperclass(obj.getClass());
@@ -22,6 +25,15 @@ private Object targetObject;
     }
 
 
+    /**
+     *
+     * @param o 代理对象
+     * @param method
+     * @param objects
+     * @param methodProxy
+     * @return
+     * @throws Throwable
+     */
     @Override
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         System.out.println("----------方法调用前----------");
