@@ -199,8 +199,8 @@
         <!-- springboot configuration依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId> spring-boot-configuration-processor</artifactId>
-            <optional> true </optional>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
@@ -215,11 +215,27 @@
             <version>3.2.0</version>
         </dependency>
 
+        <!--jdk内存查看工具 Java object layout-->
+        <dependency>
+            <groupId>org.openjdk.jol</groupId>
+            <artifactId>jol-core</artifactId>
+            <version>0.9</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+
+
     </dependencies>
 
 
     <build>
-        <!--<plugins>
+        <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -227,8 +243,8 @@
                     <executable>true</executable>
                 </configuration>
             </plugin>
-            &lt;!&ndash;maven只打包不执行测试用例&ndash;&gt;
-            <plugin>
+            <!--maven只打包不执行测试用例-->
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.20.1</version>
@@ -236,11 +252,11 @@
                     &lt;!&ndash; 不指定单元测试 &ndash;&gt;
                     <skipTests>true</skipTests>
                 </configuration>
-            </plugin>
-        </plugins>-->
+            </plugin>-->
+        </plugins>
         <resources>
             <resource>
-                <directory>/src/main/resources</directory>
+                <directory>src/main/resources</directory>
             </resource>
         </resources>
     </build>

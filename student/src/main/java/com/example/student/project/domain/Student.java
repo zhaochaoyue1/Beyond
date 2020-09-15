@@ -21,6 +21,8 @@ import java.util.Date;
 public class Student implements Serializable {
     private Long id;
     private String name;
+    private String value;
+    private String comment;
     private Integer age;
     private Date createTime;
     private Date updateTime;

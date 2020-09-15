@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  *  数据层
  * 
@@ -32,6 +34,22 @@ public interface StudentDao
 	 */
 	@Select("select * from student where name = #{name}")
 	Student getStudentByName(@Param("name") String name);
+
+	/**
+	 * 查询
+	 * @param name
+	 * @return
+	 */
+	@Select("select * from conf")
+	List<Student> getConf(@Param("name") String name);
+
+	/**
+	 * 插入
+	 * @param student
+	 * @return
+	 */
+	@Insert("INSERT INTO tb_bp_config_globalconfig ( `name`, `value`, `comment`, `create_time`, `update_time`, `product`, `state`) VALUES ( #{name}, #{value}, #{comment},NOW(), NOW(), 47, 1)")
+	int insertConf(Student student);
 
 	/**
 	 * 查询

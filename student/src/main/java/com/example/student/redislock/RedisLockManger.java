@@ -51,7 +51,7 @@ public class RedisLockManger {
      * @return
      */
     public Boolean releaseLock(final String lockKey, final String requestId) {
-        String script = "if redis.call('get', KEYS[1]) == ARGV[1] then redis.call('del', KEYS[1]) else return 0 end";
+        String script = "if redis.call('get', KEYS[1]) == ARGV[1] then redis.call('del', KEYS[1]) return 1 else return 0 end";
         Object result = dragonJedisClusterClient.eval(script, Collections.singletonList(lockKey), Collections.singletonList(requestId));
         return RELEASE_SUCCESS.equals(result);
     }

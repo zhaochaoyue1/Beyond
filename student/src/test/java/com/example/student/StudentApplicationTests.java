@@ -58,33 +58,33 @@ public class StudentApplicationTests {
     private AdBoundUserDao adBoundUserDao;
 
     @Test
-    public void testDuplicate(){
+    public void testDuplicate() {
         Boolean userIsExist = adBoundUserDao.getUserIsExist(1L);
         System.out.println(userIsExist);
     }
 
 
     @Test
-    public void testAdBoundUser(){
-        for(int i=1;i<=996;i++){
-            int h = RandomUtil.random(2,22);
+    public void testAdBoundUser() {
+        for (int i = 1; i <= 996; i++) {
+            int h = RandomUtil.random(2, 22);
             int m = RandomUtil.random(0, 60);
-            String  s = "00";
+            String s = "00";
             StringBuilder sb = new StringBuilder(" ");
-            if(h>=10){
+            if (h >= 10) {
                 sb.append(h);
-            }else {
+            } else {
                 sb.append(0).append(h);
             }
             sb.append(":");
-            if(m>=10){
+            if (m >= 10) {
                 sb.append(m);
-            }else {
+            } else {
                 sb.append(0).append(m);
             }
             sb.append(":");
             String s1 = sb.append(s).toString();
-            adBoundUserDao.update(i,s1);
+            adBoundUserDao.update(i, s1);
         }
     }
 
@@ -95,15 +95,16 @@ public class StudentApplicationTests {
         ScoredPage<ShortVedio> shortVedios = solrTemplate.queryForPage(query, ShortVedio.class);
         System.out.println(JSON.toJSON(shortVedios));
     }
+
     private static Logger log = LoggerFactory.getLogger(StudentApplicationTests.class);
     private static ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     @Test
     public void contextLoads() {
-        List<People> peopleList=new ArrayList<>();
-        for(int i=1;i<4;i++){
+        List<People> peopleList = new ArrayList<>();
+        for (int i = 1; i < 4; i++) {
             People people = new People();
-            people.setId(i+1);
+            people.setId(i + 1);
             people.setCount(i);
             peopleList.add(people);
         }
@@ -293,9 +294,9 @@ public class StudentApplicationTests {
     }
 
     @Test
-    public void testList()throws Exception {
-        String s="{\"member\":{\"balance\":0.00,\"balancePwd\":\"\",\"canReceiveEmail\":1,\"canReceiveSms\":1,\"customerToken\":\"q6TVP2dWBNe2ABXH7TWTKPQK4OsRpGlMyZ8tTgcilJ8d3kagqluG5muBk8m58TAnbiSDd4U9WpYgCnEewuqa1w==\",\"email\":\"\",\"emailVerifyCode\":\"\",\"grade\":1,\"gradeValue\":0,\"id\":18559,\"integral\":0,\"isEmailVerify\":0,\"isSmsVerify\":1,\"lastLoginIp\":\"114.254.143.198\",\"lastLoginTime\":1546945660000,\"loginNumber\":0,\"mobile\":\"18515430634\",\"name\":\"小碗ibbe\",\"password\":\"e10adc3949ba59abbe56e057f20f883e\",\"phone\":\"18515430634\",\"phoneType\":\"HUAWEI\",\"pic\":\"https://xiaowan-image.oss-cn-beijing.aliyuncs.com/user_info.jpg\",\"pwdErrCount\":0,\"registerTime\":1546945660000,\"registrationId\":\"\",\"smsVerifyCode\":\"\",\"source\":2,\"status\":1,\"updateTime\":1563522148000},\"token\":\"memberSession_c5e244b8b3964f7eb1b3fbddc207719f\"}";
-        Object s1=JSON.parse(s);
+    public void testList() throws Exception {
+        String s = "{\"member\":{\"balance\":0.00,\"balancePwd\":\"\",\"canReceiveEmail\":1,\"canReceiveSms\":1,\"customerToken\":\"q6TVP2dWBNe2ABXH7TWTKPQK4OsRpGlMyZ8tTgcilJ8d3kagqluG5muBk8m58TAnbiSDd4U9WpYgCnEewuqa1w==\",\"email\":\"\",\"emailVerifyCode\":\"\",\"grade\":1,\"gradeValue\":0,\"id\":18559,\"integral\":0,\"isEmailVerify\":0,\"isSmsVerify\":1,\"lastLoginIp\":\"114.254.143.198\",\"lastLoginTime\":1546945660000,\"loginNumber\":0,\"mobile\":\"18515430634\",\"name\":\"小碗ibbe\",\"password\":\"e10adc3949ba59abbe56e057f20f883e\",\"phone\":\"18515430634\",\"phoneType\":\"HUAWEI\",\"pic\":\"https://xiaowan-image.oss-cn-beijing.aliyuncs.com/user_info.jpg\",\"pwdErrCount\":0,\"registerTime\":1546945660000,\"registrationId\":\"\",\"smsVerifyCode\":\"\",\"source\":2,\"status\":1,\"updateTime\":1563522148000},\"token\":\"memberSession_c5e244b8b3964f7eb1b3fbddc207719f\"}";
+        Object s1 = JSON.parse(s);
         Field member2 = s1.getClass().getDeclaredField("member");
 
         //Object member = parse.get("member");
@@ -304,15 +305,14 @@ public class StudentApplicationTests {
     }
 
 
-
     @Test
-    public void testFile(){
-        String lu = "/Users/coohua/Downloads/hl20";
+    public void testFile() {
+        String lu = "/Users/coohua/Downloads/hlall";
         getAllFileName(lu);
     }
 
     @Test
-    public void testFile2(){
+    public void testFile2() {
         //String calendar = calenderService.getCalendar("2020-11-18");
         //JSONObject parse = JSONObject.parseObject(calendar);
         //System.out.println(parse);
@@ -321,16 +321,16 @@ public class StudentApplicationTests {
     }
 
 
-    public  void getAllFileName(String path){
+    public void getAllFileName(String path) {
         File file = new File(path);
-        File [] files = file.listFiles();
-        String [] names = file.list();
-        if(names != null){
-            for(int i=0;i<names.length;i++){
+        File[] files = file.listFiles();
+        String[] names = file.list();
+        if (names != null) {
+            for (int i = 0; i < names.length; i++) {
                 String name = names[i];
                 String[] split = name.split("\\.");
-                String fileName=path+"/"+name;
-                getFile(split[0],fileName);
+                String fileName = path + "/" + name;
+                getFile(split[0], fileName);
             }
         }
 
@@ -342,7 +342,10 @@ public class StudentApplicationTests {
         }*/
     }
 
-    public  void getFile(String id,String fileName){
+    public void getFile(String id, String fileName) {
+        if (StringUtils.isEmpty(id)) {
+            return;
+        }
         File file = new File(fileName);
         BufferedReader reader = null;
         StringBuffer sbf = new StringBuffer();
@@ -354,13 +357,17 @@ public class StudentApplicationTests {
             }
             reader.close();
             String text = sbf.toString();
-            if(StringUtils.isEmpty(id)){
+            if (StringUtils.isEmpty(id)) {
                 return;
             }
             Date date = DateTimeUtils.parseYYYYMMDD(id);
             String dailyVersion = DateTimeUtils.getDailyVersion(date);
             long time = date.getTime();
-            calenderService.saveCalender(dailyVersion,text,time);
+            calenderService.saveCalender(dailyVersion, text, time);
+            /*String calendar = calenderService.getCalendar(dailyVersion);
+            if (StringUtils.isEmpty(calendar)) {
+
+            }*/
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

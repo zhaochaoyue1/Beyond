@@ -10,8 +10,8 @@ import java.util.List;
  * 题目： 有一个背包，他的容量为C（capacity). 现在有n种不同的商品，编号为0至n-1，其中每一件物品的重量为w(i),价值为v(i).问
  * 可以向这个背包中盛放哪些物品，使得在不超过背包容量的基础上，物质的总价值最大。
  * F(n,c)考虑将n个物品放进容量为C的背包，使得价值最大
- * F(i,c) = F(i-1,c)
- * = v(i) + F(i-1,c-w(i))
+ * F(i,c) = F(i-1,c) or v(i) + F(i-1,c-w(i))
+ *
  * F(i,c) = max(F(i-1,c),v(i) + F(i-1,c-w(i)))
  */
 public class DynamicProgramming {

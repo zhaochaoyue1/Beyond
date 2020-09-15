@@ -14,8 +14,7 @@ public class BacktrackQueen {
     private static int[][] chess = new int[8][8];
     private static List<List<Integer>> chessPattern = Lists.newArrayList();
     public static void main(String[] args) {
-        int abs = Math.abs(1- 9);
-        System.out.println(abs);
+
     }
 
     public static void queen(List<Integer> list, int n) {

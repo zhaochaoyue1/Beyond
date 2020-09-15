@@ -4,15 +4,19 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
     #正式环境
-    #url: jdbc:mysql://rm-m5e17qa9eu584g1ha.mysql.rds.aliyuncs.com:3306/ry?useUnicode=true&zeroDateTimeBehavior=convertToNull
-    #测试环境
+    #url: jdbc:mysql://rm-2ze9b79wd9nddvce8.mysql.rds.aliyuncs.com:3306/bubuduo-duole
+    #本地环境
     url: jdbc:mysql://127.0.0.1:3306/ry?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    #测试环境
+    #url: jdbc:mysql://rdsb67neyrayvf2.mysql.rds.aliyuncs.com:3306/weather?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+    #username: coohua
+    #password: 86_Coohua_Com_1301
     #读写分离库
     #url: jdbc:mysql://rm-m5ew0fp38tm118428no.mysql.rds.aliyuncs.com:3306/ry1?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
     #测试环境
 #    url: jdbc:mysql://rm-m5ew0fp38tm118428no.mysql.rds.aliyuncs.com:3306/ry?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
-#    username: yitong
-#    password: 123@wepartner
+    #username: coohua
+    #password: KoZg32nu6q
     #url: jdbc:mysql://127.0.0.1:3306/ry?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
     #url: jdbc:mysql://192.168.2.137:3306/ry?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
 #    url: jdbc:mysql://127.0.0.1:3306/ry1?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull

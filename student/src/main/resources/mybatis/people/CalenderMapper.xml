@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <select id="getCalendar" resultType="java.lang.String">
-        select text from calendar_table where id = #{id}
+        select id from calendar_table where id = #{id}
     </select>
 
     
