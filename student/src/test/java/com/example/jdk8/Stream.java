@@ -1,18 +1,20 @@
-package com.example.jdkStream;
+package com.example.jdk8;
 
 import com.alibaba.fastjson.JSON;
 import com.example.student.Student;
 import org.assertj.core.util.Lists;
+
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * https://blog.csdn.net/kenzyq/article/details/88540663（简单实用示例）
  * https://www.cnblogs.com/renchengtianshao/p/9843648.html(深入学习示例)
  */
-public class StudentSchool {
+public class Stream {
     public static void main(String[] args) throws Exception {
         List<Student> students = Lists.newArrayList();
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 0; i <= 10; i++) {
             Student student = Student.builder()
                     .id(i)
                     .age(i)
@@ -21,7 +23,11 @@ public class StudentSchool {
             students.add(student);
         }
         //按年纪分组
+        //Map<String, List<Student>> collect = students.stream().collect(Collectors.groupingBy(student -> get(student.getAge())));
+        //按年纪分组
         //Map<String, List<Student>> collect = students.stream().collect(Collectors.groupingBy(student -> student.getAge()+""));
+        //按年纪分组
+        //Map<String, List<Student>> collect = students.stream().collect(Collectors.groupingBy(student -> student.getAge() > 0 ? "1" : "0"));
 
         //根据age排序
         //students.sort(Comparator.comparing(Student::getAge).reversed());
@@ -73,4 +79,9 @@ public class StudentSchool {
                 .isPresent();*/
         System.out.println(JSON.toJSONString(count));
     }
+
+    public static String get(int a) {
+        return a > 0 ? "1" : "0";
+    }
+
 }
