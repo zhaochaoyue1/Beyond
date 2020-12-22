@@ -12,6 +12,8 @@ import java.util.List;
 
 /**
  * 消费者
+ * 安装启动在有道笔记
+ * 解惑：https://www.cnblogs.com/lizherui/p/12655425.html
  */
 public class Consumer {
     public static void main(String[] args) throws Exception{
