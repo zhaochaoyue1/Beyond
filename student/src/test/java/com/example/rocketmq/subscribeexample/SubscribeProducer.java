@@ -18,8 +18,8 @@ public class SubscribeProducer {
         //启动生产者
         producer.start();
         //创建一个tag数组
-        String[] tags = new String[]{"TagA", "TagB", "TagC", "TagD", "TagE"};
-        for (int i = 0; i < 100; i++) {
+        String[] tags = new String[]{"TagA"};
+        for (int i = 0; i < 1; i++) {
             int orderId = i%10;
             Message msg = new Message("TopicTestjjj",tags[i%tags.length],"KEY"+i,("Hello Rocket" + i).getBytes(RemotingHelper.DEFAULT_CHARSET));
             SendResult sendResult = producer.send(msg, new MessageQueueSelector() {

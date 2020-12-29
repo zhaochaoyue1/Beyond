@@ -5,6 +5,7 @@ import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeOrderlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerOrderly;
 import org.apache.rocketmq.common.message.MessageExt;
+import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -14,13 +15,14 @@ public class SubscribeConsumer {
     public static void main(String[] args) throws Exception {
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("example_group_name");
         consumer.setNamesrvAddr("localhost:9876");
-        consumer.subscribe("TopicTestjjj", "TagA||TagB||TagB");
+        consumer.subscribe("TopicTestjjj", "TagA");
+        consumer.setMessageModel(MessageModel.CLUSTERING);
         consumer.registerMessageListener(new MessageListenerOrderly() {
             AtomicLong consumeTime = new AtomicLong(0);
 
             @Override
             public ConsumeOrderlyStatus consumeMessage(List<MessageExt> msgs, ConsumeOrderlyContext context) {
-                context.setAutoCommit(false);
+                context.setAutoCommit(true);
                 //System.out.printf(Thread.currentThread().getName() + "receive new message" + msgs + "%n");
                 try {
                     for(MessageExt messageExt:msgs){
