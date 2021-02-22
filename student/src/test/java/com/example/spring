@@ -1,0 +1,21 @@
+1 、BeanPostProcessor 后置处理bean
+    1.1 BeanPostProcessor 接口定义回调方法，您可以实施这些回调方法提供自己实例化逻辑或覆盖实例容器默认值，依赖关系解析逻辑等。如果你想在spring容器完成
+实例化，配置和初始化bean之后实现一些自定义逻辑，则可以插入一个或多个BeanPostProcessor实现。
+    1.2 您可以配置多个BeanPostProcessor实例，并且可以通过设置order属性来控制这些BeanPostProcessor的执行 Sequences。仅当BeanPostProcessor实现
+    Ordered接口时，才可以设置此属性；
+2 、 FactoryBean 自定义实例化逻辑
+    为本身是 factory *的对象实现org.springframework.beans.factory.FactoryBean接口。
+    FactoryBean接口是可插入 Spring IoC 容器的实例化逻辑的点。如果您拥有复杂的初始化代码，而不是(可能)冗长的 XML，可以用 Java 更好地表达，
+    则可以创建自己的FactoryBean，在该类中编写复杂的初始化，然后将自定义FactoryBean插入容器。
+    FactoryBean 接口提供了三种方法
+    Object getObject(): 返回此工厂创建的对象实例。实例可以共享，具体取决于该工厂是否返回单例或原型
+    boolean isSingleton(): 如果此FactoryBean 返回单例，则返回true，否则返回false
+    Class getObjectType(): 返回getObject() 方法或null 返回的对象类型
+
+下文来源：https://www.cnblogs.com/deveypf/p/11406940.html
+    DefaultListableBeanFactory :这就是大家常说的IOC容器，它里面有很多map、list。spring帮我们创建的singleton类型的bean就存放在其中一个map中
+        我们定义的监听器（applicationListener）也被放到一个set集合中
+    BeanDefinitionRegistry: 把一个BeanDefinition 放到beanDefinitionMap.
+    annotatedBeanDefinitionReader: 针对AnnotationConfigApplicationContext而言，一个BeanDefinition读取器
+    扩展点集合： 存放spring扩展点（主要是BeanFactoryPostProcessor、BeanPostProcessor）接口的list集合
+
