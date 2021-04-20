@@ -17,7 +17,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * https://www.cnblogs.com/liyutian/p/9473747.html
+ */
 public class HttpTest {
     private   static final OkHttpClient okHttpClient = new OkHttpClient();
     private static final String HTTPS_URL = "https://api.caiyunapp.com/v2.5/Y1tgCUliE34Ahjj0/%s,%s/weather.json";

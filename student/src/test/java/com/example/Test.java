@@ -1,10 +1,14 @@
 package com.example;
 
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * description: Test
@@ -36,12 +40,672 @@ public class Test {
         //System.out.println(JSONObject.toJSONString(largeGroupPositions("abbxxxxzzzzyxxxx")));
         //int[] n = {1,2,3,4,5,6};
         //rotate(n,3);
-        String s = "test1,test2,test3";
-        String join = String.join(s, ",");
-        System.out.println(join);
+        //String s = "test1,test2,test3";
+        //String join = String.join(s, ",");
+        //System.out.println(join);
+        //System.out.println(minCut("sdjkdjkjdkjda"));
+        //System.out.println(cal("1000/3+5 + 9 / 3"));;
+        //System.out.println(isValidSerialization("1,#,2"));
+        //System.out.println(JSONObject.toJSONString(generateMatrix4(3)));
+        //System.out.println(numDistinct("  a"," a"));
+        //System.out.println(evalRPN(new String[]{"4", "13", "5", "/", "+"}));
+        //subsetsWithDup(new int[]{1,2});
+        //System.out.println(trap(new int[]{1, 3, 1, 5, 6, 7, 8}));
+        //System.out.println(new Date().getTime());
+        //System.out.println(removeDuplicates(new int[]{1,1,1,1,4,4,4}));
+        //System.out.println(findMin(new int[]{1,2,3,4,5}));
+        //System.out.println(findMinThree(new int[]{3, 3, 1, 3}));
+        //System.out.println(rob(new int[]{3,30,34,5,9}));
+        System.out.println(strStr("mississippi","issip"));
     }
 
-    
+    public static int strStr(String haystack, String needle) {
+        if(haystack.equals(needle)){
+            return 0 ;
+        }
+        if(haystack == ""){
+            return-1;
+        }
+        if(needle.equals("")){
+            return 0;
+        }
+        for(int i = 0;i<haystack.length();i++){
+            if(haystack.charAt(i) == needle.charAt(0)&&haystack.length()-i>= needle.length()){
+                for(int j = 0;j<needle.length();j++){
+                    if(haystack.charAt(i+j)!=needle.charAt(j)){
+                        break;
+                    }
+                    if(j==needle.length()-1){
+                        return i;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+
+    public static int rob1(int[] nums){
+        int length = nums.length;
+        if(length == 1){
+            return nums[0];
+        }else if(length == 2){
+            return Math.max(nums[0],nums[1]);
+        }else {
+            return Math.max(rob2(nums,0,length-2),rob2(nums,1,length-1));
+        }
+    }
+
+    public static int rob2(int[] nums,int low,int high){
+        int first = nums[low], second = Math.max(nums[low],nums[low+1]);
+        for(int i=low+2;i<=high;i++){
+            int temp = second;
+            second = Math.max(first+nums[i],second);
+            first = second;
+        }
+        return second;
+    }
+
+    //https://leetcode-cn.com/problems/house-robber-ii/solution/da-jia-jie-she-ii-by-leetcode-solution-bwja/
+    public static int rob(int[] nums) {
+        int length = nums.length;
+        if (length == 1) {
+            return nums[0];
+        } else if (length == 2) {
+            return Math.max(nums[0], nums[1]);
+        }
+        return Math.max(robRange(nums, 0, length - 2), robRange(nums, 1, length - 1));
+    }
+
+    public static int robRange(int[] nums, int start, int end) {
+        int first = nums[start], second = Math.max(nums[start], nums[start + 1]);
+        for (int i = start + 2; i <= end; i++) {
+            int temp = second;
+            second = Math.max(first + nums[i], second);
+            first = temp;
+        }
+        return second;
+    }
+
+    //https://leetcode-cn.com/problems/largest-number/solution/zui-da-shu-by-leetcode-solution-sid5/
+    public static String largestNumber(int[] nums) {
+        int n = nums.length;
+        // 转换成包装类型，以便传入 Comparator 对象（此处为 lambda 表达式）
+        Integer[] numsArr = new Integer[n];
+        for (int i = 0; i < n; i++) {
+            numsArr[i] = nums[i];
+        }
+
+        Arrays.sort(numsArr, (x, y) -> {
+            long sx = 10, sy = 10;
+            while (sx <= x) {
+                sx *= 10;
+
+
+            }
+            while (sy <= y) {
+                sy *= 10;
+            }
+            return (int) (-sy * x - y + sx * y + x);
+        });
+
+        if (numsArr[0] == 0) {
+            return "0";
+        }
+        StringBuilder ret = new StringBuilder();
+        for (int num : numsArr) {
+            ret.append(num);
+        }
+        return ret.toString();
+    }
+
+    /**
+     * @param nums
+     * @return
+     */
+    public static int findMinThree(int[] nums) {
+        int high = nums.length - 1;
+        int low = 0;
+        while (low < high) {
+            int pivot = low + (high - low) / 2;
+            if (nums[pivot] < nums[high]) {
+                high = pivot;
+            } else if (nums[pivot] > nums[high]) {
+                low = pivot + 1;
+            } else {
+                high -= 1;
+            }
+        }
+        return nums[low];
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/solution/xun-zhao-xuan-zhuan-pai-xu-shu-zu-zhong-5irwp/
+     *
+     * @param nums
+     * @return
+     */
+    public static int findMin(int[] nums) {
+        int low = 0;
+        int high = nums.length - 1;
+        while (low < high) {
+            int pivot = low + (high - low) / 2;
+            if (nums[pivot] < nums[high]) {
+                high = pivot;
+            } else {
+                low = pivot + 1;
+            }
+        }
+        return nums[low];
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array-ii/solution/shan-chu-pai-xu-shu-zu-zhong-de-zhong-fu-yec2/
+     *
+     * @param nums
+     * @return
+     */
+    public static int removeDuplicates(int[] nums) {
+        int n = nums.length;
+        if (n <= 2) {
+            return n;
+        }
+        int slow = 2, fast = 2;
+        while (fast < n) {
+            if (nums[slow - 2] != nums[fast]) {
+                nums[slow] = nums[fast];
+                ++slow;
+            }
+            ++fast;
+        }
+        return slow;
+    }
+
+    /**
+     * 接雨水
+     * https://leetcode-cn.com/problems/volume-of-histogram-lcci/solution/zhi-fang-tu-de-shui-liang-by-leetcode-so-7rla/
+     *
+     * @param height
+     * @return
+     */
+    public static int trap(int[] height) {
+        int n = height.length;
+        if (n == 0) {
+            return 0;
+        }
+
+        int[] leftMax = new int[n];
+        leftMax[0] = height[0];
+        for (int i = 1; i < n; ++i) {
+            leftMax[i] = Math.max(leftMax[i - 1], height[i]);
+        }
+
+        int[] rightMax = new int[n];
+        rightMax[n - 1] = height[n - 1];
+        for (int i = n - 2; i >= 0; --i) {
+            rightMax[i] = Math.max(rightMax[i + 1], height[i]);
+        }
+
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {
+            ans += Math.min(leftMax[i], rightMax[i]) - height[i];
+        }
+        return ans;
+    }
+
+    /**
+     * 接雨水 stack处理
+     *
+     * @param height
+     * @return
+     */
+    public int trapStack(int[] height) {
+        int ans = 0;
+        Deque<Integer> stack = new LinkedList<Integer>();
+        int n = height.length;
+        for (int i = 0; i < n; ++i) {
+            while (!stack.isEmpty() && height[i] > height[stack.peek()]) {
+                int top = stack.pop();
+                if (stack.isEmpty()) {
+                    break;
+                }
+                int left = stack.peek();
+                int currWidth = i - left - 1;
+                int currHeight = Math.min(height[left], height[i]) - height[top];
+                ans += currWidth * currHeight;
+            }
+            stack.push(i);
+        }
+        return ans;
+    }
+
+    /**
+     * leetcode-cn.com/problems/subsets-ii/solution/gong-shui-san-xie-yi-ti-shuang-jie-hui-s-g77q/
+     *
+     * @param nums
+     * @return
+     */
+    public static List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        Set<List<Integer>> ans = new HashSet<>();
+        List<Integer> cur = new ArrayList<>();
+        dfs(nums, 0, cur, ans);
+        return new ArrayList<>(ans);
+    }
+
+    /**
+     * @param nums 原输入数组
+     * @param u    当前决策到原输入数组中的哪一位
+     * @param cur  当前方案
+     * @param ans  最终结果集
+     */
+    static void dfs(int[] nums, int u, List<Integer> cur, Set<List<Integer>> ans) {
+        // 所有位置都决策完成，将当前方案放入结果集
+        if (nums.length == u) {
+            ans.add(new ArrayList<>(cur));
+            return;
+        }
+
+        // 选择当前位置的元素，往下决策
+        cur.add(nums[u]);
+        dfs(nums, u + 1, cur, ans);
+
+        // 不选当前位置的元素（回溯），往下决策
+        cur.remove(cur.size() - 1);
+        dfs(nums, u + 1, cur, ans);
+    }
+
+    /**
+     * 132问题
+     * https://leetcode-cn.com/problems/132-pattern/solution/132mo-shi-by-leetcode-solution-ye89/
+     *
+     * @param nums
+     * @return
+     */
+    public static boolean find132pattern(int[] nums) {
+        int n = nums.length;
+        if (n < 3) {
+            return false;
+        }
+
+        // 左侧最小值
+        int leftMin = nums[0];
+        // 右侧所有元素
+        TreeMap<Integer, Integer> rightAll = new TreeMap<Integer, Integer>();
+
+        for (int k = 2; k < n; ++k) {
+            rightAll.put(nums[k], rightAll.getOrDefault(nums[k], 0) + 1);
+        }
+
+        for (int j = 1; j < n - 1; ++j) {
+            if (leftMin < nums[j]) {
+                Integer next = rightAll.ceilingKey(leftMin + 1);
+                if (next != null && next < nums[j]) {
+                    return true;
+                }
+            }
+            leftMin = Math.min(leftMin, nums[j]);
+            rightAll.put(nums[j + 1], rightAll.get(nums[j + 1]) - 1);
+            if (rightAll.get(nums[j + 1]) == 0) {
+                rightAll.remove(nums[j + 1]);
+            }
+        }
+
+        return false;
+    }
+
+
+    /**
+     * 逆波兰表达式
+     * https://leetcode-cn.com/problems/evaluate-reverse-polish-notation/
+     *
+     * @param tokens
+     * @return
+     */
+    public static int evalRPN(String[] tokens) {
+        Deque<Integer> deque = new ArrayDeque<>();
+        for (int i = 0; i < tokens.length; i++) {
+            switch (tokens[i]) {
+                case "+":
+                    int i1 = deque.pop() + deque.pop();
+                    deque.push(i1);
+                    continue;
+                case "-":
+                    int i2 = -deque.pop() + deque.pop();
+                    deque.push(i2);
+                    continue;
+                case "*":
+                    int i3 = deque.pop() * deque.pop();
+                    deque.push(i3);
+                    continue;
+                case "/":
+                    Integer pop = deque.pop();
+                    int i4 = deque.pop() / pop;
+                    deque.push(i4);
+                    continue;
+            }
+            deque.push(Integer.parseInt(tokens[i]));
+        }
+        return deque.pop();
+    }
+
+    public static int numDistinct2(String s, String t) {
+        int[][] dp = new int[t.length() + 1][s.length() + 1];
+        for (int j = 0; j < s.length() + 1; j++) dp[0][j] = 1;
+        for (int i = 1; i < t.length() + 1; i++) {
+            for (int j = 1; j < s.length() + 1; j++) {
+                if (t.charAt(i - 1) == s.charAt(j - 1)) dp[i][j] = dp[i - 1][j - 1] + dp[i][j - 1];
+                else dp[i][j] = dp[i][j - 1];
+            }
+        }
+        return dp[t.length()][s.length()];
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/distinct-subsequences/solution/dong-tai-gui-hua-yi-ci-ti-wei-li-jiang-j-enq0/
+     * t[i]==s[j]   dp[i][j] = dp[i-1][j-1]+dp[i][j-1]
+     * t[i]!=s[j]   dp[i][j] = dp[i][j-1]
+     *
+     * @return
+     */
+    public static int numDistinct(String s, String t) {
+        int sLen = s.length();
+        int tLen = t.length();
+        if (tLen > sLen) {
+            return 0;
+        }
+        if (sLen == tLen) {
+            if (s.equals(t)) {
+                return 1;
+            }
+            return 0;
+        }
+        int[][] dp = new int[tLen + 1][sLen + 1];
+        for (int i = 0; i <= tLen; i++) {
+            if (i == 0) {
+                for (int j = 0; j <= sLen; j++) {
+                    if (j == 0) {
+                        dp[i][j] = 1;
+                    }
+                }
+                continue;
+            }
+            for (int j = 1; j <= sLen; j++) {
+                if (t.charAt(i - 1) == s.charAt(j - 1)) {
+                    dp[i][j] = dp[i - 1][j - 1] + dp[i][j - 1];
+                } else {
+                    dp[i][j] = dp[i][j - 1];
+                }
+            }
+        }
+        return dp[tLen][sLen];
+    }
+
+
+    public static int[][] generateMatrix4(int n) {
+        int[][] mat = new int[n][n];
+        int row = 0, column = 0, nextRow = 0, nextColumn = 0, num = 1, max = n * n;
+        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        int directionIndex = 0;
+        while (num <= max) {
+            mat[row][column] = num;
+            num++;
+            nextRow = row + directions[directionIndex][0];
+            nextColumn = column + directions[directionIndex][1];
+            if (nextRow < 0 || nextRow >= n || nextColumn < 0 || nextColumn >= n || mat[nextRow][nextColumn] != 0) {
+                directionIndex = (directionIndex + 1) % 4;
+            }
+            row = row + directions[directionIndex][0];
+            column = column + directions[directionIndex][1];
+            view(mat, n);
+        }
+        return mat;
+    }
+
+    public static int[][] generateMatrix3(int n) {
+        int[][] mat = new int[n][n];
+        int num = 1;
+        int l = 0, r = n - 1, t = 0, b = n - 1;
+        int max = n * n;
+        while (num <= max) {
+            for (int i = l; i <= r; i++) mat[t][i] = num++;
+            t++;
+            for (int i = t; i <= b; i++) mat[i][r] = num++;
+            r--;
+            for (int i = r; i >= l; i--) mat[b][i] = num++;
+            b--;
+            for (int i = b; i >= t; i--) mat[i][l] = num++;
+            l++;
+        }
+        for (int i = 0; i < n; i++) {
+            int[] ints = mat[i];
+            for (int j = 0; j < n; j++) {
+                System.out.print(ints[j] + " ");
+            }
+            System.out.println();
+        }
+        return mat;
+    }
+
+    public static int[][] generateMatrix2(int n) {
+        int l = 0, r = n - 1, t = 0, b = n - 1;
+        int[][] mat = new int[n][n];
+        int num = 1, tar = n * n;
+        while (num <= tar) {
+            //上边界
+            for (int i = l; i <= r; i++) mat[t][i] = num++; // left to right.
+            t++;
+            //下边界
+            for (int i = t; i <= b; i++) mat[i][r] = num++; // top to bottom.
+            r--;
+            for (int i = r; i >= l; i--) mat[b][i] = num++; // right to left.
+            b--;
+            for (int i = b; i >= t; i--) mat[i][l] = num++; // bottom to top.
+            l++;
+        }
+        return mat;
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/spiral-matrix-ii/solution/luo-xuan-ju-zhen-ii-by-leetcode-solution-f7fp/
+     *
+     * @param n
+     * @return
+     */
+    public static int[][] generateMatrix(int n) {
+        int maxNum = n * n;
+        int curNum = 1;
+        int[][] matrix = new int[n][n];
+        int row = 0, column = 0;
+        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; // 右下左上
+        int directionIndex = 0;
+        while (curNum <= maxNum) {
+            matrix[row][column] = curNum;
+            curNum++;
+            int nextRow = row + directions[directionIndex][0], nextColumn = column + directions[directionIndex][1];
+            if (nextRow < 0 || nextRow >= n || nextColumn < 0 || nextColumn >= n || matrix[nextRow][nextColumn] != 0) {
+                directionIndex = (directionIndex + 1) % 4; // 顺时针旋转至下一个方向
+            }
+            row = row + directions[directionIndex][0];
+            column = column + directions[directionIndex][1];
+            view(matrix, n);
+        }
+        return matrix;
+    }
+
+    private static void view(int[][] a, int n) {
+        for (int i = 0; i < n; i++) {
+            int[] ints = a[i];
+            for (int j = 0; j < n; j++) {
+                System.out.print(ints[j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+
+    public static boolean isValidSerialization2(String preorder) {
+        int n = preorder.length();
+        int i = 0;
+        int slots = 1;
+        while (i < n) {
+            if (slots == 0) {
+                return false;
+            }
+            if (preorder.charAt(i) == ',') {
+                i++;
+            } else if (preorder.charAt(i) == '#') {
+                slots--;
+                i++;
+            } else {
+                // 读一个数字
+                while (i < n && preorder.charAt(i) != ',') {
+                    i++;
+                }
+                slots++; // slots = slots - 1 + 2
+            }
+        }
+        return slots == 0;
+    }
+
+    public static boolean isValidSerialization(String preorder) {
+        Deque<Integer> stack = new LinkedList<>();
+        stack.push(1);
+        int length = preorder.length();
+        int n = 0;
+        while (n < length) {
+            if (stack.isEmpty()) {
+                return false;
+            }
+
+            if (preorder.charAt(n) == '#') {
+                int i = stack.pop() - 1;
+                if (i > 0) {
+                    stack.push(i);
+                }
+                n++;
+            } else if (preorder.charAt(n) == ',') {
+                n++;
+            } else {
+                //是一串数字
+                while (n < length && preorder.charAt(n) != ',') {
+                    n++;
+                }
+                int i = stack.pop() - 1;
+                if (i > 0) {
+                    stack.push(i);
+                }
+                n++;
+                stack.push(2);
+            }
+        }
+        return stack.isEmpty();
+    }
+
+
+    public static int cal(String s) {
+        Deque<Integer> deque = new LinkedList<>();
+        int num = 0;
+        char preSign = '+';
+        int n = s.length();
+        for (int i = 0; i < n; i++) {
+            if (Character.isDigit(s.charAt(i))) {
+                num = num * 10 + s.charAt(i) - '0';
+            }
+            if (!Character.isDigit(s.charAt(i)) && s.charAt(i) != ' ' || n - 1 == i) {
+                switch (preSign) {
+                    case '+':
+                        deque.push(num);
+                        break;
+                    case '-':
+                        deque.push(-num);
+                        break;
+                    case '*':
+                        deque.push(deque.pop() * num);
+                        break;
+                    case '/':
+                        deque.push(deque.pop() / num);
+                        break;
+                    default:
+                        break;
+                }
+                preSign = s.charAt(i);
+                num = 0;
+            }
+        }
+        int sum = 0;
+        while (!deque.isEmpty()) {
+            sum += deque.pop();
+        }
+        return sum;
+    }
+
+    public static int calculate(String s) {
+        Deque<Integer> stack = new LinkedList<Integer>();
+        char preSign = '+';
+        int num = 0;
+        int n = s.length();
+        for (int i = 0; i < n; ++i) {
+            if (Character.isDigit(s.charAt(i))) {
+                num = num * 10 + s.charAt(i) - '0';
+            }
+            if (!Character.isDigit(s.charAt(i)) && s.charAt(i) != ' ' || i == n - 1) {
+                switch (preSign) {
+                    case '+':
+                        stack.push(num);
+                        break;
+                    case '-':
+                        stack.push(-num);
+                        break;
+                    case '*':
+                        stack.push(stack.pop() * num);
+                        break;
+                    default:
+                        stack.push(stack.pop() / num);
+                }
+                preSign = s.charAt(i);
+                num = 0;
+            }
+        }
+        int ans = 0;
+        while (!stack.isEmpty()) {
+            ans += stack.pop();
+        }
+        return ans;
+    }
+
+    //查询最小分割下的回文数字
+    public static int minCut(String s) {
+        int n = s.length();
+        boolean[][] g = new boolean[n][n];
+        for (int i = 0; i < n; ++i) {
+            Arrays.fill(g[i], true);
+        }
+
+        for (int i = n - 1; i >= 0; --i) {
+            for (int j = i + 1; j < n; ++j) {
+                g[i][j] = s.charAt(i) == s.charAt(j) && g[i + 1][j - 1];
+            }
+        }
+
+        int[] f = new int[n];
+        Arrays.fill(f, Integer.MAX_VALUE);
+        for (int i = 0; i < n; ++i) {
+            if (g[0][i]) {
+                f[i] = 0;
+            } else {
+                for (int j = 0; j < i; ++j) {
+                    if (g[j + 1][i]) {
+                        f[i] = Math.min(f[i], f[j] + 1);
+                    }
+                }
+            }
+        }
+
+        return f[n - 1];
+    }
+
 
     public static void rotate(int[] nums, int k) {
         int n = nums.length;
@@ -74,7 +738,7 @@ public class Test {
             }
             if (k >= 2) {
                 List<Integer> list1 = new ArrayList<>();
-                list1.add(i - k-1);
+                list1.add(i - k - 1);
                 list1.add(i - 1);
                 list.add(list1);
             }
@@ -525,5 +1189,62 @@ public class Test {
         }
         return Math.max(up, down);
     }
-
 }
+
+class MyQueue {
+    Stack<Object> inStack;
+    Stack<Object> outStack;
+
+    /**
+     * Initialize your data structure here.
+     */
+    public MyQueue() {
+        inStack = new Stack<>();
+        outStack = new Stack<>();
+    }
+
+    /**
+     * Push element x to the back of queue.
+     */
+    public void push(int x) {
+        inStack.push(x);
+    }
+
+    /**
+     * Removes the element from in front of queue and returns that element.
+     */
+    public int pop() {
+        if (outStack.isEmpty()) {
+            inToOut();
+        }
+        return (Integer) outStack.pop();
+    }
+
+    /**
+     * Get the front element.
+     */
+    public int peek() {
+        if (outStack.isEmpty()) {
+            inToOut();
+        }
+        return (Integer) outStack.peek();
+    }
+
+    /**
+     * Returns whether the queue is empty.
+     */
+    public boolean empty() {
+        if (inStack.isEmpty() && outStack.isEmpty()) {
+            return true;
+        }
+        return false;
+    }
+
+    private void inToOut() {
+        while (!inStack.isEmpty()) {
+            outStack.push(inStack.pop());
+        }
+    }
+}
+
+

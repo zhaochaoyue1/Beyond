@@ -1,7 +1,7 @@
 #������������
 server:
   #�˿�
-  port: 8021
+  port: 80
   #servlet:
     #context-path: /spring-basic
   #port: 80

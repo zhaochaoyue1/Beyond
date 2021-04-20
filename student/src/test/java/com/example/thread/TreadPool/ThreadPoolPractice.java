@@ -93,7 +93,7 @@ import java.util.concurrent.*;
  */
 public class ThreadPoolPractice {
     private static final int CORE_THREAD_SIZE = 5;
-    private static final int MAXIMUM_THREAD_SIZE = 10;
+    private static final int MAXIMUM_THREAD_SIZE = 5;
     private static final int QUEUE_CAPACITY = 10;
     private static final Long KEEP_ALIVE_TIME = 1L;
 
@@ -113,7 +113,7 @@ public class ThreadPoolPractice {
 
     private static void future(ExecutorService threadPoolExecutor) {
         List<Future<String>> futureList = Lists.newArrayList();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             MyCallable myCallable = new MyCallable();
             Future<String> submit = threadPoolExecutor.submit(myCallable);
             futureList.add(submit);

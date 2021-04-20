@@ -17,6 +17,7 @@ import org.jsoup.select.Elements;
  * @date: 2020/9/8 下午3:48
  * @author: zcy
  * @version: 1.0
+ * https://www.cnblogs.com/liyutian/p/9473747.html
  */
 public class WeatherHttp {
     private static final OkHttpClient okHttpClient = new OkHttpClient();
