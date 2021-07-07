@@ -27,7 +27,12 @@ public class LocalDateTimePractice {
         //secondOrMill();
         //localSwitchString();
         //duration();
-        secondOrMill();
+        //secondOrMill();
+        LocalDateTime localDateTime = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
+        String yyyyMMddHHmmss = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        System.out.println(yyyyMMddHHmmss);
+        long l = localDateTime.toEpochSecond(ZoneOffset.of("+8"));
+        System.out.println(l);
     }
 
     private static void duration(){

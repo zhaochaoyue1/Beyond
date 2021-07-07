@@ -35,6 +35,9 @@ public interface StudentDao
 	@Select("select * from student where name = #{name}")
 	Student getStudentByName(@Param("name") String name);
 
+	@Select("select * from student where name = #{name}")
+	List<Student> getStudentByNameList(@Param("name") String name);
+
 	/**
 	 * 查询
 	 * @param name

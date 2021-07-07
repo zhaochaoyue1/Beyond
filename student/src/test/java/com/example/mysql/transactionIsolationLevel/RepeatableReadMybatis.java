@@ -15,6 +15,8 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.annotation.Resource;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @description: 不可重复读
@@ -71,7 +73,7 @@ public class RepeatableReadMybatis {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Student student = Student.builder().name("赵超越").age(25).build();
+        Student student = Student.builder().name("zcy").age(1).build();
         studentDao.insert(student);
     }
 
@@ -80,14 +82,24 @@ public class RepeatableReadMybatis {
         //设置隔离级别 可重复读
         defaultTransactionDefinition.setIsolationLevel(transactionDefinition.ISOLATION_REPEATABLE_READ);
         TransactionStatus transaction = dataSourceTransactionManager.getTransaction(defaultTransactionDefinition);
-        Student s = studentDao.getStudentByName("赵超越");
+        try {
+            dataSourceTransactionManager.getDataSource().getConnection().setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        List<Student> s = studentDao.getStudentByNameList("zcy");
         System.out.println(JSONObject.toJSONString(s));
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Student s2 = studentDao.getStudentByName("赵超越");
+        List<Student> s2 = studentDao.getStudentByNameList("zcy");
         System.out.println(JSONObject.toJSONString(s2));
+        int zcy = studentDao.updateByName("zcy", 25);
+        System.out.println("修改数量："+ zcy);
+        List<Student> s3 = studentDao.getStudentByNameList("zcy");
+        System.out.println(JSONObject.toJSONString(s3));
+        dataSourceTransactionManager.commit(transaction);
     }
 }

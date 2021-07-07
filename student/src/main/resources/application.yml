@@ -1,7 +1,7 @@
 #������������
 server:
   #�˿�
-  port: 80
+  port: 8088
   #servlet:
     #context-path: /spring-basic
   #port: 80
@@ -15,7 +15,10 @@ logging:
     org.spring.springboot.dao: debug
 #Spring����
 spring:
-#  mvc:
+  mvc:
+    pathmatch:
+      use-suffix-pattern: true
+  #  mvc:
 #    view:
 #      prefix: /
 #      suffix: .jsp

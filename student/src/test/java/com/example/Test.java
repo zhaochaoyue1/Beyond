@@ -3,12 +3,14 @@ package com.example;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.concurrent.LinkedBlockingDeque;
+import java.util.stream.Stream;
 
 /**
  * description: Test
@@ -56,26 +58,291 @@ public class Test {
         //System.out.println(findMin(new int[]{1,2,3,4,5}));
         //System.out.println(findMinThree(new int[]{3, 3, 1, 3}));
         //System.out.println(rob(new int[]{3,30,34,5,9}));
-        System.out.println(strStr("mississippi","issip"));
+        //System.out.println(strStr("mississippi","issip"));
+        //System.out.println();
+        //romanToInt("III");
+        //findMaximumXOR(new int[]{1, 6,30});
+        reverseParentheses("(er(abcd)hs)");
+    }
+
+    int i, n;
+    String formula;
+
+    public String countOfAtoms(String formula) {
+        this.i = 0;
+        this.n = formula.length();
+        this.formula = formula;
+
+        Deque<Map<String, Integer>> stack = new LinkedList<Map<String, Integer>>();
+        stack.push(new HashMap<String, Integer>());
+        while (i < n) {
+            char ch = formula.charAt(i);
+            if (ch == '(') {
+                i++;
+                stack.push(new HashMap<String, Integer>()); // 将一个空的哈希表压入栈中，准备统计括号内的原子数量
+            } else if (ch == ')') {
+                i++;
+                int num = parseNum(); // 括号右侧数字
+                Map<String, Integer> popMap = stack.pop(); // 弹出括号内的原子数量
+                Map<String, Integer> topMap = stack.peek();
+                for (Map.Entry<String, Integer> entry : popMap.entrySet()) {
+                    String atom = entry.getKey();
+                    int v = entry.getValue();
+                    topMap.put(atom, topMap.getOrDefault(atom, 0) + v * num); // 将括号内的原子数量乘上 num，加到上一层的原子数量中
+                }
+            } else {
+                String atom = parseAtom();
+                int num = parseNum();
+                Map<String, Integer> topMap = stack.peek();
+                topMap.put(atom, topMap.getOrDefault(atom, 0) + num); // 统计原子数量
+            }
+        }
+
+        Map<String, Integer> map = stack.pop();
+        TreeMap<String, Integer> treeMap = new TreeMap<String, Integer>(map);
+
+        StringBuffer sb = new StringBuffer();
+        for (Map.Entry<String, Integer> entry : treeMap.entrySet()) {
+            String atom = entry.getKey();
+            int count = entry.getValue();
+            sb.append(atom);
+            if (count > 1) {
+                sb.append(count);
+            }
+        }
+        return sb.toString();
+    }
+
+    public String parseAtom() {
+        StringBuffer sb = new StringBuffer();
+        sb.append(formula.charAt(i++)); // 扫描首字母
+        while (i < n && Character.isLowerCase(formula.charAt(i))) {
+            sb.append(formula.charAt(i++)); // 扫描首字母后的小写字母
+        }
+        return sb.toString();
+    }
+
+    public int parseNum() {
+        if (i == n || !Character.isDigit(formula.charAt(i))) {
+            return 1; // 不是数字，视作 1
+        }
+        int num = 0;
+        while (i < n && Character.isDigit(formula.charAt(i))) {
+            num = num * 10 + formula.charAt(i++) - '0'; // 扫描数字
+        }
+        return num;
+    }
+
+    public int[] array(int[] arr1, int[] arr2) {
+        int length1 = arr1.length;
+        int length2 = arr2.length;
+        if (length1 == 0) {
+            return arr2;
+        }
+        if (length2 == 0) {
+            return arr1;
+        }
+        int length3 = length1 + length2;
+        int[] arr3 = new int[length3];
+        int index1 = 0;
+        int index2 = 0;
+        for (int i = 0; i < length3; i++) {
+            if (arr1[index1] > arr2[index2]) {
+                arr3[i] = arr2[index2];
+                index2++;
+                if (index2 == length2) {
+                    for (int j = i + 1; j < length3; j++) {
+                        arr3[j] = arr1[index1];
+                        index1++;
+                    }
+                    return arr3;
+                }
+            } else {
+                arr3[i] = arr1[index1];
+                index1++;
+                if (index1 == length1) {
+                    for (int j = i + 1; j < length3; j++) {
+                        arr3[j] = arr2[index2];
+                        index2++;
+                    }
+                    return arr3;
+                }
+            }
+        }
+        return arr3;
+    }
+
+    public static String reverseParentheses(String s) {
+        Deque<String> stack = new LinkedList<String>();
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch == '(') {
+                stack.push(sb.toString());
+                sb.setLength(0);
+            } else if (ch == ')') {
+                sb.reverse();
+                sb.insert(0, stack.pop());
+            } else {
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
+    }
+
+    // 最高位的二进制位编号为 30
+    static final int HIGH_BIT = 30;
+
+    public static int findMaximumXOR(int[] nums) {
+        int res = 0;
+        int mask = 0;
+        for (int i = HIGH_BIT; i >= 0; i--) {
+            mask = mask | (1 << i);
+            Set<Integer> set = new HashSet<>();
+            for (int num : nums) {
+                //获取高位
+                set.add(num & mask);
+            }
+            //如果当前第i位为1时，就是目标最大值
+            int targetMax = res | (1 << i);
+            for (Integer prefix : set) {
+                //最大目标值，异或已有前缀，获得另一个一个前缀temp
+                int temp = prefix ^ targetMax;
+                //set集合里如果有和前缀异或等于1的可以获取当前位
+                //是否存在另一个前缀
+                if (set.contains(temp)) {
+                    res = targetMax;
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+
+
+    public static int romanToInt(String s) {
+        Map<String, Integer> map = new HashMap(32);
+        map.put("M", 1000);
+        map.put("CM", 900);
+        map.put("D", 500);
+        map.put("CD", 400);
+        map.put("C", 100);
+        map.put("XC", 90);
+        map.put("L", 50);
+        map.put("XL", 40);
+        map.put("X", 10);
+        map.put("IX", 9);
+        map.put("V", 5);
+        map.put("IV", 4);
+        map.put("I", 1);
+        int num = 0;
+        int lenght = s.length();
+        for (int i = 0; i < lenght; i++) {
+            if (i + 1 < lenght) {
+                String key = s.substring(i, i + 2);
+                if (map.containsKey(key)) {
+                    num += map.get(key);
+                    i += 1;
+                    continue;
+                }
+            }
+            num += map.get(s.substring(i, i + 1));
+        }
+        return num;
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/frog-jump/solution/qing-wa-guo-he-by-leetcode-solution-mbuo/
+     * title:青蛙过河
+     *
+     * @param stones
+     * @return
+     */
+    public static boolean canCross(int[] stones) {
+        int n = stones.length;
+        boolean[][] dp = new boolean[n][n];
+        dp[0][0] = true;
+        for (int i = 1; i < n; ++i) {
+            if (stones[i] - stones[i - 1] > i) {
+                return false;
+            }
+        }
+        HashMap<Object, Object> map = Maps.newHashMap();
+        for (int i = 1; i < n; ++i) {
+            for (int j = i - 1; j >= 0; --j) {
+                int k = stones[i] - stones[j];
+                if (k > j + 1) {
+                    break;
+                }
+                dp[i][k] = dp[j][k - 1] || dp[j][k] || dp[j][k + 1];
+                if (i == n - 1 && dp[i][k]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    public static int shipWithinDays(int[] weights, int D) {
+        int left = Arrays.stream(weights).max().getAsInt();
+        int right = Arrays.stream(weights).sum();
+        return 0;
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/implement-strstr/solution/shi-xian-strstr-by-leetcode-solution-ds6y/
+     *
+     * @param haystack
+     * @param needle
+     * @return
+     */
+    public static int strStrKmp(String haystack, String needle) {
+        int n = haystack.length(), m = needle.length();
+        if (m == 0) {
+            return 0;
+        }
+        int[] pi = new int[m];
+        for (int i = 1, j = 0; i < m; i++) {
+            while (j > 0 && needle.charAt(i) != needle.charAt(j)) {
+                j = pi[j - 1];
+            }
+            if (needle.charAt(i) == needle.charAt(j)) {
+                j++;
+            }
+            pi[i] = j;
+        }
+        for (int i = 0, j = 0; i < n; i++) {
+            while (j > 0 && haystack.charAt(i) != needle.charAt(j)) {
+                j = pi[j - 1];
+            }
+            if (haystack.charAt(i) == needle.charAt(j)) {
+                j++;
+            }
+            if (j == m) {
+                return i - m + 1;
+            }
+        }
+        return -1;
     }
 
     public static int strStr(String haystack, String needle) {
-        if(haystack.equals(needle)){
-            return 0 ;
-        }
-        if(haystack == ""){
-            return-1;
-        }
-        if(needle.equals("")){
+        if (haystack.equals(needle)) {
             return 0;
         }
-        for(int i = 0;i<haystack.length();i++){
-            if(haystack.charAt(i) == needle.charAt(0)&&haystack.length()-i>= needle.length()){
-                for(int j = 0;j<needle.length();j++){
-                    if(haystack.charAt(i+j)!=needle.charAt(j)){
+        if (haystack == "") {
+            return -1;
+        }
+        if (needle.equals("")) {
+            return 0;
+        }
+        for (int i = 0; i < haystack.length(); i++) {
+            if (haystack.charAt(i) == needle.charAt(0) && haystack.length() - i >= needle.length()) {
+                for (int j = 0; j < needle.length(); j++) {
+                    if (haystack.charAt(i + j) != needle.charAt(j)) {
                         break;
                     }
-                    if(j==needle.length()-1){
+                    if (j == needle.length() - 1) {
                         return i;
                     }
                 }
@@ -85,22 +352,22 @@ public class Test {
     }
 
 
-    public static int rob1(int[] nums){
+    public static int rob1(int[] nums) {
         int length = nums.length;
-        if(length == 1){
+        if (length == 1) {
             return nums[0];
-        }else if(length == 2){
-            return Math.max(nums[0],nums[1]);
-        }else {
-            return Math.max(rob2(nums,0,length-2),rob2(nums,1,length-1));
+        } else if (length == 2) {
+            return Math.max(nums[0], nums[1]);
+        } else {
+            return Math.max(rob2(nums, 0, length - 2), rob2(nums, 1, length - 1));
         }
     }
 
-    public static int rob2(int[] nums,int low,int high){
-        int first = nums[low], second = Math.max(nums[low],nums[low+1]);
-        for(int i=low+2;i<=high;i++){
+    public static int rob2(int[] nums, int low, int high) {
+        int first = nums[low], second = Math.max(nums[low], nums[low + 1]);
+        for (int i = low + 2; i <= high; i++) {
             int temp = second;
-            second = Math.max(first+nums[i],second);
+            second = Math.max(first + nums[i], second);
             first = second;
         }
         return second;

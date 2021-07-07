@@ -12,6 +12,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -126,14 +127,10 @@ public class Test2 {
         return true;
     }
     public static void main(String[] args) {
-        updateTaskNewPlanList();
-        UserInfo userInfo = new UserInfo();
-        userInfo.setOs(0);
-        userInfo.setAppVersion("1.0.0");
-        userInfo.setIsRestricted(true);
-        userInfo.setUserId(0L);
-        userInfo.setCreateTime(System.currentTimeMillis());
-        JSONObject dailyTaskList = getDailyTaskList(userInfo);
-        System.out.println(dailyTaskList);
+        HashMap<Object, Object> map = Maps.newHashMap();
+        for (int i = 0; i < 13; i++) {
+            map.put(i,i);
+        }
+        System.out.println();
     }
 }
