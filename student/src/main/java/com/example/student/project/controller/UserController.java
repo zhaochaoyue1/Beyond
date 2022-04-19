@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @GetMapping(value = "/user/{id}/{name}")
     public User user(@PathVariable(name = "id") Integer id, @PathVariable("name") String name){
+        try {
+            Thread.sleep(id);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return new User(id,name);
     }
 
