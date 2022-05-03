@@ -7,6 +7,8 @@ package com.example.annotation;
  * @version: 1.0
  */
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * 使用注解
  */
@@ -50,7 +52,9 @@ public class Apple {
 
     public static void main(String[] args) {
         Apple apple = new Apple();
+        System.out.println(JSONObject.toJSONString(apple));
         apple.setAppleName("zcyApple");
-        FruitInfoUtil.getFruitInfo(apple.getClass());
+        FruitInfoUtil.getFruitInfo(apple);
+        System.out.println(JSONObject.toJSONString(apple));
     }
 }

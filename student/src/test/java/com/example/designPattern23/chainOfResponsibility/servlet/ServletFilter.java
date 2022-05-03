@@ -7,5 +7,5 @@ package com.example.designPattern23.chainOfResponsibility.servlet;
  * @version: 1.0
  */
 public interface ServletFilter {
-    boolean doFilter(Request request,Response response,FilterChain filterChain);
+    boolean doFilter(Request request,Response response,FilterChain filterChain,int index);
 }

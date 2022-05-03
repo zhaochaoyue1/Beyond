@@ -85,7 +85,7 @@ class test6{
         //Test5 test5 = new Test5();
         new Thread(()->{
             for (int i = 0; i < 1000; i++) {
-                //++test5.a;
+                //++test5.com.example.spi.SpiInterface;
                 System.out.println("线程1：");
             }
 
@@ -93,7 +93,7 @@ class test6{
 
         new Thread(()->{
             for (int i = 0; i < 10; i++) {
-                //++test5.a;
+                //++test5.com.example.spi.SpiInterface;
                 System.out.println("线程2：");
             }
         }).start();

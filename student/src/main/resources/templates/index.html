@@ -1,9 +1,21 @@
-<html>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Insert title here</title>
 </head>
+<script type = "text/javascript">
+    alert("test")
+</script>
+<script th:inline="javascript" >
+    window.load();
+    console.log("zcy")
+   //console.log($("#staff_name2").val());
+</script>
 <body>
     <h1>哈啊哈哈</h1>
+    <input type="" th:value='${msg}' id="staff_name2"/>
+    <!--/*@thymesVar id="msg2" type=""*/-->
+    <input type="" th:value='${msg2}' id="staff_name3"/>
 </body>
 </html>

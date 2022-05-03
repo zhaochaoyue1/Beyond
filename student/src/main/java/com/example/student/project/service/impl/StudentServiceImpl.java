@@ -24,6 +24,6 @@ public class StudentServiceImpl implements StudentService {
             e.printStackTrace();
         }
         Student zcy = Student.builder().age(age).id((long) age).name("zcy").build();
-        studentDao.insert(zcy);
+        //studentDao.insert(zcy);
     }
 }

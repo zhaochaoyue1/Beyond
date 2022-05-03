@@ -28,6 +28,20 @@ public class PreorderTraversal {
         System.out.println(JSONObject.toJSONString(list2));
     }
 
+    public static void preorderTraversalNotRecursion2(List<Object> list, TreeNode treeNode) {
+        Stack<TreeNode> stack = new Stack<>();
+        while(!stack.isEmpty() || treeNode != null){
+            while(treeNode !=null){
+                list.add(treeNode.data);
+                stack.push(treeNode);
+                treeNode = treeNode.leftNode;
+            }
+            if(!stack.isEmpty()){
+                treeNode = stack.pop();
+                treeNode = treeNode.rightNode;
+            }
+        }
+    }
     /**
      * 前序非递归遍历
      *
@@ -63,6 +77,22 @@ public class PreorderTraversal {
         if (treeNode.rightNode != null) {
             preorderTraversalRecursion(list, treeNode.rightNode);
         }
+    }
+
+    /**
+     * 将数组转换成二叉树
+     */
+    public static TreeNode tree(List<Integer> list,TreeNode treeNode){
+        if(treeNode == null){
+            treeNode = new TreeNode(null);
+        }
+        Stack<Integer> stack = new Stack<>();
+        list.forEach(s->{
+            if(s == null){
+
+            }
+        });
+        return null;
     }
 
 

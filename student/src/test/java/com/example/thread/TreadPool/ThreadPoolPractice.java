@@ -16,7 +16,7 @@ import java.util.concurrent.*;
  *
  *
  * <p>
- * Executor 框架是Java5之后引进的，在Java5之后，通过Executor 来启动线程比使用Thread的start方法更好，除2了
+ * Executor 框架是Java5之后引进的，在Java5之后，通过Executor 来启动线程比使用Thread的start方法更好，除了
  * 更容易管理，效率更好（用线程池实现，节约开销）外，还有关键的一点：有助于避免this逃逸问题。
  * 补充: this逃逸是指在构造函数返回之前其他线程就持有该对象的应用，调用尚未构造完全的对象的方法可能引发令人疑惑的错误
  * <p>
@@ -69,7 +69,7 @@ import java.util.concurrent.*;
  * <p>
  * 2.2 execute() vs submit()
  * execute() 方法用于提交不需要返回值的任务，所以无法判断任务是否被线程池执行成功与否
- * submit() 方法用于提交需要返回指的任务。线程池会返回一个Future类型的对象，通过这个Future 对象可以判断任务是否执行成功，
+ * submit() 方法用于提交需要返回值的任务。线程池会返回一个Future类型的对象，通过这个Future 对象可以判断任务是否执行成功，
  * 并且可以通过Future 的get()方法来获取返回值，get()方法会阻塞当前线程直到任务完成，而使用get(long timeout,TimeUnit unit)方法则会阻塞当前线程一段
  * 时间后立即返回，这时候有可能任务没有执行完。
  * <p>

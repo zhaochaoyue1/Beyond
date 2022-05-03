@@ -4,6 +4,39 @@ import java.io.*;
 
 public class ReadAndWriteCharToFile {
     public static void main(String[] args) {
+        //readAndWriteCharToFile();
+        practice();
+    }
+
+    public static void practice(){
+        String input = "/Users/coohua/Downloads/激活码.txt";
+        String output ="/Users/coohua/Downloads/激活码3.txt";
+        Reader reader = null;
+        Writer writer = null;
+        try {
+            File file = new File(input);
+            reader = new FileReader(file);
+            writer = new FileWriter(output);
+            char[] chars = new char[1024];
+            int len = 0;
+            while ((len = reader.read(chars))>0){
+                writer.write(chars,0,len);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                writer.close();
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
+    public static void readAndWriteCharToFile() {
         Reader reader = null;
         Writer writer = null;
         try {

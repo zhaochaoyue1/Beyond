@@ -3,11 +3,22 @@ package com.example;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.example.designPattern23.strategyPattern.Sort;
+import com.example.student.Student;
+import com.example.student.project.service.ProxyService;
+import com.example.student.project.service.StudentService;
+import com.example.student.project.service.impl.StudentServiceImpl;
 import com.google.common.collect.Maps;
 import lombok.Builder;
 import lombok.Data;
+import org.assertj.core.util.Lists;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.util.CollectionUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.stream.Stream;
@@ -22,7 +33,7 @@ public class Test {
     private static int[] weight = {8, 5, 3, 2};
     private static int[] value = {5, 5, 4, 6};
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
         int c = 13;
         int i = weight.length - 1;
         //int[] b = {1,17,5,10,13,15,10,5,16,8};
@@ -49,7 +60,7 @@ public class Test {
         //System.out.println(cal("1000/3+5 + 9 / 3"));;
         //System.out.println(isValidSerialization("1,#,2"));
         //System.out.println(JSONObject.toJSONString(generateMatrix4(3)));
-        //System.out.println(numDistinct("  a"," a"));
+        //System.out.println(numDistinct("  com.example.spi.SpiInterface"," com.example.spi.SpiInterface"));
         //System.out.println(evalRPN(new String[]{"4", "13", "5", "/", "+"}));
         //subsetsWithDup(new int[]{1,2});
         //System.out.println(trap(new int[]{1, 3, 1, 5, 6, 7, 8}));
@@ -62,7 +73,870 @@ public class Test {
         //System.out.println();
         //romanToInt("III");
         //findMaximumXOR(new int[]{1, 6,30});
-        reverseParentheses("(er(abcd)hs)");
+        //reverseParentheses("(er(abcd)hs)");
+        //int[][] ints = {{2, 9, 10}, {2, 7, 15}, {2, 12, 12}, {15, 20, 10}, {19, 24, 8}};
+        //int[][] ints1 = {{4, 6, 4}, {2, 3, 1}, {2, 5, 2}, {3, 4, 3}, {4, 5, 2}};
+        //int[][] ints2 = {{2, 3, 6}, {2, 4, 7}};
+        //System.out.println(JSONObject.toJSONString(getSkyline3(ints1)));
+        ;
+        //priorityQueue();
+        //int maximumGenerated = getMaximumGenerated(10);
+        ///longestPalindrome("1111");
+        //findMaximizedCapital(2,4,new int[]{2,2,3,7},new int[]{4,4,4,5});
+        //getRpn("3+(5*6)-8");
+        //int tilt = findTilt(treeNode);
+        /*List<Integer> list = Lists.newArrayList();
+        list.add(4);
+        list.add(3);
+        list.add(5);
+        list.add(4);
+        Collections.sort(list,((o1, o2) -> {
+            int i1 = o2.compareTo(o1);
+            if(i1 !=0){
+                return i1;
+            }
+            return o2-o1;
+        }));
+        System.out.println(JSONObject.toJSONString(list));*/
+        //System.out.println(divide(-2147483648,-1));
+        //int[] nums1 = {3,8,10},nums2={5,8,10,7,2,3,4};
+        //System.out.println(JSONObject.toJSONString(nextGreaterElement(nums1,nums2)));
+        //System.out.println(removeInvalidParentheses("()())()"));
+        //test("");
+
+        //System.out.println(shortestCompletingWord("1s3 PSt", new String[]{"step","steps","stripe","stepple"}));
+        //System.out.println(findRadius2(new int[]{3,5,6,7,8,9,11,12},new int[]{5,11,12}));;
+        //repeatedStringMatch("abcd","cdabcd");
+        //pushDominoes(".L.R...LR..L..");
+        //maximumRequests2(5,new int[][]{{0,1},{1,0},{0,1},{1,2},{2,0},{3,4}});
+        //new CountHighest().countHighestScoreNodes(new int[]{-1,2,0,2,0});
+        System.out.println(LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli());
+        System.out.println(new Date().getTime());
+    }
+
+    static class CountHighest{
+        long maxScore = 0;
+        int cnt = 0;
+        int n;
+        List<Integer>[] children;
+
+        public int countHighestScoreNodes(int[] parents) {
+            n = parents.length;
+            children = new List[n];
+            for (int i = 0; i < n; i++) {
+                children[i] = new ArrayList<Integer>();
+            }
+            for (int i = 0; i < n; i++) {
+                int p = parents[i];
+                if (p != -1) {
+                    children[p].add(i);
+                }
+            }
+            dfs(0);
+            return cnt;
+        }
+
+        public int dfs(int node) {
+            long score = 1;
+            int size = n - 1;
+            for (int c : children[node]) {
+                int t = dfs(c);
+                score *= t;
+                size -= t;
+            }
+            if (node != 0) {
+                score *= size;
+            }
+            if (score == maxScore) {
+                cnt++;
+            } else if (score > maxScore) {
+                maxScore = score;
+                cnt = 1;
+            }
+            return n - size;
+        }
+    }
+
+    public String convert(String s, int numRows) {
+        int length = s.length();
+        int n = (numRows-1)*2;
+        int col = length / n + length % n > 0 ? 1 : 0;
+
+        return null;
+    }
+
+    /**
+     * 链接：https://leetcode-cn.com/problems/maximum-number-of-achievable-transfer-requests/solution/202202280859-mei-ri-yi-ti-java-hui-su-by-ltao/
+     * @param n
+     * @param requests
+     * @return
+     */
+    public static int maximumRequests2(int n, int[][] requests) {
+        return dfs(new int[n], requests, 0, 0);
+    }
+
+    // 可选选项：requests[cur]
+    // 当前状态：count
+    // 结束条件：cur >= requests.length
+    // 更新结果：isAcceptable(count) == true
+    private static int dfs(int[] count, int[][] requests, int cur, int chosen) {
+        // 到达结束条件
+        if (cur >= requests.length) {
+            if (isAcceptable(count)) {
+                return chosen;
+            }
+            return 0;
+        }
+
+        // 不接受 request[cur]
+        int ret = dfs(count, requests, cur + 1, chosen);
+
+        // 接受 request[cur]
+        count[requests[cur][0]] -= 1;
+        count[requests[cur][1]] += 1;
+        ret = Math.max(ret, dfs(count, requests, cur + 1, chosen + 1));
+        count[requests[cur][1]] -= 1;
+        count[requests[cur][0]] += 1;
+
+        return ret;
+    }
+
+    private static boolean isAcceptable(int[] cnt) {
+        for (int c : cnt) {
+            if (c != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+    public int maximumRequests(int n, int[][] requests) {
+        int[] delta = new int[n];
+        int ans = 0, m = requests.length;
+        for (int mask = 0; mask < (1 << m); ++mask) {
+            int cnt = Integer.bitCount(mask);
+            if (cnt <= ans) {
+                continue;
+            }
+            Arrays.fill(delta, 0);
+            for (int i = 0; i < m; ++i) {
+                if ((mask & (1 << i)) != 0) {
+                    ++delta[requests[i][0]];
+                    --delta[requests[i][1]];
+                }
+            }
+            boolean flag = true;
+            for (int x : delta) {
+                if (x != 0) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) {
+                ans = cnt;
+            }
+        }
+        return ans;
+    }
+
+    public int maximumDifference(int[] nums) {
+        int n = nums.length;
+        int ans = -1, premin = nums[0];
+        for (int i = 1; i < n; ++i) {
+            if (nums[i] > premin) {
+                ans = Math.max(ans, nums[i] - premin);
+            } else {
+                premin = nums[i];
+            }
+        }
+        return ans;
+    }
+
+    public static String pushDominoes(String dominoes) {
+        char[] s = dominoes.toCharArray();
+        int n = s.length, i = 0;
+        char left = 'L';
+        while (i < n) {
+            int j = i;
+            while (j < n && s[j] == '.') { // 找到一段连续的没有被推动的骨牌
+                j++;
+            }
+            char right = j < n ? s[j] : 'R';
+            if (left == right) { // 方向相同，那么这些竖立骨牌也会倒向同一方向
+                while (i < j) {
+                    s[i++] = right;
+                }
+            } else if (left == 'R' && right == 'L') { // 方向相对，那么就从两侧向中间倒
+                int k = j - 1;
+                while (i < k) {
+                    s[i++] = 'R';
+                    s[k--] = 'L';
+                }
+            }
+            left = right;
+            i = j + 1;
+        }
+        return new String(s);
+    }
+
+
+
+    /**
+     * leetcode-cn.com/problems/repeated-string-match/solution/zhong-fu-die-jia-zi-fu-chuan-pi-pei-by-l-vnye/
+     * @param a
+     * @param b
+     * @return
+     */
+    public static int repeatedStringMatch(String a, String b) {
+        int an = a.length(), bn = b.length();
+        int index = strStr2(a, b);
+        if (index == -1) {
+            return -1;
+        }
+        if (an - index >= bn) {
+            return 1;
+        }
+        return (bn + index - an - 1) / an + 2;
+    }
+
+    public static int strStr2(String haystack, String needle) {
+        int n = haystack.length(), m = needle.length();
+        if (m == 0) {
+            return 0;
+        }
+        int[] pi = new int[m];
+        for (int i = 1, j = 0; i < m; i++) {
+            while (j > 0 && needle.charAt(i) != needle.charAt(j)) {
+                j = pi[j - 1];
+            }
+            if (needle.charAt(i) == needle.charAt(j)) {
+                j++;
+            }
+            pi[i] = j;
+        }
+        for (int i = 0, j = 0; i - j < n; i++) { // b 开始匹配的位置是否超过第一个叠加的 com.example.spi.SpiInterface
+            while (j > 0 && haystack.charAt(i % n) != needle.charAt(j)) { // haystack 是循环叠加的字符串，所以取 i % n
+                j = pi[j - 1];
+            }
+            if (haystack.charAt(i % n) == needle.charAt(j)) {
+                j++;
+            }
+            if (j == m) {
+                return i - m + 1;
+            }
+        }
+        return -1;
+    }
+
+
+    /**
+     * TODO 很重要，很有用 可以散发都灌溉上
+     * 链接：https://leetcode-cn.com/problems/heaters/solution/gong-nuan-qi-by-leetcode-solution-rwui/
+     * findRadius2
+     * @return
+     */
+    public static int findRadius(int[] houses, int[] heaters) {
+        int ans = 0;
+        Arrays.sort(heaters);
+        for (int house : houses) {
+            int i = binarySearch2(heaters, house);
+            int j = i + 1;
+            int leftDistance = i < 0 ? Integer.MAX_VALUE : house - heaters[i];
+            int rightDistance = j >= heaters.length ? Integer.MAX_VALUE : heaters[j] - house;
+            int curDistance = Math.min(leftDistance, rightDistance);
+            ans = Math.max(ans, curDistance);
+        }
+        return ans;
+    }
+    public static int binarySearch2(int[] heaters, int house) {
+        int left = 0, right = heaters.length - 1;
+        if (heaters[left] > house) {
+            return -1;
+        }
+        while (left < right) {
+            int mid = (right - left + 1) / 2 + left;
+            if (heaters[mid] > house) {
+                right = mid - 1;
+            } else {
+                left = mid;
+            }
+        }
+        return left;
+    }
+
+    public static int findRadius2(int[] houses, int[] heaters) {
+        Arrays.sort(houses);
+        Arrays.sort(heaters);
+        int ans = 0;
+        for (int i = 0, j = 0; i < houses.length; i++) {
+            int curDistance = Math.abs(houses[i] - heaters[j]);
+            while (j < heaters.length - 1 && Math.abs(houses[i] - heaters[j]) >= Math.abs(houses[i] - heaters[j + 1])) {
+                j++;
+                curDistance = Math.min(curDistance, Math.abs(houses[i] - heaters[j]));
+            }
+            ans = Math.max(ans, curDistance);
+        }
+        return ans;
+    }
+
+
+    /**
+     * https://leetcode-cn.com/problems/shortest-completing-word/solution/zui-duan-bu-quan-ci-by-leetcode-solution-35pt/
+     * @param licensePlate
+     * @param words
+     * @return
+     */
+    public static String shortestCompletingWord(String licensePlate, String[] words) {
+        int[] cnt = new int[26];
+        for (int i = 0; i < licensePlate.length(); ++i) {
+            char ch = licensePlate.charAt(i);
+            if (Character.isLetter(ch)) {
+                ++cnt[Character.toLowerCase(ch) - 'a'];
+            }
+        }
+        int idx = -1;
+        for (int i = 0; i < words.length; ++i) {
+            int[] c = new int[26];
+            for (int j = 0; j < words[i].length(); ++j) {
+                char ch = words[i].charAt(j);
+                ++c[ch - 'a'];
+            }
+            boolean ok = true;
+            for (int j = 0; j < 26; ++j) {
+                if (c[j] < cnt[j]) {
+                    ok = false;
+                    break;
+                }
+            }
+            if (ok && (idx < 0 || words[i].length() < words[idx].length())) {
+                idx = i;
+            }
+        }
+        return words[idx];
+    }
+
+    public static void test(String s) {
+        System.out.println("jkdjfkwe".substring(1));
+        System.out.println(Math.pow(2,7));
+    }
+
+    public static List<String> removeInvalidParentheses(String s) {
+        List<String> ans = new ArrayList<String>();
+        Set<String> currSet = new HashSet<String>();
+
+        currSet.add(s);
+        while (true) {
+            for (String str : currSet) {
+                if (isValid(str)) {
+                    ans.add(str);
+                }
+            }
+            if (ans.size() > 0) {
+                return ans;
+            }
+            Set<String> nextSet = new HashSet<String>();
+            for (String str : currSet) {
+                for (int i = 0; i < str.length(); i ++) {
+                    if (i > 0 && str.charAt(i) == str.charAt(i - 1)) {
+                        continue;
+                    }
+                    if (str.charAt(i) == '(' || str.charAt(i) == ')') {
+                        nextSet.add(str.substring(0, i) + str.substring(i + 1));
+                    }
+                }
+            }
+            currSet = nextSet;
+        }
+    }
+
+    private static boolean isValid(String str) {
+        char[] ss = str.toCharArray();
+        int count = 0;
+
+        for (char c : ss) {
+            if (c == '(') {
+                count++;
+            } else if (c == ')') {
+                count--;
+                if (count < 0) {
+                    return false;
+                }
+            }
+        }
+
+        return count == 0;
+    }
+
+    /**
+     * 单调栈
+     * https://leetcode-cn.com/problems/next-greater-element-i/solution/xia-yi-ge-geng-da-yuan-su-i-by-leetcode-bfcoj/
+     * @return
+     */
+    public static int[] nextGreaterElement(int[] nums1, int[] nums2){
+        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        Stack<Integer> stack = new Stack<Integer>();
+        for(int i=0;i<nums2.length;i++){
+            while(!stack.isEmpty() && nums2[i] >= stack.peek()){
+                stack.pop();
+            }
+            map.put(nums2[i],stack.isEmpty() ? -1:stack.peek());
+            stack.push(nums2[i]);
+        }
+        for(int i = 0 ;i <nums1.length;i++){
+            nums1[i]=map.get(nums1[i]);
+        }
+        return nums1;
+    }
+
+    public static int divide(int dividend, int divisor) {
+
+        if(dividend == 0 ){
+            return 0;
+        }
+        if(dividend<0){
+            if(divisor <0){
+                return num(-dividend,-divisor);
+            }else{
+                return -num(-dividend,divisor);
+            }
+        }else{
+            if(divisor <0){
+                return -num(dividend,-divisor);
+            }else{
+                return num(dividend,divisor);
+            }
+        }
+    }
+
+    public static int num(int div,int dis){
+        int num = 0;
+        while(div>=dis){
+            num++;
+            div-=dis;
+        }
+        return num;
+    }
+
+
+    /*TreeNode treeNode = new TreeNode();
+    treeNode.val=4;
+    TreeNode left = new TreeNode();
+    left.val=2;
+    TreeNode right = new TreeNode();
+    right.val=9;
+    treeNode.right=right;
+    treeNode.left=left;
+
+    TreeNode leftLeft = new TreeNode();
+    leftLeft.val=3;
+    TreeNode leftRight = new TreeNode();
+    leftRight.val=5;
+    left.right=leftRight;
+    left.left=leftLeft;
+    TreeNode rightRight = new TreeNode();
+    rightRight.val=7;
+    right.right=rightRight;*/
+
+
+    public static int findTilt(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+
+        List<Integer> list = new ArrayList<>();
+        return root(root);
+    }
+
+    //root
+    public static int root(TreeNode root){
+        int result =0;
+        if(root.left!=null){
+            result+=root(root.left);
+        }
+        if (root.right!=null){
+            result+=root(root.right);
+        }
+        int right =0;
+        if(root.right!=null){
+            right=root.right.val;
+        }
+        int left = 0;
+        if(root.left!=null){
+            left = root.left.val;
+        }
+        root.val=root.val+right+left;
+        result+=Math.abs(right-left);
+        return result;
+    }
+
+
+    public static int root2(TreeNode root){
+        int left =0;
+        if(root.left!=null){
+            left=root3(root.left);
+        }
+        int right=0;
+        if(root.right!=null){
+            right=root3(root.right);
+        }
+        return Math.abs(left-right);
+    }
+    public static int root3(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+        int result = root.val;
+        if(root.left!=null){
+            result+=root3(root.left);
+        }
+        if(root.right!=null){
+            result+=root3(root.right);
+        }
+        return result;
+    }
+
+    public static List<String> getRpn(String str){
+        char[] chars = str.toCharArray();
+        List<String> ls = new ArrayList<>();
+        for (int i = 0; i < chars.length ; i++) {
+            ls.add(String.valueOf(chars[i]));
+        }
+
+
+        //符号栈
+        Stack<String> s1 = new Stack<>();
+        //结果
+        List<String> s2 = Lists.newArrayList();
+        for(String item: ls){
+            if(item.matches("\\d+")){
+                s2.add(item);
+            }else if("(".equals(item)){
+                s1.push(item);
+            }else if (")".equals(item)){
+                while(!s1.peek().equals("(")){
+                    s2.add(s1.pop());
+                }
+                s1.pop();
+            }else {
+                //while (s1.size()!=0&&Operation.getValue(s1.peek()) >= Operation.getValue(item))
+            }
+        }
+        while (s1.size() != 0 ){
+            s2.add(s1.pop());
+        }
+        return s2;
+    }
+
+
+
+    /**
+     *   链接：https://leetcode-cn.com/problems/ipo/solution/ipo-by-leetcode-solution-89zm/
+     * @return
+     */
+    public static int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
+        int n = profits.length;
+        int curr = 0;
+        int[][] arr = new int[n][2];
+
+        for (int i = 0; i < n; ++i) {
+            arr[i][0] = capital[i];
+            arr[i][1] = profits[i];
+        }
+        Arrays.sort(arr, (a, b) -> a[0] - b[0]);
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>((x, y) -> y - x);
+        for (int i = 0; i < k; ++i) {
+            while (curr < n && arr[curr][0] <= w) {
+                pq.add(arr[curr][1]);
+                curr++;
+            }
+            if (!pq.isEmpty()) {
+                w += pq.poll();
+            } else {
+                break;
+            }
+        }
+
+        return w;
+    }
+
+
+
+    public static String longestPalindrome(String s) {
+        int len = s.length();
+        if (len < 2) {
+            return s;
+        }
+
+        int maxLen = 1;
+        int begin = 0;
+        // dp[i][j] 表示 s[i..j] 是否是回文串
+        boolean[][] dp = new boolean[len][len];
+        // 初始化：所有长度为 1 的子串都是回文串
+        for (int i = 0; i < len; i++) {
+            dp[i][i] = true;
+        }
+
+        char[] charArray = s.toCharArray();
+        // 递推开始
+        // 先枚举子串长度
+        for (int L = 2; L <= len; L++) {
+            // 枚举左边界，左边界的上限设置可以宽松一些
+            for (int i = 0; i < len; i++) {
+                // 由 L 和 i 可以确定右边界，即 j - i + 1 = L 得
+                int j = L + i - 1;
+                // 如果右边界越界，就可以退出当前循环
+                if (j >= len) {
+                    break;
+                }
+
+                if (charArray[i] != charArray[j]) {
+                    dp[i][j] = false;
+                } else {
+                    if (j - i < 3) {
+                        dp[i][j] = true;
+                    } else {
+                        dp[i][j] = dp[i + 1][j - 1];
+                    }
+                }
+
+                // 只要 dp[i][L] == true 成立，就表示子串 s[i..L] 是回文，此时记录回文长度和起始位置
+                if (dp[i][j] && j - i + 1 > maxLen) {
+                    maxLen = j - i + 1;
+                    begin = i;
+                }
+            }
+        }
+        return s.substring(begin, begin + maxLen);
+    }
+
+
+
+    public static int getMaximumGenerated(int n) {
+        if(n == 0 || n==1){
+            return n;
+        }
+        List<Integer> list = new ArrayList<>();
+        list.add(0);
+        list.add(1);
+        for(int m=2;m<=n;m++){
+            
+            if( (m % 2) == 0){
+                list.add(list.get(m/2));
+                continue;
+            }
+            if(((m+1)%2)==0){
+                list.add(list.get((m-1)/2)+list.get((m+1)/2));
+                continue;
+            }
+        }
+        return Math.max(list.get(list.size()-1),list.get(list.size()-2));
+    }
+
+    public static int minAbsoluteSumDiff(int[] nums1, int[] nums2) {
+        int MOD = (int) (1e9) + 7;
+        int n = nums1.length;
+        int[] rec = new int[n];
+        System.arraycopy(nums1, 0, rec, 0, n);
+        Arrays.sort(rec);
+        int sum = 0, maxn = 0;
+        for (int i = 0; i < n; i++) {
+            int diff = Math.abs(nums1[i] - nums2[i]);
+            sum = (sum + diff) % MOD;
+            int j = binarySearch(rec, nums2[i]);
+            if (j < n) {
+                maxn = Math.max(maxn, diff - (rec[j] - nums2[i]));
+            }
+            if (j > 0) {
+                maxn = Math.max(maxn, diff - (nums2[i] - rec[j - 1]));
+            }
+        }
+        return (sum - maxn + MOD) % MOD;
+    }
+
+    private static int binarySearch(int[] rec, int target) {
+        int low = 0, high = rec.length - 1;
+        if (rec[high] < target) {
+            return high + 1;
+        }
+        while (low < high) {
+            int mid = (high - low) / 2 + low;
+            if (rec[mid] < target) {
+                low = mid + 1;
+            } else {
+                high = mid;
+            }
+        }
+        return low;
+    }
+
+
+    public static List<List<Integer>> getSkyline3(int[][] buildings) {
+        List<int[]> buildPoints = Lists.newArrayList();
+        //获取到所有横坐标
+        for (int[] a : buildings) {
+            buildPoints.add(new int[]{a[0], -a[2]});
+            buildPoints.add(new int[]{a[1], a[2]});
+        }
+        //横坐标升序排列，横坐标相等时纵坐标升序
+        buildPoints.sort((a, b) -> {
+            if (a[0] != b[0]) {
+                return a[0] - b[0];
+            } else {
+                return a[1] - b[1];
+            }
+        });
+        //最大的优先队列
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Comparator.reverseOrder());
+        //最后获得的最大坐标，起始是0
+        pq.offer(0);
+        //存储延迟处理的高度
+        Map<Integer, Integer> maps = Maps.newHashMap();
+        //最后的高度
+        int lastHigh = 0;
+        List<List<Integer>> res = Lists.newArrayList();
+
+        for (int[] a : buildPoints) {
+            if (a[1] < 0) {
+                pq.offer(-a[1]);
+            } else {
+                maps.merge(a[1], 1, Integer::sum);
+            }
+            while (!pq.isEmpty()) {
+                Integer peek = pq.peek();
+                if (maps.containsKey(peek)) {
+                    pq.poll();
+                    if (maps.merge(peek, -1, Integer::sum) == 0) {
+                        maps.remove(peek);
+                    }
+                } else {
+                    break;
+                }
+            }
+            Integer peek = pq.peek();
+            //有高度差记录
+            if (peek != lastHigh) {
+                // 正在扫过的左端点的值
+                res.add(Arrays.asList(a[0], peek));
+                //当前高度成为计算高度差的标准
+                lastHigh = peek;
+            }
+        }
+        return res;
+    }
+
+    /**
+     * https://leetcode-cn.com/problems/the-skyline-problem/solution/you-xian-dui-lie-java-by-liweiwei1419-jdb5/
+     *
+     * @param buildings
+     * @return
+     */
+    public static List<List<Integer>> getSkyline2(int[][] buildings) {
+        // 第 1 步：预处理
+        List<int[]> buildingPoints = new ArrayList<>();
+        for (int[] b : buildings) {
+            // 负号表示左边高度的转折点
+            buildingPoints.add(new int[]{b[0], -b[2]});
+            buildingPoints.add(new int[]{b[1], b[2]});
+        }
+
+        // 第 2 步：按照横坐标排序，横坐标相同的时候，高度高的在前面
+        buildingPoints.sort((a, b) -> {
+            if (a[0] != b[0]) {
+                return a[0] - b[0];
+            } else {
+                // 注意：这里因为左端点传进去的时候，数值是负的，在比较的时候还按照升序排序
+                return a[1] - b[1];
+            }
+        });
+
+        // 第 3 步：扫描一遍动态计算出结果
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+        // 哈希表，记录「延迟删除」的元素，key 为元素，value 为需要删除的次数
+        Map<Integer, Integer> delayed = new HashMap<>();
+
+        // 最开始的时候，需要产生高度差，所以需要加上一个高度为 0，宽度为 0 的矩形
+        maxHeap.offer(0);
+        // 为了计算高度差，需要保存之前最高的高度
+        int lastHeight = 0;
+        List<List<Integer>> res = new ArrayList<>();
+        for (int[] buildingPoint : buildingPoints) {
+            if (buildingPoint[1] < 0) {
+                // 说明此时是「从下到上」，纵坐标参与选拔最大值，请见「规则 1」
+                maxHeap.offer(-buildingPoint[1]);
+            } else {
+                // 不是真的删除 buildingPoint[1]，把它放进 delayed，等到堆顶元素是 buildingPoint[1] 的时候，才真的删除
+                delayed.merge(buildingPoint[1], 1, Integer::sum);
+            }
+
+            // 如果堆顶元素在延迟删除集合中，才真正删除，这一步可能执行多次，所以放在 while 中
+            // while (true) 都是可以的，因为 maxHeap 一定不会为空
+            while (!maxHeap.isEmpty()) {
+                int curHeight = maxHeap.peek();
+                if (delayed.containsKey(curHeight)) {
+                    delayed.put(curHeight, delayed.get(curHeight) - 1);
+                    if (delayed.get(curHeight) == 0) {
+                        delayed.remove(curHeight);
+                    }
+                    maxHeap.poll();
+                } else {
+                    break;
+                }
+            }
+
+            int curHeight = maxHeap.peek();
+            // 有高度差，才有关键点出现
+            if (curHeight != lastHeight) {
+                // 正在扫过的左端点的值
+                res.add(Arrays.asList(buildingPoint[0], curHeight));
+                // 当前高度成为计算高度差的标准
+                lastHeight = curHeight;
+            }
+        }
+        return res;
+    }
+
+    public static void priorityQueue() {
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
+        Random random = new Random();
+        for (int i = 0; i < 10; i++) {
+            pq.offer(random.nextInt(100));
+        }
+        while (!pq.isEmpty()) {
+            Integer peek = pq.peek();
+            System.out.println(pq.poll());
+
+        }
+    }
+
+    public static List<List<Integer>> getSkyline(int[][] buildings) {
+        PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> b[1] - a[1]);
+        List<Integer> boundaries = new ArrayList<Integer>();
+        for (int[] building : buildings) {
+            boundaries.add(building[0]);
+            boundaries.add(building[1]);
+        }
+        Collections.sort(boundaries);
+
+        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+        int n = buildings.length, idx = 0;
+        for (int boundary : boundaries) {
+            while (idx < n && buildings[idx][0] <= boundary) {
+                pq.offer(new int[]{buildings[idx][1], buildings[idx][2]});
+                idx++;
+            }
+            while (!pq.isEmpty() && pq.peek()[0] <= boundary) {
+                pq.poll();
+            }
+
+            int maxn = pq.isEmpty() ? 0 : pq.peek()[1];
+            if (ret.size() == 0 || maxn != ret.get(ret.size() - 1).get(1)) {
+                ret.add(Arrays.asList(boundary, maxn));
+            }
+        }
+        return ret;
     }
 
     int i, n;
@@ -1164,7 +2038,7 @@ public class Test {
         return -1;
     }
 
-    class TreeNode {
+    static class TreeNode {
         /**
          * 节点数据
          */
@@ -1177,6 +2051,24 @@ public class Test {
          * 当前节点的右子节点
          */
         public TreeNode right;
+    }
+
+    public static TreeNode setTreeNode(int rootIndex,List<Integer> list){
+        if (rootIndex >= list.size()) {
+            return null;
+        }
+        TreeNode rootNode = new TreeNode();
+        if(list.get(rootIndex)==null){
+            return null;
+        }
+        rootNode.val = list.get(rootIndex);
+        rootNode.left = setTreeNode(2 * rootIndex + 1, list);
+        rootNode.right = setTreeNode(2 * rootIndex + 2, list);
+        return rootNode;
+    }
+
+    public static List<String> setList(TreeNode treeNode){
+        return null;
     }
 
     public static List<List<Integer>> zigzagLevelOrder(TreeNode root) {

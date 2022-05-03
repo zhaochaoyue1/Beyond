@@ -24,11 +24,11 @@ public class TestStatic {
 //        int i = test1(1);
 //        System.out.println("------------------------"+i);
         //Integer b = 128;
-        //Integer a= 128;
-//        Integer a = new Integer(128);
+        //Integer com.example.spi.SpiInterface= 128;
+//        Integer com.example.spi.SpiInterface = new Integer(128);
 //        //Integer b=new Integer(100);
 //        Integer b=128;
-//        if (a==b){
+//        if (com.example.spi.SpiInterface==b){
 //            System.out.println("正确");
 //        }else{
 //            System.out.println("不正确");

@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
+Premain-Class: com.example.instrumentation.PerfMonAgent
+Agentmain-Class: com.example.instrumentation.PerfMonAgent
+Main-Class: com.example.instrumentation.App

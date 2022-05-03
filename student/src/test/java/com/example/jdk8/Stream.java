@@ -1,6 +1,7 @@
 package com.example.jdk8;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.student.Student;
 import org.assertj.core.util.Lists;
 
@@ -22,6 +23,8 @@ public class Stream {
                     .build();
             students.add(student);
         }
+        students.sort(Comparator.comparing(Student::getAge).reversed());
+        System.out.println(JSONObject.toJSONString(students));
         //按年纪分组
         //Map<String, List<Student>> collect = students.stream().collect(Collectors.groupingBy(student -> get(student.getAge())));
         //按年纪分组

@@ -16,10 +16,12 @@ public class SubscribeConsumer {
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("example_group_name");
         consumer.setNamesrvAddr("localhost:9876");
         consumer.subscribe("TopicTestjjj", "TagA");
+        //CLUSTERING 集群模式 broadCasting 广播消费
         consumer.setMessageModel(MessageModel.CLUSTERING);
         consumer.registerMessageListener(new MessageListenerOrderly() {
             AtomicLong consumeTime = new AtomicLong(0);
 
+            //消费顺序有两种：ConsumeOrderlyStatus:顺序消费 ConsumeConcurrentlyStatus:并行消费
             @Override
             public ConsumeOrderlyStatus consumeMessage(List<MessageExt> msgs, ConsumeOrderlyContext context) {
                 context.setAutoCommit(true);

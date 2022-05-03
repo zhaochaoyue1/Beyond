@@ -12,17 +12,16 @@ import java.util.List;
  */
 public class FilterChain {
     List<ServletFilter> filters = Lists.newArrayList();
-    int index = 0;
 
     public FilterChain add(ServletFilter servletFilter) {
         filters.add(servletFilter);
         return this;
     }
 
-    public boolean doFilter(Request request, Response response) {
+    public boolean doFilter(Request request, Response response,int index) {
         if (index == filters.size()) return false;
         ServletFilter servletFilter = filters.get(index);
         index++;
-        return servletFilter.doFilter(request, response, this);
+        return servletFilter.doFilter(request, response, this, index);
     }
 }

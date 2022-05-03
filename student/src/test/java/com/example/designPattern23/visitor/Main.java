@@ -14,12 +14,12 @@ public class Main {
 
         accountBook.addBill(new ConsumeBill(10,"工资"));
         accountBook.addBill(new ConsumeBill(20,"材料费"));
-        AccountBookViewer boss = new Boss();
-        AccountBookViewer cpa = new CPA();
+        Boss boss = new Boss();
+        CPA cpa = new CPA();
 
         accountBook.show(boss);
         accountBook.show(cpa);
 
-        ((Boss)boss).getTotalConsume();
+        boss.getTotalConsume();
     }
 }

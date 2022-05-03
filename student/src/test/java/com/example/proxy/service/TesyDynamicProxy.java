@@ -4,6 +4,10 @@ import com.example.proxy.service.impl.AdminServiceImpl;
 
 import java.lang.reflect.Proxy;
 
+/**
+ * jdk 动态代理： 其代理对象必须是某个接口的实现，它是通过在运行期间创建一个接口的实现
+ * 类来完成对目标对象的代理
+ */
 public class TesyDynamicProxy {
     public static void main(String[] args) {
         AdminService adminService = new AdminServiceImpl();

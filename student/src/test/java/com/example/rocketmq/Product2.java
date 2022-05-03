@@ -1,5 +1,6 @@
 package com.example.rocketmq;
 
+import com.example.student.util.DateTimeUtils;
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.*;
@@ -63,9 +64,12 @@ public class Product2 {
     public static void main(String[] args) throws MQClientException {
         DefaultMQProducer producer = new DefaultMQProducer(GROUP);
         producer.setNamesrvAddr(ADDR);
-        Message message = new Message(TOPIC, TAG, "hello world".getBytes());
+        String uuid = UUID.randomUUID().toString();
+        Message message = new Message(TOPIC, TAG,uuid, "hello world".getBytes());
         producer.start();
         try {
+            System.out.println(uuid);
+            System.out.println("time:" + DateTimeUtils.formatYYYYMMDDHHMMSS(new Date()));
             producer.send(message);
         } catch (MQClientException | RemotingException | MQBrokerException | InterruptedException e) {
             e.printStackTrace();
@@ -136,8 +140,8 @@ class OneProducer {
 
 //顺序发送
 class OrderProduct {
-    public final static String GROUP = "ORDER_TEST";
-    public final static String TOPIC = "ORDER_TEST_TOPIC";
+    public final static String GROUP = "GROUP_ONE";
+    public final static String TOPIC = "TOPIC_ONE";
     public static void main(String[] args) throws MQClientException {
         DefaultMQProducer producer = new DefaultMQProducer(GROUP);
         producer.setNamesrvAddr(Product2.ADDR);
@@ -145,12 +149,14 @@ class OrderProduct {
         String[] tags = new String[]{"A1","A2","A3"};
         List<OrderStep> orderList = new OrderProduct().buildOrder();
         String dateStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-mm-dd HH:mm:ss"));
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < orderList.size(); i++) {
             String body = dateStr + " hello RocketMq " + orderList.get(i);
-            Message msg = new Message(TOPIC, tags[i % tags.length], "KEY" + i, body.getBytes());
+            String uuid = UUID.randomUUID().toString();
+            Message msg = new Message(TOPIC, tags[i % tags.length], uuid + i, body.getBytes());
             try {
                 SendResult send = producer.send(msg, (mqs, message, arg) -> {
                     Long id = (Long) arg;//根据订单ID选择发送queue
+                    //System.out.println(id);
                     long index = id % mqs.size();
                     return mqs.get((int) index);
                 }, orderList.get(i).orderId);
@@ -201,16 +207,18 @@ class OrderProduct {
 
     private List<OrderStep> buildOrder() {
         List<OrderStep> orderList = new ArrayList<>();
-        orderList.add(new OrderStep(15103111039L, "创建"));
-        orderList.add(new OrderStep(15103111065L, "创建"));
-        orderList.add(new OrderStep(15103111039L, "付款"));
-        orderList.add(new OrderStep(15103117235L, "创建"));
-        orderList.add(new OrderStep(15103111065L, "付款"));
-        orderList.add(new OrderStep(15103117235L, "付款"));
-        orderList.add(new OrderStep(15103111065L, "完成"));
-        orderList.add(new OrderStep(15103111039L, "推送"));
-        orderList.add(new OrderStep(15103117235L, "完成"));
-        orderList.add(new OrderStep(15103111039L, "完成"));
+        orderList.add(new OrderStep(15103111061L, "创建"));
+        orderList.add(new OrderStep(15103111062L, "创建"));
+        orderList.add(new OrderStep(15103111063L, "创建"));
+        orderList.add(new OrderStep(15103111064L, "创建"));
+        orderList.add(new OrderStep(15103111064L, "付款"));
+        orderList.add(new OrderStep(15103111063L, "付款"));
+        orderList.add(new OrderStep(15103111062L, "付款"));
+        orderList.add(new OrderStep(15103111061L, "付款"));
+        orderList.add(new OrderStep(15103111061L, "完成"));
+        orderList.add(new OrderStep(15103111062L, "完成"));
+        orderList.add(new OrderStep(15103111063L, "完成"));
+        orderList.add(new OrderStep(15103111064L, "完成"));
         return orderList;
     }
 

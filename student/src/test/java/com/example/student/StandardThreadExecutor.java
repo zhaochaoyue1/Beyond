@@ -107,7 +107,7 @@ class ExecutorQueue extends LinkedTransferQueue<Runnable> {
     // 注：代码来源于 tomcat
     public boolean force(Runnable o) {
         if (threadPoolExecutor.isShutdown()) {
-            throw new RejectedExecutionException("Executor not running, can't force a command into the queue");
+            throw new RejectedExecutionException("Executor not running, can't force com.example.spi.SpiInterface command into the queue");
         }
         // forces the item onto the queue, to be used if the task is rejected
         return super.offer(o);
@@ -126,7 +126,7 @@ class ExecutorQueue extends LinkedTransferQueue<Runnable> {
         if (threadPoolExecutor.getSubmittedTasksCount() <= poolSize) {
             return super.offer(o);
         }
-        // if we have less threads than maximum force creation of a new
+        // if we have less threads than maximum force creation of com.example.spi.SpiInterface new
         // thread
         if (poolSize < threadPoolExecutor.getMaximumPoolSize()) {
             return false;

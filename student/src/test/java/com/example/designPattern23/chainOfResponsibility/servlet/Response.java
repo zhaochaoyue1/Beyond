@@ -10,5 +10,5 @@ import lombok.Data;
  */
 @Data
 public class Response {
-    private String str;
+    private StringBuilder str = new StringBuilder();
 }

@@ -92,8 +92,8 @@ public class StudentApplicationTests {
     @Test
     public void TestSolrLenove() {
         Query query = new SimpleQuery("*:*");
-        ScoredPage<ShortVedio> shortVedios = solrTemplate.queryForPage(query, ShortVedio.class);
-        System.out.println(JSON.toJSON(shortVedios));
+        //ScoredPage<ShortVedio> shortVedios = solrTemplate.queryForPage(query, ShortVedio.class);
+        //System.out.println(JSON.toJSON(shortVedios));
     }
 
     private static Logger log = LoggerFactory.getLogger(StudentApplicationTests.class);
@@ -335,9 +335,9 @@ public class StudentApplicationTests {
         }
 
         //查询子文件夹
-        /*for(File a:files){
-            if(a.isDirectory()){//如果文件夹下有子文件夹，获取子文件夹下的所有文件全路径。
-                getAllFileName(a.getAbsolutePath()+"\\");
+        /*for(File com.example.spi.SpiInterface:files){
+            if(com.example.spi.SpiInterface.isDirectory()){//如果文件夹下有子文件夹，获取子文件夹下的所有文件全路径。
+                getAllFileName(com.example.spi.SpiInterface.getAbsolutePath()+"\\");
             }
         }*/
     }

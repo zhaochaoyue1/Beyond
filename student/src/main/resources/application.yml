@@ -2,6 +2,7 @@
 server:
   #�˿�
   port: 8088
+  shutdown: graceful
   #servlet:
     #context-path: /spring-basic
   #port: 80
@@ -15,6 +16,8 @@ logging:
     org.spring.springboot.dao: debug
 #Spring����
 spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
   mvc:
     pathmatch:
       use-suffix-pattern: true
@@ -29,9 +32,16 @@ spring:
   thymeleaf:
     mode: LEGACYHTML5
     cache: false
-    prefix: classpath:/templates
+    prefix: classpath:/templates/
     suffix: .html
     encoding: UTF-8
+    check-template-location: true
+    servlet:
+      content-type: text/html
+    enabled: true
+  resources:
+    #static-locations: classpath:/static/,classpath:/view/,classpath:/public,classpath:/resources,classpath:/META-INF/resources
+
   messages:
     #���ʻ���Դ�ļ�·��
     basename: i18n/messages
@@ -52,3 +62,11 @@ mybatis:
   mapperLocations: classpath*:mybatis/*/*Mapper.xml
   # ����ȫ�ֵ������ļ�
   configLocation: classpath*:mybatis/mybatis-config.xml
+management:
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: shudown

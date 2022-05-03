@@ -11,9 +11,14 @@ import java.lang.reflect.Method;
  * cglib底层用的是asm
  */
 public class AdminServiceCglibProxy implements MethodInterceptor {
-private Object targetObject;
+    private Object targetObject;
+    private Object proxyObject;
 
-    public Object getProxy(Object obj){
+    public Object getProxy() {
+        return proxyObject;
+    }
+
+    public AdminServiceCglibProxy(Object obj){
         this.targetObject = obj;
         // 创建Enhancer对象(增强)
         Enhancer enhancer = new Enhancer();
@@ -21,13 +26,12 @@ private Object targetObject;
         enhancer.setSuperclass(obj.getClass());
         // 设置回调方法, this代表是当前类, 因为当前类实现了CallBack
         enhancer.setCallback(this);
-        return enhancer.create();
+        this.proxyObject = enhancer.create();
     }
 
 
     /**
-     *
-     * @param o 代理对象
+     * @param o           代理对象
      * @param method
      * @param objects
      * @param methodProxy

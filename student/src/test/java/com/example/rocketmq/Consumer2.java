@@ -1,7 +1,9 @@
 package com.example.rocketmq;
 
+import com.example.student.util.DateTimeUtils;
 import com.example.student.util.RandomUtil;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.client.consumer.MessageSelector;
 import org.apache.rocketmq.client.consumer.listener.*;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.client.producer.*;
@@ -12,6 +14,7 @@ import org.apache.rocketmq.common.protocol.heartbeat.MessageModel;
 import org.aspectj.weaver.ast.Or;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.*;
@@ -63,7 +66,62 @@ public class Consumer2 {
             try {
                 for (MessageExt messageExt : messageExts) {
                     String s = new String(messageExt.getBody(), StandardCharsets.UTF_8);
-                    System.out.println(s);
+                    System.out.println("time:" + DateTimeUtils.formatYYYYMMDDHHMMSS(new Date())+"message:"+s+" tag: "+messageExt.getTags());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return ConsumeOrderlyStatus.SUCCESS;
+        });
+        consumer.start();
+        System.out.println("consumer start");
+    }
+}
+
+class Practice{
+    private final static String GROUP_ONE="GROUP_ONE";
+    private final static String TOPIC_ONE = "TOPIC_ONE";
+    private final static String TAG = "*";
+    private final static String NAME_ADDR = "localhost:9876";
+
+    public static void main(String[] args) throws Exception{
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer();
+        consumer.setNamesrvAddr(NAME_ADDR);
+        consumer.setConsumerGroup(GROUP_ONE);
+        consumer.subscribe(TOPIC_ONE,TAG);
+        consumer.registerMessageListener((MessageListenerOrderly)(messageExts,context)->{
+            context.setAutoCommit(true);
+            try {
+                for (MessageExt msg:messageExts){
+                    String s = new String(msg.getBody(), StandardCharsets.UTF_8);
+                    System.out.println("time:" + DateTimeUtils.formatYYYYMMDDHHMMSS(new Date())+"message:"+s);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return ConsumeOrderlyStatus.SUCCESS;
+        });
+        consumer.start();
+        System.out.println("consumer start");
+    }
+}
+
+class Practice2{
+    private final static String GROUP_ONE="GROUP_ONE";
+    private final static String TOPIC_ONE = "TOPIC_ONE";
+    private final static String TAG = "*";
+    private final static String NAME_ADDR = "localhost:9876";
+
+    public static void main(String[] args) throws Exception{
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer();
+        consumer.setNamesrvAddr(NAME_ADDR);
+        consumer.setConsumerGroup(GROUP_ONE);
+        consumer.registerMessageListener((MessageListenerOrderly)(messageExts,context)->{
+            context.setAutoCommit(true);
+            try {
+                for (MessageExt msg:messageExts){
+                    String s = new String(msg.getBody(), StandardCharsets.UTF_8);
+                    System.out.println("time:" + DateTimeUtils.formatYYYYMMDDHHMMSS(new Date())+"message:"+s);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

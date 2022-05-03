@@ -1,5 +1,7 @@
 package com.example.jdk8;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.springframework.util.StopWatch;
 
 import java.time.*;
@@ -26,8 +28,11 @@ public class LocalDateTimePractice {
     public static void main(String[] args) {
         //secondOrMill();
         //localSwitchString();
-        //duration();
+        duration();
         //secondOrMill();
+        long l1 = Instant.ofEpochMilli(1639019610823L).atOffset(ZoneOffset.of("+8")).toLocalDateTime()
+                .withHour(0).withMinute(0).withSecond(0).withNano(0).toInstant(ZoneOffset.of("+8")).toEpochMilli();
+        System.out.println(l1);
         LocalDateTime localDateTime = LocalDateTime.now().withHour(0).withMinute(0).withSecond(0).withNano(0);
         String yyyyMMddHHmmss = localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         System.out.println(yyyyMMddHHmmss);
@@ -39,10 +44,9 @@ public class LocalDateTimePractice {
         LocalDate parse = LocalDate.parse("2020-12-01", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         LocalDate parse1 = LocalDate.parse("2020-12-03", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         Duration duration = Duration.ofDays(0);
-        long l = duration.between(parse, parse1).getSeconds();
-        System.out.println(l);
-
-
+        Days.daysBetween(new DateTime("2020-12-01"),new DateTime("2020-12-03"));
+        long l = duration.between(parse, parse1).toDays();
+        System.out.println(Days.daysBetween(new DateTime("2020-12-01"),new DateTime("2020-12-03")).getDays());
     }
 
     private static void localSwitchString(){

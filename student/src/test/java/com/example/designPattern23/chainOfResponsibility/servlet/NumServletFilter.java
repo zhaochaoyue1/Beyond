@@ -8,11 +8,13 @@ package com.example.designPattern23.chainOfResponsibility.servlet;
  */
 public class NumServletFilter implements ServletFilter {
     @Override
-    public boolean doFilter(Request request, Response response, FilterChain filterChain) {
+    public boolean doFilter(Request request, Response response, FilterChain filterChain,int index) {
         String replace = request.getStr().replace("996", "955");
         request.setStr(replace);
-        filterChain.doFilter(request, response);
-        response.setStr(response.getStr() + "--NumServletFilter");
+        response.getStr().append("startNumServletFilter--");
+        filterChain.doFilter(request, response,index);
+        String s = "endNumServletFilter--";
+        response.getStr().append(s);
         return true;
     }
 }

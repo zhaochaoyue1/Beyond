@@ -1,7 +1,9 @@
 package com.example.designPattern23.chainOfResponsibility.easyImpl;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * @description: ChainFilter
@@ -10,7 +12,7 @@ import java.util.List;
  * @version: 1.0
  */
 public class ChainFilter implements Filter {
-    List<Filter> list = new ArrayList<>();
+    Queue<Filter> list = new ArrayDeque<>();
 
     public ChainFilter add(Filter filter) {
         list.add(filter);
@@ -18,11 +20,18 @@ public class ChainFilter implements Filter {
     }
 
     public boolean doFilter(Msg m) {
-        for (Filter f : list) {
-            if (!f.doFilter(m)) {
+        while(!list.isEmpty()){
+            Filter poll = list.poll();
+            boolean b = poll.doFilter(m);
+            if(!b){
                 return false;
             }
         }
+        /*for (Filter f : list) {
+            if (!f.doFilter(m)) {
+                return false;
+            }
+        }*/
         return true;
     }
 

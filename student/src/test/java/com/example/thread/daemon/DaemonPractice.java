@@ -11,7 +11,31 @@ package com.example.thread.daemon;
 public class DaemonPractice {
     public static void main(String[] args) {
         //startDaemon();
-        stopDaemon();
+        //stopDaemon();
+        testDaemon();
+    }
+
+    public static void testDaemon(){
+        try {
+            Thread thread = new Thread(() -> {
+                Thread thread1 = new Thread(() -> {
+                    for (int i = 0; i < 1000; i++) {
+                        System.out.println(i);
+                    }
+                });
+                thread1.setDaemon(true);
+                thread1.start();
+                try {
+                    Thread.sleep(10);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }, "主线程中的父线程");
+            thread.start();
+            //Thread.sleep(5000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //开启守护线程

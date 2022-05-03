@@ -29,7 +29,7 @@ public class WeatherHttp {
         String string = okHttpClient.newCall(request).execute().body().string();
         Document document = Jsoup.parseBodyFragment(string);
         Element body = document.body();
-        Element et = body.select(".sample_time_content").select(".image_list").select("a").get(0);
+        Element et = body.select(".sample_time_content").select(".image_list").select("com.example.spi.SpiInterface").get(0);
         String href = et.attributes().get("href");
         String[] split = href.split("/");
         String md5 = split[3];

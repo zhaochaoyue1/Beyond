@@ -53,7 +53,9 @@ druid:
   redis:
     #host: 120.27.18.22
     host: 127.0.0.1
-    port: 6379
+    #host: yydxny-redis001.shinet-inc.com
+    #port: 6379
+    port: 9720
     password:
     # 连接超时时间（毫秒）
     timeout: 10000ms

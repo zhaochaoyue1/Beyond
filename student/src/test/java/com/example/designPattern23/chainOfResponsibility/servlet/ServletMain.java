@@ -16,12 +16,12 @@ public class ServletMain {
         Request request = new Request();
         request.setStr("他妈的，996，666");
         Response response = new Response();
-        response.setStr("response:");
+        response.getStr().append("response:");
 
         FilterChain filterChain = new FilterChain();
         filterChain.add(new ChinaServletFilter()).add(new NumServletFilter());
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(request, response,0);
         System.out.println(request.getStr());
-        System.out.println(response.getStr());
+        System.out.println(response.getStr().toString());
     }
 }

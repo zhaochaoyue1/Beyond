@@ -21,6 +21,7 @@ public class Parallellimit {
             pool.execute(runnable);
         }
         cdl.await();
+        pool.shutdown();
     }
 }
 
@@ -42,7 +43,7 @@ class CountRunnable implements Runnable{
                 System.out.println(thread.getName() + "thread counts = " + (countDownLatch.getCount()));
                 Thread.sleep(1000);
             }
-            //countDownLatch.await();
+            countDownLatch.await();
             System.out.println(thread.getName() + " concurrency counts = " + (10 -countDownLatch.getCount()));
         } catch (Exception e) {
             e.printStackTrace();
