@@ -62,10 +62,10 @@ public class BinarySearch {
             return false;
         }
         while(true){
-            int mid = i+ ((j-i)>>1);
             if(i>j){
                 break;
             }
+            int mid = i+ ((j-i)>>1);
             if(arr[mid] == num){
                 return true;
             }else if(arr[mid]>num){

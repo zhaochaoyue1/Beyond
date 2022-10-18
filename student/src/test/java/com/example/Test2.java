@@ -8,13 +8,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.Base64Utils;
 import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.*;
 
 /**
  * @description: Test2
@@ -126,11 +127,25 @@ public class Test2 {
         }
         return true;
     }
-    public static void main(String[] args) {
-        HashMap<Object, Object> map = Maps.newHashMap();
+    public static void main(String[] args) throws UnsupportedEncodingException {
+        /*HashMap<Object, Object> map = Maps.newHashMap();
         for (int i = 0; i < 13; i++) {
             map.put(i,i);
         }
-        System.out.println();
+        System.out.println();*/
+        byte[] encode = Base64.getEncoder().encode("http://www.baidu.com".getBytes());
+        String baidu = new String(encode);
+        System.out.println(baidu);
+        byte[] decode1 = Base64.getUrlDecoder().decode(baidu);
+        System.out.println(new String(decode1));
+        String s = "aHR0cHMlM0EvL3NoYXJlLWZpbGUtY2RuLnRlemlnbi5jb20vdXNlci8ucHJldmlldy9tbHd3b2M0b2wvOTI2ZmNmNzFlYzJjM2U4YTdmMDUwYzAzMDQ3YjhjMDAubXA0L21wNC85MjZmY2Y3MWVjMmMzZThhN2YwNTBjMDMwNDdiOGMwMF8xMjgwUC5tcDQlM0ZhdXRoX2tleSUzRDE2NTgyNDY0MDAtMC0wLTczZjc1Mzc5ZGFlZTVkM2I1MTMyMWJkYjg1YzhlODU5";
+        byte[] decode = Base64.getUrlDecoder().decode(s);
+        System.out.println(new String(Base64.getDecoder().decode(s.getBytes())));
+        System.out.println(new String(decode,"utf-8"));
+        byte[] decode2 = Base64Utils.decode(s.getBytes());
+        System.out.println(URLDecoder.decode(new String(decode2),"UTF-8"));
+
+
+        //"https://share-file-cdn.tezign.com/user/.preview/mlwwoc4ol/926fcf71ec2c3e8a7f050c03047b8c00.mp4/mp4/926fcf71ec2c3e8a7f050c03047b8c00_1280P.mp4?Fauth_key=1658246400-0-0-73f75379daee5d3b51321bdb85c8e859";
     }
 }

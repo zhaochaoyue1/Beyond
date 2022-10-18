@@ -12,7 +12,7 @@ public class ChinaServletFilter implements ServletFilter {
         String replace = request.getStr().replace("他妈的", "你好");
         request.setStr(replace);
         response.getStr().append("startChinaServletFilter--");
-        filterChain.doFilter(request, response,index);
+        filterChain.doFilterChain(request, response,index);
         response.getStr().append("endChinaServletFilter--");
         return true;
     }

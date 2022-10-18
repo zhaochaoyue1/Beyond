@@ -20,7 +20,7 @@ public class ServletMain {
 
         FilterChain filterChain = new FilterChain();
         filterChain.add(new ChinaServletFilter()).add(new NumServletFilter());
-        filterChain.doFilter(request, response,0);
+        filterChain.doFilterChain(request, response,0);
         System.out.println(request.getStr());
         System.out.println(response.getStr().toString());
     }

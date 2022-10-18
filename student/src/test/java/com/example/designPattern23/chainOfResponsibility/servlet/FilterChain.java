@@ -18,7 +18,7 @@ public class FilterChain {
         return this;
     }
 
-    public boolean doFilter(Request request, Response response,int index) {
+    public boolean doFilterChain(Request request, Response response,int index) {
         if (index == filters.size()) return false;
         ServletFilter servletFilter = filters.get(index);
         index++;

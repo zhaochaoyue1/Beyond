@@ -12,7 +12,7 @@ public class NumServletFilter implements ServletFilter {
         String replace = request.getStr().replace("996", "955");
         request.setStr(replace);
         response.getStr().append("startNumServletFilter--");
-        filterChain.doFilter(request, response,index);
+        filterChain.doFilterChain(request, response,index);
         String s = "endNumServletFilter--";
         response.getStr().append(s);
         return true;

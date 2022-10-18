@@ -1,13 +1,9 @@
 package com.example.mock;
 
-import com.example.binarytree.TreeNode;
 import junit.framework.TestCase;
-import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JUnit4Mockery;
-import org.junit.internal.builders.JUnit4Builder;
 
-import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -28,9 +24,6 @@ public class Test extends TestCase {
            oneOf(car).run();
        }});
        driven.driven(car);*/
-       Queue<TreeNode> q = new LinkedList<>();
-       for(int i = 0;i<5;i++){
-           q.add(null);
-       }
+
    }
 }
