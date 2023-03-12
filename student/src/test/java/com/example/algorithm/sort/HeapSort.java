@@ -20,6 +20,7 @@ public class HeapSort {
             //heapInsert(arr, i);
             heapify2(arr,arr.length-1-i,arr.length);
         }
+        System.out.println(JSONObject.toJSONString(arr));
 
         for(int i=0;i<arr.length;i++) {
             swap(arr,0,arr.length-i-1);
@@ -100,14 +101,14 @@ public class HeapSort {
     public static void heapify2(int[] arr, int index, int size) {
 
         int left = index * 2 + 1;
-        while(left<size){
-            left = left+1<size&&arr[left+1]>arr[left]?left+1:left;
+        while (left < size) {
+            left = left + 1 < size && arr[left + 1] > arr[left] ? left + 1 : left;
             if (arr[index] >= arr[left]) {
                 break;
             }
-            swap(arr,index,left);
-            index=left;
-            left = left*2+1;
+            swap(arr, index, left);
+            index = left;
+            left = left * 2 + 1;
         }
     }
 

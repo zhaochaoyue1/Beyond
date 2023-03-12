@@ -19,7 +19,6 @@ public class IsCompleteBinaryTree {
     public static void main(String[] args) {
         TreeNode completeTreeNode = getCompleteTreeNode();
         System.out.println(isCompleteTree2(completeTreeNode));
-        System.out.println(getReturnMessage(completeTreeNode).toString());
         TreeNode noCompleteTreeNode = getNoCompleteTreeNode();
         System.out.println(isCompleteTree2(noCompleteTreeNode));
         System.out.println(getReturnMessage(noCompleteTreeNode).toString());
@@ -29,20 +28,26 @@ public class IsCompleteBinaryTree {
         if(treeNode == null){
             return new ReturnType(0,true,0);
         }
-        ReturnType leftMessage = getReturnMessage(treeNode.leftNode);
-        ReturnType rightMessage = getReturnMessage(treeNode.rightNode);
-        int high = Math.max(leftMessage.high,rightMessage.high)+1;
-        long num = leftMessage.num + rightMessage.num + 1;
-        //左右节点有一个为false就不是
-        boolean isCorrect = !leftMessage.correct || !rightMessage.correct;
-        //左右两子树高度之差大于1就不是
-        boolean highBool = Math.abs(leftMessage.high - rightMessage.high) > 1;
-        //左树的节点数一定大于右树的节点数
-        boolean isNum = leftMessage.num<rightMessage.num;
-        if(isCorrect || highBool || isNum){
-            return new ReturnType(high,false,num);
+        ReturnType left = getReturnMessage(treeNode.leftNode);
+        ReturnType right = getReturnMessage(treeNode.rightNode);
+
+        int high = Math.max(left.high,right.high)+1;
+        long num = left.num + right.num + 1;
+
+        //左右节点有一个就不是
+        boolean isF = !right.correct || !left.correct;
+
+        //左右树高度差大于1
+        boolean gt = Math.abs(right.high-left.high)>1;
+
+        //左树节点一定大于等于右树节点
+        boolean numCompare = right.num > left.num;
+
+        boolean correct = true;
+        if(isF || gt || numCompare){
+            correct =false;
         }
-        return new ReturnType(high,true,num);
+        return new ReturnType(high,correct,num);
     }
 
     public static boolean isCompleteTree(TreeNode node){

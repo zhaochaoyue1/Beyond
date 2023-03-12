@@ -6,6 +6,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -35,9 +36,10 @@ public class LoggerAround {
      *   执行时是否需要替换方法参数，执行完毕是否需要替换返回值。
      *   环绕通知第一个参数必须是org.aspectj.lang.ProceedingJoinPoint类型
      */
-    @Around("execution(* com.example.student..*.*(..))")
+    @Around("@annotation(com.example.student.annotation.AopAnnotation)")
     public Object doAroundService(ProceedingJoinPoint pjp){
         try {
+            System.out.println("日志打印");
             Object object=pjp.proceed();
             return object;
         } catch (Throwable throwable) {

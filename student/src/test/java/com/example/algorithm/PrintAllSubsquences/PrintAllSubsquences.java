@@ -29,5 +29,4 @@ public class PrintAllSubsquences {
         processor(str,i+1);
         str[i]=temp;
     }
-
 }

@@ -16,8 +16,37 @@ public class MaxIsland {
         print(arr);
         System.out.println("--------------------");
         System.out.println(maxLands(arr));
+        int[][] arr2 = new int[][]{{1, 0, 1, 1}, {1, 0, 0, 1}, {1, 0, 0, 1}, {1, 0, 1, 0}};
+        System.out.println(maxLands2(arr2));
         print(arr);
     }
+
+    public static int maxLands2(int[][] arr){
+        int max = 0;
+        for (int x = 0; x < arr.length; x++) {
+            for (int y = 0; y < arr[x].length; y++) {
+                if(arr[x][y] == 1){
+                    recursion(arr,x,y);
+                    max++;
+                }
+            }
+
+        }
+        return max;
+    }
+
+    public static int recursion(int[][] arr,int x, int y){
+        if (x < 0 || y < 0 || x >= arr.length || y >= arr[x].length) {
+            return 0;
+        }
+        if (arr[x][y] == 0) {
+            return 0;
+        }
+        arr[x][y] = 0;
+        return 1 + recursion(arr, x, y + 1) + recursion(arr, x, y - 1) + recursion(arr, x - 1, y) + recursion(arr, x + 1, y);
+    }
+
+
 
     public static int maxLands(int[][] arr){
         if(arr == null){

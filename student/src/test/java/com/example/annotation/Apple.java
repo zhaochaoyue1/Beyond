@@ -10,6 +10,7 @@ package com.example.annotation;
 import com.alibaba.fastjson.JSONObject;
 
 /**
+ * https://blog.csdn.net/m0_67698950/article/details/125960549
  * 使用注解
  */
 public class Apple {

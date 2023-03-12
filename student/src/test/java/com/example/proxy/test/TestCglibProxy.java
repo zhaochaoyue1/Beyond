@@ -1,7 +1,9 @@
-package com.example.proxy.service;
+package com.example.proxy.test;
 
 
-import com.example.proxy.service.impl.AdminServiceImpl;
+
+import com.example.proxy.impl.AdminServiceImpl;
+import com.example.proxy.service.AdminServiceCglibProxy;
 import net.sf.cglib.core.DebuggingClassWriter;
 
 /**

@@ -18,7 +18,7 @@ public class StackReverseOrder {
         stack.push(2);
         stack.push(3);
         System.out.println(JSONObject.toJSONString(stack));
-        reStack(stack);
+        reStack2(stack);
         System.out.println(JSONObject.toJSONString(stack));
     }
 
@@ -41,22 +41,23 @@ public class StackReverseOrder {
         return i;
     }
 
-    public static void reverse(Stack<Integer> stack){
-        if(stack.isEmpty()){
+    public static  void reStack2(Stack<Integer> stack){
+        if(stack.size() == 0){
             return;
         }
-        int stackLow = getStackLow(stack);
-        reverse(stack);
-        stack.push(stackLow);
+        int min = min(stack);
+        reStack2(stack);
+        stack.push(min);
     }
 
-    public static int getStackLow(Stack<Integer> stack){
-        if(stack.size()==1){
+    public static int min(Stack<Integer> stack){
+        if(stack.size() == 1){
             return stack.pop();
         }
         Integer pop = stack.pop();
-        int stackLow = getStackLow(stack);
+        int min = min(stack);
         stack.push(pop);
-        return stackLow;
+        return min;
     }
+
 }

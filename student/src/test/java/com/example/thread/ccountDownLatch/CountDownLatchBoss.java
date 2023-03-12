@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class CountDownLatchBoss {
     private static ExecutorService executors = Executors.newCachedThreadPool();
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         CountDownLatch count = new CountDownLatch(3);
         Boss boss = new Boss(count, "老板");
         Worker worker1 = new Worker(count, "员工1");
@@ -25,7 +25,8 @@ public class CountDownLatchBoss {
         executors.execute(worker1);
         executors.execute(worker2);
         executors.execute(worker3);
-        boss.run();
+        executors.execute(boss);
+        count.await();
         System.out.println("主线程执行结束");
         executors.shutdown();
     }

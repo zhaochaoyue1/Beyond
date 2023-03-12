@@ -9,7 +9,7 @@ package com.example.classloader.zcy;
 public class Test {
     public static void main(String[] args) {
         TestClass testClass = new TestClass();
-        TestClass.c = TestClass.c + 1;
-        TestClass testClass1 = new TestClass();
+        //TestClass.c = TestClass.c + 1;
+        //TestClass testClass1 = new TestClass();
     }
 }

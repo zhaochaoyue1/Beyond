@@ -14,7 +14,7 @@ import java.util.Random;
  */
 public class QuickSort1 {
     public static void main(String[] args) {
-        int[] arr = new int[]{2,4,5,63,3543,2};
+        int[] arr = new int[]{2,4,5,63,35,43,2,89};
         sortPractice(arr,0,arr.length-1);
         System.out.println(JSONObject.toJSONString(arr));
         for (int i = 0; i < 1000000; i++) {
@@ -41,7 +41,7 @@ public class QuickSort1 {
     }
 
     public static void sort(int[] arr,int left,int right){
-        if(left<0||right<1||left>=right){
+        if(left-right<1){
             return;
         }
         int pi = left-1;
@@ -74,14 +74,12 @@ public class QuickSort1 {
         if(right-left<1){
             return;
         }
-        int pi = left-1;
         int i = left;
         int pj = right;
         int j = right-1;
         int num = arr[right];
         while(i<pj){
             if(arr[i]<num){
-                pi++;
                 i++;
                 continue;
             }

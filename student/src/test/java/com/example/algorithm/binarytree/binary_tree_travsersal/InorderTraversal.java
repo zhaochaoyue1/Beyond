@@ -29,23 +29,20 @@ public class InorderTraversal {
     }
 
     public static void inOrderPrint(List<Object> list,TreeNode node){
-        if(node == null){
-            return;
-        }
         Stack<TreeNode> stack = new Stack<>();
-
-        while (!stack.isEmpty()||node!=null){
-            if(node!=null){
+        while (node != null || !stack.isEmpty()){
+            if(node != null){
                 stack.push(node);
                 node = node.leftNode;
             }
-            if(node==null&&!stack.isEmpty()){
+            if(node == null&&!stack.isEmpty()){
                 TreeNode pop = stack.pop();
                 list.add(pop.data);
                 node = pop.rightNode;
             }
         }
     }
+
 
     /**
      * 中序非递归遍历

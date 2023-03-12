@@ -5,13 +5,13 @@ import java.math.BigDecimal;
 
 public class TestBigDecimal {
     public static void main(String[] args) {
-        //testNumAndString();
-        testDistinction();
+        testNumAndString();
+        //testDistinction();
     }
     //测试bigDecimal 整数与小数的区别
     public static void testDistinction(){
         BigDecimal a = new BigDecimal("22.1899");
-        System.out.println(a.intValueExact());
+        //System.out.println(a.intValueExact());
         System.out.println(a.scale());
     }
     //测试数值与字符串的区别

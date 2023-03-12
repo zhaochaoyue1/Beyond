@@ -1,7 +1,7 @@
-package com.example.proxy.service;
+package com.example.proxy.test;
 
-import com.example.proxy.service.impl.AdminServiceImpl;
-import com.example.proxy.service.impl.AdminServiceProxy;
+import com.example.proxy.impl.AdminServiceImpl;
+import com.example.proxy.impl.AdminServiceProxy;
 
 /**
  * 静态代理模式在不改变目标对象的前提下，实现了对目标对象的功能扩展。

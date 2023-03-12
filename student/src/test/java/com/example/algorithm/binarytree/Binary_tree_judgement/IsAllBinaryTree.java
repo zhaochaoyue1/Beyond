@@ -54,7 +54,7 @@ public class IsAllBinaryTree {
                     queue.offer(poll.leftNode);
                 }
                 if(poll.rightNode!=null){
-                    queue.offer(poll.rightNode);
+                        queue.offer(poll.rightNode);
                 }
             }
         }
@@ -69,8 +69,8 @@ public class IsAllBinaryTree {
         treeNode.rightNode = right;
         TreeNode leftLeft = new TreeNode(1);
         TreeNode leftRight = new TreeNode(4);
-        left.rightNode = leftRight;
         left.leftNode = leftLeft;
+        left.rightNode = leftRight;
         TreeNode rightLeft = new TreeNode(7);
         TreeNode rightRight = new TreeNode(11);
         right.leftNode = rightLeft;
@@ -86,8 +86,8 @@ public class IsAllBinaryTree {
         treeNode.rightNode = right;
         TreeNode leftLeft = new TreeNode(1);
         TreeNode leftRight = new TreeNode(2);
-        left.rightNode = leftRight;
         left.leftNode = leftLeft;
+        left.rightNode = leftRight;
         TreeNode rightLeft = new TreeNode(4);
         TreeNode rightRight = new TreeNode(9);
         right.leftNode = rightLeft;

@@ -14,7 +14,7 @@ public class Hanoi {
 
     public static void hanoi(int n){
         if(n>0){
-            func(n,"左","右","中");
+            func2(n,"左","右","中");
         }
     }
 
@@ -25,6 +25,16 @@ public class Hanoi {
             func(i-1,start,other,end);
             System.out.println("move " + i + " from " + start + " to " + end);
             func(i-1,other,end,start);
+        }
+    }
+
+    private static void func2(int i,String start,String end,String other){
+        if(i == 1){
+            System.out.println("move 1 from " + start + " to " + end);
+        }else{
+            func2(i - 1, start, other, end);
+            System.out.println("move " + i + " from " + start + " to " + end);
+            func2(i - 1, other, end, start);
         }
     }
 }

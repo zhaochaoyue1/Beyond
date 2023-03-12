@@ -20,10 +20,10 @@ public class CyclicBarrierPractice {
             final int num = i;
             Thread.sleep(1000);
             pool.execute(()->{
-                System.out.println("threadNum" + num + "is ready");
+                System.out.println("threadNum " + num + " is ready");
                 try {
                     //时间到达后直接执行，放行所有线程
-                    cyclicBarrier.await(5000, TimeUnit.MILLISECONDS);
+                    cyclicBarrier.await(20000, TimeUnit.MILLISECONDS);
                     //cyclicBarrier.await();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

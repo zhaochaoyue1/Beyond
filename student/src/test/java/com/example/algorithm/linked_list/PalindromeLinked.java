@@ -15,7 +15,7 @@ public class PalindromeLinked {
     public static void main(String[] args) {
         Node node = Node.getNode(new int[]{1,2,3,2,1});
         System.out.println(JSONObject.toJSONString(node));
-        System.out.println(JSONObject.toJSONString(isPalindrome3(node)));
+        System.out.println(JSONObject.toJSONString(isPalindrome22(node)));
         System.out.println(JSONObject.toJSONString(node));
     }
 
@@ -87,6 +87,45 @@ public class PalindromeLinked {
         }
         return true;
     }
+
+    public static boolean isPalindrome22(Node head){
+        if(head == null || head.next == null){
+            return true;
+        }
+        Node f = head;
+        Node s = head;
+        while (f!=null){
+            f=f.next;
+            s=s.next;
+            if(f==null){
+                break;
+            }
+            f=f.next;
+        }
+        Node pre = null;
+        while (s!=null){
+            Node temp = s.next;
+            s.next = pre;
+            pre = s;
+            s=temp;
+        }
+        Node pre2 = pre;
+        while (pre!=null){
+            if(head.value != pre.value){
+                return false;
+            }
+            head = head.next;
+            pre = pre.next;
+        }
+        while (pre2!=null){
+            Node temp = pre2.next;
+            pre2.next = pre;
+            pre=pre2;
+            pre2=temp;
+        }
+        return true;
+    }
+
 
     /**
      * 快慢指针加开辟空间

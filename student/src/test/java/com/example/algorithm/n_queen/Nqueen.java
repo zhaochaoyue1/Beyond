@@ -1,5 +1,7 @@
 package com.example.algorithm.n_queen;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * 八皇后问题
  * @description: Nqueen
@@ -16,16 +18,20 @@ public class Nqueen {
     }
 
 
+
+
     public static int getQueen(int[] arr,int row,int countRol){
         if(row == countRol){
+            System.out.println(JSONObject.toJSONString(arr));
             return 1;
         }
         int res = 0;
         //遍历每一个位置是否可以放皇后
         for (int i = 0; i < arr.length; i++) {
-            if(isValid(arr,row,i)){
-                arr[row]=i;
-                res+=getQueen(arr,row+1,countRol);
+            if (isValid(arr, row, i)) {
+                //设置皇后在row行，i列
+                arr[row] = i;
+                res += getQueen(arr, row + 1, countRol);
             }
         }
         return res;
@@ -33,6 +39,8 @@ public class Nqueen {
 
     public static boolean isValid(int[] arr,int row,int col){
         for (int k = 0; k < row; k++) {
+            //col == arr[k] 放在同一列了
+            //Math.abs(arr[k]- col)==Math.abs(row-k) 放在对角线上了
             if(col == arr[k] || Math.abs(arr[k]- col)==Math.abs(row-k)){
                 return false;
             }
@@ -57,12 +65,12 @@ public class Nqueen {
         //String  = Integer.toBinaryString(colLimit);
         pos = limit & (~(colLimit|leftDiaLim|rigDiaLim));
         int res = 0;
-        while (pos!=0){
-            mastRightOne = pos&(~pos+1);
-            pos = pos -mastRightOne;
-            res+=process2(limit,colLimit|mastRightOne,
-                    (leftDiaLim|mastRightOne)<<1,
-                    (rigDiaLim|mastRightOne)>>>1);
+        while (pos != 0) {
+            mastRightOne = pos & (~pos + 1);
+            pos = pos - mastRightOne;
+            res += process2(limit, colLimit | mastRightOne,
+                    (leftDiaLim | mastRightOne) << 1,
+                    (rigDiaLim | mastRightOne) >>> 1);
         }
         return res;
     }

@@ -1,4 +1,4 @@
-package com.example.proxy.service.impl;
+package com.example.proxy.impl;
 
 import com.example.proxy.service.AdminService;
 

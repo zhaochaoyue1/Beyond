@@ -20,6 +20,14 @@ public class TreeNodeDeserialization {
         System.out.println(JSONObject.toJSONString(s.split("_")));
     }
 
+    public static void poll(){
+        Queue<String> queue = new ArrayDeque<>();
+        queue.offer("1");
+        queue.offer("2");
+        queue.offer("3");
+        //String
+    }
+
     public static TreeNode deserialization(String str){
         String[] s = str.split("_");
         Queue<Object> queue = new ArrayDeque<>();
@@ -31,7 +39,7 @@ public class TreeNodeDeserialization {
 
     public static TreeNode reConPreOrder(Queue<Object> queue){
         Object poll = queue.poll();
-        if(poll.equals("#")){
+        if(poll == null || poll.equals("#")){
             return null;
         }
         TreeNode treeNode = new TreeNode(poll);

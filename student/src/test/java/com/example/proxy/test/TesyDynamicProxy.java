@@ -1,10 +1,13 @@
-package com.example.proxy.service;
+package com.example.proxy.test;
 
-import com.example.proxy.service.impl.AdminServiceImpl;
+
+import com.example.proxy.impl.AdminServiceImpl;
+import com.example.proxy.service.AdminService;
 
 import java.lang.reflect.Proxy;
 
 /**
+ * https://blog.51cto.com/u_15281317/2942363
  * jdk 动态代理： 其代理对象必须是某个接口的实现，它是通过在运行期间创建一个接口的实现
  * 类来完成对目标对象的代理
  */

@@ -9,8 +9,8 @@ package com.example.algorithm.greedy_algorithm;
  * @version: 1.0
  */
 public class MaxValue {
-    public static int wight[] = new int[]{1,3,2};
-    public static int price[] = new int[]{1,5,2};
+    public static int[] wight = new int[]{5,3,2,1,2};
+    public static int[] price = new int[]{1,5,2,3,4};
     public static void main(String[] args) {
         System.out.println(getMaxValue(0,3));
     }
@@ -19,7 +19,7 @@ public class MaxValue {
             return 0;
         }
         if(wight[index]>bagWeight){
-            return 0;
+            return getMaxValue(index+1,bagWeight);
         }
         return Math.max(getMaxValue(index+1,bagWeight),
                 price[index]+getMaxValue(index+1,bagWeight-wight[index]));

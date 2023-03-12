@@ -38,8 +38,8 @@ class CountRunnable implements Runnable{
         thread.setName(i.incrementAndGet() +"");
         try {
             synchronized(countDownLatch){
-                //每次减少一个容量
                 countDownLatch.countDown();
+                //每次减少一个容量
                 System.out.println(thread.getName() + "thread counts = " + (countDownLatch.getCount()));
                 Thread.sleep(1000);
             }

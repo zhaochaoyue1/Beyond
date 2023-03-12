@@ -12,7 +12,7 @@ import java.net.Socket;
  * @author: zcy
  * @version: 1.0
  */
-public class Client {
+public class  Client {
     public static void main(String[] args) throws Exception {
         String readLine = null;
         String inTemp = null;

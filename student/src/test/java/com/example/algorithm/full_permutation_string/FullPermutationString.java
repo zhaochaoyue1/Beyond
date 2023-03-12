@@ -3,6 +3,7 @@ package com.example.algorithm.full_permutation_string;
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -12,16 +13,17 @@ import java.util.List;
  * @version: 1.0
  */
 public class FullPermutationString {
+
+    private static List<String> res = new ArrayList<>();
     public static void main(String[] args) {
         String s = "abc" +
                 "" +
                 "";
-        ArrayList<String> res = new ArrayList<>();
-        process(s.toCharArray(),0,res);
+        process(s.toCharArray(),0);
         System.out.println(JSONObject.toJSONString(res));
     }
 
-    public static void process(char[] str, int i, List<String> res){
+    public static void process(char[] str, int i){
         if(i == str.length){
             res.add(String.valueOf(str));
         }
@@ -30,11 +32,12 @@ public class FullPermutationString {
             if(!visit[str[j]-'a']){
                 visit[str[j]-'a']= true;
                 swap(str,i,j);
-                process(str,i+1,res);
+                process(str,i+1);
                 swap(str,i,j);
             }
         }
     }
+
     public static void swap (char[] chs, int i, int j) {
         char tmp = chs[i];
         chs[i] = chs[j];

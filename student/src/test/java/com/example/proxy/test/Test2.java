@@ -1,4 +1,4 @@
-package com.example.proxy.service;
+package com.example.proxy.test;
 
 import com.example.student.project.service.RentService;
 import com.example.student.project.service.impl.Landlord;

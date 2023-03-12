@@ -30,4 +30,31 @@ public class Node {
         }
         return node;
     }
+
+    private static Node serializable(int[] arr){
+        if(arr==null || arr.length<=0){
+            return null;
+        }
+        Node head = null;
+        Node next = null;
+        for (int i = 0; i < arr.length; i++) {
+            Node n = new Node(arr[i]);
+            if(head == null){
+                head = n;
+                next = n;
+                continue;
+            }
+            next.next = n;
+            next=n;
+        }
+        return head;
+    }
+
+    public Node() {
+    }
+
+    public Node(int value) {
+        super();
+        this.value = value;
+    }
 }

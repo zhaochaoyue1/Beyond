@@ -13,9 +13,9 @@ public class StopDuringSleep {
                 int num = 0 ;
                 while (!Thread.currentThread().isInterrupted()&&num<=1000){
                     System.out.println("num = " + num++);
-                    Thread.sleep(100000000);
+                    //Thread.sleep(10000);
                 }
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });

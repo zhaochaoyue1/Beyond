@@ -26,7 +26,7 @@ public class DaemonPractice {
                 thread1.setDaemon(true);
                 thread1.start();
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(1);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

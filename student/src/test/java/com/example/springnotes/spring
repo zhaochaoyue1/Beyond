@@ -19,3 +19,11 @@
     annotatedBeanDefinitionReader: 针对AnnotationConfigApplicationContext而言，一个BeanDefinition读取器
     扩展点集合： 存放spring扩展点（主要是BeanFactoryPostProcessor、BeanPostProcessor）接口的list集合
 
+3. Spring中的BeanFactory与FactoryBean
+    https://www.cnblogs.com/yichunguo/p/13922189.html
+
+4. 三级缓存解决循环依赖
+   https://blog.csdn.net/chinawangfei/article/details/122963121
+
+
+
