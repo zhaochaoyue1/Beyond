@@ -11,7 +11,7 @@ import com.example.student.Student;
  */
 public class IAdd {
     public static void main(String[] args) {
-        //System.out.println(iAdd());;
+        System.out.println(iAdd());;
         System.out.println(JSONObject.toJSONString(getStudent()));
     }
 

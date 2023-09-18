@@ -18,9 +18,9 @@ import java.util.regex.Pattern;
 public class PatternTest {
 
     public static void main(String[] args) {
-        matchingNum();
+        //matchingNum();
         matchingNumAndString();
-        testAppend();
+        //testAppend();
     }
 
 

@@ -20,7 +20,7 @@ public class  Client {
         final String client = "Client:";
         final String server = "Server:";
         int port = 4000;
-        byte ipAddressTemp[] = {127,0,0,1};
+        byte[] ipAddressTemp = {127,0,0,1};
         //byte ipAddressTemp[] = {(byte) 192, (byte) 168,100, (byte) 163};
         InetAddress ipAddress = InetAddress.getByAddress(ipAddressTemp);
         Socket socket = new Socket(ipAddress, port);

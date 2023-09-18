@@ -21,6 +21,7 @@ spring:
   mvc:
     pathmatch:
       use-suffix-pattern: true
+    static-path-pattern: /static/**
   #  mvc:
 #    view:
 #      prefix: /
@@ -32,15 +33,16 @@ spring:
   thymeleaf:
     mode: LEGACYHTML5
     cache: false
-    prefix: classpath:/templates/
+    prefix: classpath:templates/
     suffix: .html
     encoding: UTF-8
     check-template-location: true
     servlet:
       content-type: text/html
     enabled: true
-  resources:
-    #static-locations: classpath:/static/,classpath:/view/,classpath:/public,classpath:/resources,classpath:/META-INF/resources
+
+    #resources:
+      #static-locations: classpath:/static,classpath:/view/,classpath:/public,classpath:/resources
 
   messages:
     #���ʻ���Դ�ļ�·��

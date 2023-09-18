@@ -6,6 +6,7 @@ import org.springframework.util.StopWatch;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 /**
@@ -43,9 +44,9 @@ public class LocalDateTimePractice {
     private static void duration(){
         LocalDate parse = LocalDate.parse("2020-12-01", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         LocalDate parse1 = LocalDate.parse("2020-12-03", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        Duration duration = Duration.ofDays(0);
+
+        System.out.println(ChronoUnit.DAYS.between(parse,parse1));
         Days.daysBetween(new DateTime("2020-12-01"),new DateTime("2020-12-03"));
-        long l = duration.between(parse, parse1).toDays();
         System.out.println(Days.daysBetween(new DateTime("2020-12-01"),new DateTime("2020-12-03")).getDays());
     }
 
@@ -57,6 +58,8 @@ public class LocalDateTimePractice {
         String yyyyMMddHHmmss1 = localDateTime.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
         System.out.println(yyyyMMddHHmmss1);
     }
+
+
 
     /**
      * 获取毫秒和秒的方法

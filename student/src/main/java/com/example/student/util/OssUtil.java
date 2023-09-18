@@ -81,4 +81,15 @@ public class OssUtil {
         conn.disconnect();
         return cdnUrl + key;
     }
+
+    /**
+     * 上传本地流
+     */
+    public static String saveLocal2Oss(InputStream inputStream, boolean isMp4, String filename) throws IOException {
+        //文件名
+        String key = ossBaseDir + "20230612" + "/" + (isMp4 ? "mp4" : "img") + "/" + filename;
+        //获取网络输入流
+        ossClient.putObject(new PutObjectRequest(ossBucket, key, inputStream));
+        return cdnUrl + key;
+    }
 }

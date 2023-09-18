@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>律师咨询服务</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <div class="menu-container">
+        <!--nav :链接导航-->
+        <nav>
+            <!--//HTML 两个列表实例： 一个有序列表 (<ol>) 和 一个无序列表 (<ul>) :-->
+            <ul>
+                <li><img src="http://pmo1f6f3b.pic1.ysjianzhan.cn/upload/logo_3gqx.png"></li>
+                <li><a href="#home">主页</a></li>
+                <li><a href="#lawyers">律师搜索</a></li>
+                <li><a href="#login">登录</a></li>
+                <li><a href="#register">注册</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+            <!--form https://www.runoob.com/tags/tag-form.html-->
+            <!--<form action="/search" method="GET">
+                <input type="text" name="keyword" placeholder="搜索律师">
+                <button type="submit">搜索</button>
+            </form>-->
+        </nav>
+    </div>
+
+    <!--<h1>律师咨询服务</h1>-->
+
+    <script src="/jquery.min.js"></script>
+</header>
+<!--main:使用 main 标签来展示文档的主体部分：
+    标签中的内容在文档中是唯一的。它不应包含在文档中重复出现的内容，比如侧栏、导航栏、版权信息、站点标志或搜索表单。
+    注意在一个文档中，<main> 元素是唯一的，所以不能出现一个以上的 <main> 元素。<main> 元素不能是以下元素的后代：<article>、<aside>、<footer>、<header> 或 <nav>。-->
+<main>
+
+    <div>
+        <img src="http://pmo1f6f3b.pic1.ysjianzhan.cn/upload/banner1-1_9tkq_sggh.jpg">
+    </div>
+
+    <section id="home">
+        <!--<h1> - <h6> 标签被用来定义 HTML 标题。-->
+        <h2>欢迎来到律师咨询服务</h2>
+        <p>在这里，我们为您提供专业的法律咨询和服务。</p>
+        <a href="#contact" class="cta-button">免费咨询</a>
+    </section>
+
+    <section id="lawyers">
+        <h2>律师搜索</h2>
+        <!-- 律师搜索和筛选表单 -->
+    </section>
+
+    <section id="login">
+        <h2>用户登录</h2>
+        <!-- 用户登录表单 -->
+    </section>
+
+    <section id="register">
+        <h2>用户注册</h2>
+        <!-- 用户注册表单 -->
+    </section>
+
+
+    <section id="contact">
+        <h2>联系我们</h2>
+        <form action="/contact" method="POST" enctype="application/x-www-form-urlencoded">
+            <label for="name">姓名：</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">电子邮件：</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">留言：</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="submit">提交</button>
+        </form>
+    </section>
+
+    <!-- 悬浮客服图标共同的容器 -->
+    <div class="chat-icons">
+        <!-- 悬浮客服图标1 -->
+        <div id="chat-icon1" class="chat-icon">
+            <img src="chat-icon1.png" alt="Chat Icon 1">
+        </div>
+
+        <!-- 悬浮客服图标2 -->
+        <div id="chat-icon2" class="chat-icon">
+            <img src="chat-icon2.png" alt="Chat Icon 2">
+        </div>
+    </div>
+
+    <!-- 悬浮客服弹窗1 -->
+    <div id="chat-widget1" class="chat-widget">
+        <!-- 悬浮弹窗1的内容 -->
+        <div class="chat-header">
+            <span class="chat-title">弹窗1标题</span>
+            <button class="chat-close">X</button>
+        </div>
+        <div class="chat-body">
+            <p>这里是弹窗1的内容</p>
+        </div>
+    </div>
+
+    <!-- 悬浮客服弹窗2 -->
+    <div id="chat-widget2" class="chat-widget">
+        <!-- 悬浮弹窗2的内容 -->
+        <div class="chat-header">
+            <span class="chat-title">弹窗2标题</span>
+            <button class="chat-close">X</button>
+        </div>
+        <div class="chat-body">
+            <p>这里是弹窗2的内容</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</main>
+
+<footer>
+    <p>版权所有 © 2023 律师咨询服务</p>
+</footer>
+</body>
+</html>

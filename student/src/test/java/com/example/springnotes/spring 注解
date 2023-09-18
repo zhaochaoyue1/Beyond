@@ -2,3 +2,8 @@
 https://www.cnblogs.com/yichunguo/p/12122598.html
 @Bean 注解
 https://www.cnblogs.com/yichunguo/p/12110761.html
+
+BeanDefinitionRegistryPostProcessor
+   该接口只定义了一个功能：处理BeanDefinitonRegistry，也就是解析配置类中的Import、Component、
+   ComponentScan等注解进行相应的处理，处理完毕后将这些类注册成对应的BeanDefinition
+   在Spring内部中，只有一个实现：ConfigurationClassPostProcessor

@@ -110,8 +110,53 @@ public class Test {
         //pushDominoes(".L.R...LR..L..");
         //maximumRequests2(5,new int[][]{{0,1},{1,0},{0,1},{1,2},{2,0},{3,4}});
         //new CountHighest().countHighestScoreNodes(new int[]{-1,2,0,2,0});
-        System.out.println(LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli());
-        System.out.println(new Date().getTime());
+        /*System.out.println(LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli());
+        System.out.println(new Date().getTime());*/
+        int[][] matrix = new int[][]{{2,1,3},{6,5,4},{7,8,9}};
+        System.out.println(minFallingPathSum(matrix));
+        Integer num = new Integer("3");
+        updateNum(num);
+        System.out.println(num);
+    }
+
+    public static void updateNum(Integer num){
+        num=9;
+    }
+
+    public static int minFallingPathSum(int[][] matrix) {
+        int n = matrix.length;
+        int[] dp = new int[n];
+        System.arraycopy(matrix[0], 0, dp, 0, n);
+        dp = dfs(matrix, dp, 1, n);
+        System.out.println(JSONObject.toJSON(dp));
+        int res = Integer.MAX_VALUE;
+        for (int j = 0; j < n; ++j) {
+            res = Math.min(res, dp[j]);
+        }
+
+        return res;
+    }
+
+    private static int[] dfs(int[][] matrix, int[] dp, int depth, int n) {
+        if (depth == n) {
+            return dp;
+        }
+
+        int[] nextDp = new int[n];
+        for (int i = 0; i < n; ++i) {
+            int cur = dp[i];
+            if (i > 0) cur = Math.min(cur, dp[i - 1]);
+            if (i < n - 1) cur = Math.min(cur, dp[i + 1]);
+            nextDp[i] = cur + matrix[depth][i];
+        }
+
+        return dfs(matrix, nextDp, depth + 1, n);
+    }
+
+    @Data
+    static class MinBool{
+        private boolean isValid;
+        private int num;
     }
 
     static class CountHighest{

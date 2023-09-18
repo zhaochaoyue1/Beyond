@@ -67,6 +67,7 @@ public class IoPratice {
             try {
                 int read ;
                 while ((read = input.read())!=-1){
+                    System.out.println("输出中");
                     System.out.print((char)read);
                 }
             } catch (IOException e) {

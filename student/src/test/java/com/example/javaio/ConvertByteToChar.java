@@ -10,40 +10,28 @@ public class ConvertByteToChar {
     }
 
     public static void practice() {
-        String route = "/Users/coohua/Downloads/激活码.txt";
-        InputStream is = null;
-        Reader reader = null;
-        try {
-            File file = new File(route);
-            is = new FileInputStream(file);
-            reader = new InputStreamReader(is,StandardCharsets.UTF_8);
-            char[] chars = new char[(int) file.length()];
-            int read = reader.read(chars);
-            System.out.println("size: " + read + "\n内容: " + new String(chars));
-        } catch (Exception e) {
+        String dir = "/Users/coohua/Downloads/激活码.txt";
+        File file = new File(dir);
+        try (InputStream is = new FileInputStream(file);
+             Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+            char[] arr = new char[(int) file.length()];
+            int read = reader.read(arr);
+            System.out.println("size: " + read + "内容: " + new String(arr));
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                if(is != null ){
-                    is.close();
-                }
-                if(reader != null){
-                    reader.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private static void convertByteToChar(){
+    private static void convertByteToChar() {
         InputStream is = null;
         Reader reader = null;
         try {
             File file = new File("/Users/coohua/Downloads/激活码.txt");
             is = new FileInputStream(file);
-            reader = new InputStreamReader(is,"UTF-8");
-            char[] chars = new char[(int)file.length()];
+            reader = new InputStreamReader(is, "UTF-8");
+            char[] chars = new char[(int) file.length()];
             int read = reader.read(chars);
             System.out.println("size: " + read + "\n内容: " + new String(chars));
         } catch (Exception e) {

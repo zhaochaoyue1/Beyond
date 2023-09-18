@@ -8,10 +8,7 @@ import com.example.student.serialize.PrivacySerializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -26,15 +23,17 @@ public class UserController {
     }
 
     @GetMapping(value = "/desensitization")
-    public User desensitization(){
+    public User desensitization(@RequestParam("model")String model){
         User user = new User();
         user.setId(123);
         user.setIdCard("413026199903020634");
         user.setName("张三三");
         user.setPhone("18512340634");
         user.setEmail("18512340634@163.com");
+        user.setModel(model);
         String s = JSONObject.toJSONString(user);
         System.out.println(s);
+        System.out.println(model);
         return user;
     }
 

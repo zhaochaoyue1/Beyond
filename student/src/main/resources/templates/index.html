@@ -1,21 +1,115 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Insert title here</title>
+    <meta charset="utf-8"/>
+    <title>ECharts</title>
+    <!-- 引入刚刚下载的 ECharts 文件 -->
+    <script src="/echarts.js"></script>
+    <script src="/jquery.min.js"></script>
 </head>
-<script type = "text/javascript">
-    alert("test")
-</script>
-<script th:inline="javascript" >
-    window.load();
-    console.log("zcy")
-   //console.log($("#staff_name2").val());
-</script>
 <body>
-    <h1>哈啊哈哈</h1>
-    <input type="" th:value='${msg}' id="staff_name2"/>
-    <!--/*@thymesVar id="msg2" type=""*/-->
-    <input type="" th:value='${msg2}' id="staff_name3"/>
+<!-- 为 ECharts 准备一个定义了宽高的 DOM -->
+<div class="layui-col-xs6">
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="columnar" style="width: 1800px;height:600px;"></div>
+
+</div>
+
+<script>
+
+    var columnar = echarts.init(document.getElementById('columnar'));
+
+    /*发送ajax请求到后台，动态为option1赋值*/
+    $.ajax({
+        url: "/getChart",
+        type: "GET",
+        success: function (data) {
+            var length = data.y.length;
+            var arr = new Array();
+            var year = 2023
+            for(i = 0;i<length;i++){
+                var ele = data.y[i];
+                arr[i]={
+                    name: (year - i).toString(),
+                    type: 'bar',
+                    data: ele
+                };
+            }
+            /*[{
+                name: '2023',
+                type: 'bar',
+                data: data.y[0]
+            }, {
+                name: '2022',
+                type: 'bar',
+                data: data.y[1]
+            }, {
+                name: '2021',
+                type: 'bar',
+                data: data.y[2]
+            }, {
+                name: '2020',
+                type: 'bar',
+                data: data.y[3]
+            }]*/
+            // 指定图表的配置项和数据
+            var option1 = {
+                title: {
+                    text: data.title
+                },
+                tooltip: {},
+                legend: {
+                    data: data.legendData
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    data: data.x
+                },
+                yAxis: {},
+                series: arr
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            columnar.setOption(option1);
+        },
+        error: function (e) {
+            alert(e);
+        }
+    })
+
+</script>
+
+<!--<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: 'ECharts 入门示例'
+        },
+        tooltip: {},
+        legend: {
+            data: ['销量']
+        },
+        xAxis: {
+            data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+        },
+        yAxis: {},
+        series: [
+            {
+                name: '销量',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>-->
 </body>
 </html>

@@ -21,11 +21,13 @@ public class CountDownLatchBoss {
         Worker worker1 = new Worker(count, "员工1");
         Worker worker2 = new Worker(count, "员工2");
         Worker worker3 = new Worker(count, "员工3");
+        Boss boss1 = new Boss(count, "二老板");
 
         executors.execute(worker1);
         executors.execute(worker2);
         executors.execute(worker3);
         executors.execute(boss);
+        executors.execute(boss1);
         count.await();
         System.out.println("主线程执行结束");
         executors.shutdown();

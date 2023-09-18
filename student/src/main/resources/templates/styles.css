@@ -1,0 +1,131 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    /*背景是白色*/
+    background-color: #fff;
+    color: #fff;
+    padding: 0px;
+    margin: 0px;
+    height: 90px;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav li {
+    display: inline;
+    margin-right: 50px;
+
+}
+
+nav li a {
+    /*字体是黑色*/
+    color: #333;
+    text-decoration: none;
+}
+
+nav form {
+    display: inline-block;
+}
+
+main {
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+footer {
+    text-align: center;
+    background-color: #f2f2f2;
+    padding: 10px;
+}
+
+
+/* 页面样式 */
+
+/* 悬浮客服图标样式 */
+.chat-icons {
+    /*图标悬浮是通过CSS的position属性来实现的。我们将悬浮图标和悬浮弹窗都设置为position: fixed;，
+        这样它们就会脱离文档流，相对于浏览器窗口进行定位，而不是相对于页面其他元素。*/
+    position: fixed;
+    /*距离浏览器顶部的距离*/
+    top: 200px;
+    /* 距离浏览器右侧窗口的距离 */
+    right: 0px;
+    /* 设置 z 轴等级，确保图标在其他元素之上*/
+    z-index: 9999;
+}
+
+.chat-icon {
+    /*设置图标的宽度和高度为 60 像素。*/
+    width: 60px;
+    height: 60px;
+    /*设置图标的背景颜色为 #333，即深灰色*/
+    background-color: #333;
+    /*将图标的边框半径设置为 50%，使图标变为圆形。*/
+    border-radius: 50%;
+    /* 使用 flexbox 布局方式，将图标内部元素放在一个弹性容器中 */
+    display: flex;
+    /*将图标内部元素在主轴上（横向）居中对齐，这里是将图标内部的内容水平居中。*/
+    justify-content: center;
+    /*将图标内部元素在交叉轴上（纵向）居中对齐，这里是将图标内部的内容垂直居中。*/
+    align-items: center;
+    /*当用户将鼠标悬停在图标上时，鼠标指针会变成一个手型，表示图标可点击。*/
+    cursor: pointer;
+}
+
+/*.chat-icon img: 这是一个 CSS 后代选择器，表示选择所有在拥有chat-icon类的元素下的img标签。*/
+/*width: 40px; 和 height: 40px;: 设置选择到的img标签的宽度和高度为 40 像素。
+这段代码的目的是调整位于.chat-icon类下的所有img标签的宽度和高度为 40 像素，
+即将图标图片的尺寸设置为 40x40 像素。请注意，这里的宽度和高度值是固定的，
+可能需要根据实际的图标图片尺寸进行调整，以确保图标在页面上展示时不失真或过大。*/
+.chat-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+/* 悬浮客服弹窗样式 */
+.chat-widget {
+    /*设置元素的定位方式为fixed，这使得该元素相对于浏览器窗口固定定位，不随页面滚动而改变位置。*/
+    position: fixed;
+    /*bottom: 20px; 和 right: 20px;
+    : 设置元素距离浏览器窗口底部和右侧的距离分别为 20 像素，这将使元素固定在页面的右下角。*/
+    bottom: 20px;
+    right: 0px;
+    /*设置元素的宽度为 320 像素。*/
+    width: 320px;
+    /*设置元素的边框为 1 像素宽的实线边框，颜色为 #ccc（浅灰色）*/
+    border: 1px solid #ccc;
+    /*设置元素的背景颜色为 #fff（白色）*/
+    background-color: #fff;
+    /*为元素添加阴影效果。这里的box-shadow属性的值表示元素的阴影偏移量为水平和垂直方向都为 0，模糊半径为 10 像素，
+    颜色为 rgba(0, 0, 0, 0.2)，即黑色带有 20% 的透明度的阴影。*/
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    /*设置元素的层级为 9998，这将确保元素在其他层级较低的元素之上显*/
+    z-index: 9998;
+    /*初始状态下，设置元素的显示方式为none，即元素在页面加载时不会显示。*/
+    display: none;
+}
+
+/* 页面其他样式... */
+
+
+

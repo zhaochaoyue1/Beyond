@@ -69,3 +69,7 @@ druid:
         max-active: 100
         # 连接池最大阻塞等待时间（使用负值表示没有限制）
         max-wait: -1ms
+#自定义elasticsearch连接配置
+elasticsearch:
+  host: 192.168.166.136
+  port: 9201

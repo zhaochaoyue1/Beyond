@@ -32,6 +32,8 @@ public class User{
     //@PrivacyEncrypt(type = PrivacyTypeEnum.EMAIL)
     private String email;
 
+    private String model;
+
     public User() {
     }
 

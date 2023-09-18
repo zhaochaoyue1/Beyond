@@ -16,7 +16,7 @@ import java.util.stream.Stream;
  */
 public class Test {
     /**
-     * 基于反射复制对象
+     * 基于反射赋值对象
      * @param args
      */
     //@org.junit.Test
@@ -30,7 +30,7 @@ public class Test {
             if(f.getType()==(SkuService.class)){
                 try {
                     String name = f.getName();
-                    String methodStr = "set"+name.substring(0,1).toUpperCase() + name.substring(1,name.length());
+                    String methodStr = "set"+name.substring(0,1).toUpperCase() + name.substring(1);
                     Method method = clazz.getMethod(methodStr, SkuService.class);
                     method.invoke(productService,skuService);
                 } catch (Exception e) {
@@ -60,6 +60,29 @@ public class Test {
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+        System.out.println(productService.getSkuServiceImpl());
+    }
+
+    @org.junit.Test
+    public void testMyAutowire(){
+        ProductServiceImpl productService = new ProductServiceImpl();
+        Class<? extends ProductServiceImpl> clazz = productService.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        Stream.of(fields).forEach(f->{
+            MyAutowire annotation = f.getAnnotation(MyAutowire.class);
+            if(annotation != null){
+                f.setAccessible(true);
+                try {
+                    Object o = f.getType().newInstance();
+                    f.set(productService,o);
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
         System.out.println(productService.getSkuServiceImpl());

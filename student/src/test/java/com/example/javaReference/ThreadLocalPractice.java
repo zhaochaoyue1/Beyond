@@ -12,6 +12,7 @@ public class ThreadLocalPractice {
     static ThreadLocal<Person> tl = new ThreadLocal<>();
 
     public static void main(String[] args) {
+
         new Thread(()->{
             try {
                 TimeUnit.SECONDS.sleep(5);

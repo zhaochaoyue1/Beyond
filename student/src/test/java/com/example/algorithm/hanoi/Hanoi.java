@@ -14,7 +14,7 @@ public class Hanoi {
 
     public static void hanoi(int n){
         if(n>0){
-            func2(n,"左","右","中");
+            func(n,"左","右","中");
         }
     }
 

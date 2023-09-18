@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author: zcy
  * @version: 1.0
  */
-public class Parallellimit {
+public class ParallelLimit {
     public static void main(String[] args) throws InterruptedException {
         ExecutorService pool = Executors.newCachedThreadPool();
         CountDownLatch cdl = new CountDownLatch(10);
@@ -22,7 +22,7 @@ public class Parallellimit {
         }
         cdl.await();
         pool.shutdown();
-    }
+}
 }
 
 class CountRunnable implements Runnable{

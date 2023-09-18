@@ -27,7 +27,8 @@ public class ArrayListT {
         List<String> collect = list.stream().filter(o -> !o.equals("2")).collect(Collectors.toList());
         System.out.println(collect);
         System.out.println(list.hashCode());
-        list.remove(2);
+        list.remove("1");
+        System.out.println(list);
         System.out.println(list.hashCode());
     }
 }

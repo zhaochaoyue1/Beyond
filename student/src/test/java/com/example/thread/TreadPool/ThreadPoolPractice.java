@@ -82,7 +82,7 @@ import java.util.concurrent.*;
  *
  * 2.4 isTerminated()  vs isShutdown()
  * isShutdown(): 当调用shutdown()方法后返回为true.
- * isTerminated(): 当调用shutdown() 方法后，并且所有提交的任务完成后返回true
+ * isTerminated(): 当调用shutdownNow() 方法后，并且所有提交的任务完成后返回true
  * <p>
  *
  * FixedThreadPool 被称为可重用固定线程池

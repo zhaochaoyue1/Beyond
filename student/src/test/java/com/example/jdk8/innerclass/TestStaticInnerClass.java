@@ -27,6 +27,7 @@ public class TestStaticInnerClass {
         StaticInner staticInner1 = new StaticInner(3, 4);
         System.out.println(JSONObject.toJSONString(staticInner));
         System.out.println(JSONObject.toJSONString(staticInner1));
+        System.out.println(JSONObject.toJSON(staticInner));
     }
 
 }
