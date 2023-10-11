@@ -15,6 +15,11 @@ public class TestPost {
     private final static String PROD_HTTPS_URL = "http://url";
     public static void main(String[] args) {
         /*OkHttpClient okHttpClient = new OkHttpClient();
+         OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS) // 连接超时时间为 10 秒
+                .readTimeout(30, TimeUnit.SECONDS)    // 读取超时时间为 30 秒
+                .writeTimeout(15, TimeUnit.SECONDS)   // 写入超时时间为 15 秒
+                .build();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("param1", "p1");
         jsonObject.put("param2", "p2");
