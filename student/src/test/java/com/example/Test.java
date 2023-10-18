@@ -112,12 +112,78 @@ public class Test {
         //new CountHighest().countHighestScoreNodes(new int[]{-1,2,0,2,0});
         /*System.out.println(LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli());
         System.out.println(new Date().getTime());*/
-        int[][] matrix = new int[][]{{2,1,3},{6,5,4},{7,8,9}};
+        /*int[][] matrix = new int[][]{{2,1,3},{6,5,4},{7,8,9}};
         System.out.println(minFallingPathSum(matrix));
         Integer num = new Integer("3");
         updateNum(num);
-        System.out.println(num);
+        System.out.println(num);*/
+        System.out.println(JSONObject.toJSONString(avoidFlood(new int[]{1,2,0,2})));
     }
+
+    public int[] singleNumber(int[] nums) {
+        int[] arr = new int[2];
+        int sum = 0;
+        for (int j = 0; j < nums.length; j++) {
+            sum = sum ^ nums[j];
+        }
+        int minRight = sum & ((~sum)+1);
+        int a = 0;
+        for (int j = 0; j < nums.length; j++) {
+            if((minRight&nums[j])==minRight){
+                a ^= nums[j];
+            }
+        }
+        arr[0] = a;
+        arr[1] = sum ^ a;
+        return arr;
+    }
+
+    public static int[] avoidFlood(int[] rains) {
+        int[] ans = new int[rains.length];
+        Arrays.fill(ans, 1);
+        TreeSet<Integer> st = new TreeSet<>();
+        Map<Integer, Integer> mp = new HashMap<>();
+        for (int i = 0; i < rains.length; ++i) {
+            //等于0没有下雨
+            if (rains[i] == 0) {
+                //记录没有下雨的天数
+                st.add(i);
+            } else {
+                //下雨了
+                ans[i] = -1;
+                if (mp.containsKey(rains[i])) {
+                    //某个湖泊下雨了
+                    Integer it = st.ceiling(mp.get(rains[i]));
+                    if (it == null) {
+                        return new int[0];
+                    }
+                    ans[it] = rains[i];
+                    st.remove(it);
+                }
+                //记录那个湖泊，在那天下雨了
+                mp.put(rains[i], i);
+            }
+        }
+        return ans;
+    }
+
+    /**
+     * rains[i] > 0 表示第 i 天时，第 rains[i] 个湖泊会下雨。
+     * rains[i] == 0 表示第 i 天没有湖泊会下雨，你可以选择 一个 湖泊并 抽干 这个湖泊的水。
+     * 请返回一个数组 ans ，满足：
+     *
+     * ans.length == rains.length
+     * 如果 rains[i] > 0 ，那么ans[i] == -1 。
+     * 如果 rains[i] == 0 ，ans[i] 是你第 i 天选择抽干的湖泊。
+     * 如果有多种可行解，请返回它们中的 任意一个 。如果没办法阻止洪水，请返回一个 空的数组 。
+     *
+     * rain[1,2,0,3]
+     * ans[-1,-1,-1,0]
+     * [1,2]
+     * 2
+     * 1
+     */
+
 
     public static void updateNum(Integer num){
         num=9;
