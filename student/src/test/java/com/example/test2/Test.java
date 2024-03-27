@@ -1,4 +1,4 @@
-package com.example;
+package com.example.test2;
 
 
 import com.alibaba.fastjson.JSONArray;
@@ -13,9 +13,16 @@ import lombok.Builder;
 import lombok.Data;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.util.CollectionUtils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -117,8 +124,464 @@ public class Test {
         Integer num = new Integer("3");
         updateNum(num);
         System.out.println(num);*/
-        System.out.println(JSONObject.toJSONString(avoidFlood(new int[]{1,2,0,2})));
+        //System.out.println(JSONObject.toJSONString(avoidFlood(new int[]{1,2,0,2})));
+        //System.out.println(countSeniors(new String[]{"7868190130M7522", "5303914400F9211", "9273338290F4010"}));
+        //System.out.println(numRollsToTarget(30,30,500));
+        //System.out.println(countDigits(1248));
+       //binary();
+        //System.out.println(countPoints("B0B6G0R6R0R6G9"));
+        //System.out.println(JSONObject.toJSONString(canSeePersonsCount2(new int[]{10,6,8,5,11,9})));
+        //System.out.println(minExtraChar("leetscode",new String[]{"leet","code","leetcode"}));
+        System.out.println(addMinimum("aaabba"));
     }
+
+    public static int addMinimum(String word) {
+        int sum = 0;
+        for (int i = 0; i < word.length();) {
+            char a = word.charAt(i);
+            if(a == 'a'){
+                if(i+1>=word.length()){
+                    return sum+2;
+                }
+                if(word.charAt(i+1) == 'b'){
+                    if(i+2>=word.length()){
+                        return sum + 1;
+                    }
+                    if(word.charAt(i+2) == 'c'){
+                        i+=3;
+                        continue;
+                    }else {
+                        i+=2;
+                        sum++;
+                        continue;
+                    }
+                }
+                sum++;
+                if(word.charAt(i+1) == 'c'){
+                    i+=2;
+                    continue;
+                }
+                sum++;
+                i++;
+                continue;
+            }
+            sum++;
+            if(a == 'b'){
+                if(i+1>=word.length()){
+                    return sum+1;
+                }
+                if(word.charAt(i+1) == 'c'){
+                    i+=2;
+                    continue;
+                }
+                sum++;
+                i+=1;
+                continue;
+            }
+            sum++;
+            i+=1;
+
+        }
+        return sum;
+    }
+
+    public static int minLength(String s) {
+        char[] cs = s.toCharArray();
+        int[] stack = new int[cs.length];
+        int idx = 0, res = 0;
+        for (char c : cs) {
+            if (idx > 0 && ((c == 'B' && stack[idx-1] == 'A') || (c == 'D' && stack[idx-1] == 'C'))) {
+                res += 2;
+                idx--;
+                continue;
+            }
+            stack[idx++] = c;
+        }
+        return cs.length - res;
+    }
+
+    public static int minExtraChar(String s, String[] dictionary) {
+        int n = s.length();
+        int[] d = new int[n + 1];
+        Arrays.fill(d, Integer.MAX_VALUE);
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        for (String str : dictionary) {
+            map.put(str, 1);
+        }
+        d[0] = 0;
+        for (int i = 1; i <= n; i++) {
+            d[i] = d[i - 1] + 1;
+            for (int j = i - 1; j >= 0; j--) {
+                if (map.containsKey(s.substring(j, i))) {
+                    d[i] = Math.min(d[i], d[j]);
+                }
+            }
+        }
+        return d[n];
+    }
+
+    public int numberOfBoomerangs(int[][] points) {
+        int ans = 0;
+        for (int[] p : points) {
+            Map<Integer, Integer> cnt = new HashMap<Integer, Integer>();
+            for (int[] q : points) {
+                int dis = (p[0] - q[0]) * (p[0] - q[0]) + (p[1] - q[1]) * (p[1] - q[1]);
+                cnt.put(dis, cnt.getOrDefault(dis, 0) + 1);
+            }
+            for (Map.Entry<Integer, Integer> entry : cnt.entrySet()) {
+                int m = entry.getValue();
+                ans += m * (m - 1);
+            }
+        }
+        return ans;
+    }
+
+
+    public static int[] canSeePersonsCount2(int[] heights) {
+        int n = heights.length;
+        Deque<Integer> stack = new ArrayDeque<Integer>();
+        int[] res = new int[n];
+
+        for (int i = n - 1; i >= 0; i--) {
+            int h = heights[i];
+            while (!stack.isEmpty() && stack.peek() < h) {
+                stack.pop();
+                res[i]++;
+            }
+            if (!stack.isEmpty()) {
+                res[i]++;
+            }
+            stack.push(h);
+        }
+        return res;
+    }
+
+
+    public static int[] canSeePersonsCount(int[] heights) {
+        int[] arr = new int[heights.length];
+        for (int i = 0; i < heights.length; i++) {
+            int self = heights[i],compare = -1,sum=0;
+            for (int j = i+1; j < heights.length; j++) {
+                if(self<heights[j]){
+                    if(compare>=heights[j]){
+                        break;
+                    }
+                }
+                if(self == heights[j]){
+                    if(compare>=heights[j]){
+                        break;
+                    }
+                }
+                if(compare>=self){
+                    break;
+                }
+                if(compare > heights[j]){
+                    continue;
+                }
+                sum++;
+                compare=heights[j];
+            }
+            arr[i] = sum;
+        }
+        return arr;
+    }
+
+    public static int buyChoco(int[] prices, int money) {
+        int m = 0 ,n = 1;
+        if(prices[m]>prices[n]){
+            m = m ^ n;
+            n = m ^ n;
+            m = m ^ n;
+        }
+        for (int i = 2; i < prices.length; i++) {
+            if(prices[i]<prices[m]){
+                n = m;
+                m = i;
+                continue;
+            }
+            if(prices[i]<prices[n]){
+                n=i;
+            }
+        }
+        m = money - prices[m] - prices[n];
+        return m >= 0 ? m : money;
+    }
+
+    public static int[] findPeakGrid(int[][] mat) {
+        int m = mat.length, n = mat[0].length;
+        int low = 0, high = m - 1;
+        while (low <= high) {
+            int i = (low + high) / 2;
+            int j = -1, maxElement = -1;
+            for (int k = 0; k < n; k++) {
+                if (mat[i][k] > maxElement) {
+                    j = k;
+                    maxElement = mat[i][k];
+                }
+            }
+            if (i - 1 >= 0 && mat[i][j] < mat[i - 1][j]) {
+                high = i - 1;
+                continue;
+            }
+            if (i + 1 < m && mat[i][j] < mat[i + 1][j]) {
+                low = i + 1;
+                continue;
+            }
+            return new int[]{i, j};
+        }
+        return new int[0]; // impossible
+    }
+
+
+    static final int POLE_NUM = 10;
+
+    public int countPoints2(String rings) {
+        int[] state = new int[POLE_NUM];
+        int n = rings.length();
+        for (int i = 0; i < n; i += 2) {
+            char color = rings.charAt(i);
+            int poleIndex = rings.charAt(i + 1) - '0';
+            if (color == 'R') {
+                state[poleIndex] |= 1;
+            } else if (color == 'G') {
+                state[poleIndex] |= 2;
+            } else {
+                state[poleIndex] |= 4;
+            }
+        }
+        int res = 0;
+        for (int i = 0; i < POLE_NUM; i++) {
+            res += state[i] == 7 ? 1 : 0;
+        }
+        return res;
+    }
+
+    public static int countPoints(String rings) {
+        int sum  = 0;
+        Map<Integer,String> map = new HashMap<>();
+        for (int i = 0; i < rings.length() / 2; i++) {
+            int index = rings.charAt(2 * i + 1) - '0';
+            String rgb = rings.charAt(2 * i) + "";
+            if(!map.containsKey(index)){
+                map.put(index,rgb);
+            }else {
+                String s = map.get(index);
+                if(s.length()==3||s.contains(rgb)){
+                    continue;
+                }
+                s+=rgb;
+                if(s.length() == 3){
+                    sum++;
+                }
+                map.put(index,s);
+            }
+        }
+        return sum;
+    }
+
+    public int maximumInvitations(int[] favorite) {
+        int n = favorite.length;
+        // 统计入度，便于进行拓扑排序
+        int[] indeg = new int[n];
+        for (int i = 0; i < n; ++i) {
+            ++indeg[favorite[i]];
+        }
+        boolean[] used = new boolean[n];
+        int[] f = new int[n];
+        Arrays.fill(f, 1);
+        Queue<Integer> queue = new ArrayDeque<Integer>();
+        for (int i = 0; i < n; ++i) {
+            if (indeg[i] == 0) {
+                queue.offer(i);
+            }
+        }
+        while (!queue.isEmpty()) {
+            int u = queue.poll();
+            used[u] = true;
+            int v = favorite[u];
+            // 状态转移
+            f[v] = Math.max(f[v], f[u] + 1);
+            --indeg[v];
+            if (indeg[v] == 0) {
+                queue.offer(v);
+            }
+        }
+        // ring 表示最大的环的大小
+        // total 表示所有环大小为 2 的「基环内向树」上的最长的「双向游走」路径之和
+        int ring = 0, total = 0;
+        for (int i = 0; i < n; ++i) {
+            if (!used[i]) {
+                int j = favorite[i];
+                // favorite[favorite[i]] = i 说明环的大小为 2
+                if (favorite[j] == i) {
+                    total += f[i] + f[j];
+                    used[i] = used[j] = true;
+                }
+                // 否则环的大小至少为 3，我们需要找出环
+                else {
+                    int u = i, cnt = 0;
+                    while (true) {
+                        ++cnt;
+                        u = favorite[u];
+                        used[u] = true;
+                        if (u == i) {
+                            break;
+                        }
+                    }
+                    ring = Math.max(ring, cnt);
+                }
+            }
+        }
+        return Math.max(ring, total);
+    }
+
+    public static void binary(){
+        int a = -5;
+        System.out.println(Integer.toBinaryString(a));
+        System.out.println(Integer.toBinaryString(a+1));
+        String s = "11111111111111111111111111111100";
+
+        System.out.println();
+    }
+
+    public int hIndex(int[] citations) {
+        int n = citations.length;
+        int left = 0, right = n - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (citations[mid] >= n - mid) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return n - left;
+    }
+
+    public int maxArea(int h, int w, int[] horizontalCuts, int[] verticalCuts) {
+        Arrays.sort(horizontalCuts);
+        Arrays.sort(verticalCuts);
+        return (int) ((long) calMax(horizontalCuts, h) * calMax(verticalCuts, w) % 1000000007);
+    }
+
+    public int calMax(int[] arr, int boardr) {
+        int res = 0, pre = 0;
+        for (int i : arr) {
+            res = Math.max(i - pre, res);
+            pre = i;
+        }
+        return Math.max(res, boardr - pre);
+    }
+
+    public static int countDigits(int num) {
+        int sum = 0;
+        String s = num+"";
+        for(int i = 0; i<s.length();i++){
+            char c = s.charAt(i);
+            sum += (num % (c-'0') == 0 ? 1:0);
+        }
+        return sum;
+    }
+
+    public static int punishmentNumber(int n) {
+        int res = 0;
+        for (int i = 1; i <= n; i++) {
+            String s = Integer.toString(i * i);
+            if (dfs(s, 0, 0, i)) {
+                res += i * i;
+            }
+        }
+        return res;
+    }
+
+    public static boolean dfs(String s, int pos, int tot, int target) {
+        if (pos == s.length()) {
+            return tot == target;
+        }
+        int sum = 0;
+        for (int i = pos; i < s.length(); i++) {
+            sum = sum * 10 + s.charAt(i) - '0';
+            if (sum + tot > target) {
+                break;
+            }
+            if (dfs(s, i + 1, sum + tot, target)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     * 这个函数是一个动态规划算法，用于计算掷骰子的方式使得 n 个骰子的点数之和等于 target 的总次数。
+     * 参数 n 表示骰子的个数，k 表示每个骰子上的点数范围（通常为 1 到 k），target 表示目标点数之和。
+     *
+     * 函数中使用了一个二维数组 f，其中 f[i][j] 表示投掷 i 个骰子，点数之和为 j 的次数。
+     * 初始时，只有投掷 0 个骰子，点数之和为 0 的次数为 1，因此 f[0][0] = 1。
+     *
+     * 然后，函数使用三个嵌套的循环进行状态转移。外层循环 i 遍历骰子的个数，
+     * 第二层循环 j 遍历可能的点数之和，第三层循环 x 遍历一个骰子的点数范围（1 到 k）。
+     *
+     * 在内层的循环中，通过检查 j - x 是否大于等于 0，
+     * 来判断是否可以将骰子的点数 x 加到点数之和 j 上。如果可以，
+     * 就将 f[i][j] 更新为 f[i][j] + f[i-1][j-x]，这表示投掷 i 个骰子，
+     * 点数之和为 j 的次数等于投掷 i-1 个骰子，点数之和为 j-x 的次数之和。
+     * 最终，f[n][target] 就表示投掷 n 个骰子，点数之和为 target 的总次数。
+     *
+     * 在每次更新 f[i][j] 的时候，都要对结果取模 1000000007，以防止整数溢出。
+     *
+     * 这个算法的时间复杂度是 O(n * k * target)，其中 n 表示骰子的个数，k 表示每个骰子的点数范围，
+     * target 表示目标点数之和。它使用动态规划的思想，通过填充二维数组 f 来计算出所有可能的投掷方式的次数。
+     *
+     * @param n
+     * @param k
+     * @param target
+     * @return
+     */
+    public static int numRollsToTarget(int n ,int k,int target){
+        final int MOD = 1000000000+7;
+        int[][] f = new int[n + 1][target + 1];
+        f[0][0] = 1;
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 0; j <= target; ++j) {
+                for (int x = 0; x <= k; ++x) {
+                    if(j - x >= 0){
+                        f[i][j] = (f[i][j] + f[i-1][j-x]) % MOD;
+                    }
+                }
+
+            }
+
+        }
+        return f[n][target];
+    }
+
+    public static int countSeniors(String[] details) {
+        int sum = 0;
+        for (int i = 0; i < details.length; i++) {
+            if (details[i].charAt(11) > '6' || (details[i].charAt(11) == '6' && details[i].charAt(12) > '0')) {
+                sum++;
+            }
+        }
+        return sum;
+    }
+
+    public int tupleSameProduct(int[] nums) {
+        int n = nums.length;
+        Map<Integer, Integer> cnt = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            for (int j = i + 1; j < n; j++) {
+                int key = nums[i] * nums[j];
+                cnt.put(key, cnt.getOrDefault(key, 0) + 1);
+            }
+        }
+        int ans = 0;
+        for (Integer v : cnt.values()) {
+            ans += v * (v - 1) * 4;
+        }
+        return ans;
+    }
+
 
     public int[] singleNumber(int[] nums) {
         int[] arr = new int[2];
@@ -126,16 +589,30 @@ public class Test {
         for (int j = 0; j < nums.length; j++) {
             sum = sum ^ nums[j];
         }
-        int minRight = sum & ((~sum)+1);
+        int minRight = sum & ((~sum) + 1);
         int a = 0;
         for (int j = 0; j < nums.length; j++) {
-            if((minRight&nums[j])==minRight){
+            if ((minRight & nums[j]) == minRight) {
                 a ^= nums[j];
             }
         }
         arr[0] = a;
         arr[1] = sum ^ a;
         return arr;
+    }
+
+    public static long maxKelements(int[] nums, int k) {
+        PriorityQueue<Integer> q = new PriorityQueue<Integer>((a, b) -> b - a);
+        for (int num : nums) {
+            q.offer(num);
+        }
+        long ans = 0;
+        for (int i = 0; i < k; ++i) {
+            int x = q.poll();
+            ans += x;
+            q.offer((x + 2) / 3);
+        }
+        return ans;
     }
 
     public static int[] avoidFlood(int[] rains) {
@@ -171,12 +648,12 @@ public class Test {
      * rains[i] > 0 表示第 i 天时，第 rains[i] 个湖泊会下雨。
      * rains[i] == 0 表示第 i 天没有湖泊会下雨，你可以选择 一个 湖泊并 抽干 这个湖泊的水。
      * 请返回一个数组 ans ，满足：
-     *
+     * <p>
      * ans.length == rains.length
      * 如果 rains[i] > 0 ，那么ans[i] == -1 。
      * 如果 rains[i] == 0 ，ans[i] 是你第 i 天选择抽干的湖泊。
      * 如果有多种可行解，请返回它们中的 任意一个 。如果没办法阻止洪水，请返回一个 空的数组 。
-     *
+     * <p>
      * rain[1,2,0,3]
      * ans[-1,-1,-1,0]
      * [1,2]
@@ -185,8 +662,8 @@ public class Test {
      */
 
 
-    public static void updateNum(Integer num){
-        num=9;
+    public static void updateNum(Integer num) {
+        num = 9;
     }
 
     public static int minFallingPathSum(int[][] matrix) {
@@ -220,12 +697,12 @@ public class Test {
     }
 
     @Data
-    static class MinBool{
+    static class MinBool {
         private boolean isValid;
         private int num;
     }
 
-    static class CountHighest{
+    static class CountHighest {
         long maxScore = 0;
         int cnt = 0;
         int n;
@@ -270,7 +747,7 @@ public class Test {
 
     public String convert(String s, int numRows) {
         int length = s.length();
-        int n = (numRows-1)*2;
+        int n = (numRows - 1) * 2;
         int col = length / n + length % n > 0 ? 1 : 0;
 
         return null;
@@ -278,6 +755,7 @@ public class Test {
 
     /**
      * 链接：https://leetcode-cn.com/problems/maximum-number-of-achievable-transfer-requests/solution/202202280859-mei-ri-yi-ti-java-hui-su-by-ltao/
+     *
      * @param n
      * @param requests
      * @return
@@ -320,7 +798,6 @@ public class Test {
         }
         return true;
     }
-
 
 
     public int maximumRequests(int n, int[][] requests) {
@@ -393,9 +870,9 @@ public class Test {
     }
 
 
-
     /**
      * leetcode-cn.com/problems/repeated-string-match/solution/zhong-fu-die-jia-zi-fu-chuan-pi-pei-by-l-vnye/
+     *
      * @param a
      * @param b
      * @return
@@ -446,6 +923,7 @@ public class Test {
      * TODO 很重要，很有用 可以散发都灌溉上
      * 链接：https://leetcode-cn.com/problems/heaters/solution/gong-nuan-qi-by-leetcode-solution-rwui/
      * findRadius2
+     *
      * @return
      */
     public static int findRadius(int[] houses, int[] heaters) {
@@ -461,6 +939,7 @@ public class Test {
         }
         return ans;
     }
+
     public static int binarySearch2(int[] heaters, int house) {
         int left = 0, right = heaters.length - 1;
         if (heaters[left] > house) {
@@ -495,6 +974,7 @@ public class Test {
 
     /**
      * https://leetcode-cn.com/problems/shortest-completing-word/solution/zui-duan-bu-quan-ci-by-leetcode-solution-35pt/
+     *
      * @param licensePlate
      * @param words
      * @return
@@ -530,7 +1010,7 @@ public class Test {
 
     public static void test(String s) {
         System.out.println("jkdjfkwe".substring(1));
-        System.out.println(Math.pow(2,7));
+        System.out.println(Math.pow(2, 7));
     }
 
     public static List<String> removeInvalidParentheses(String s) {
@@ -549,7 +1029,7 @@ public class Test {
             }
             Set<String> nextSet = new HashSet<String>();
             for (String str : currSet) {
-                for (int i = 0; i < str.length(); i ++) {
+                for (int i = 0; i < str.length(); i++) {
                     if (i > 0 && str.charAt(i) == str.charAt(i - 1)) {
                         continue;
                     }
@@ -583,49 +1063,50 @@ public class Test {
     /**
      * 单调栈
      * https://leetcode-cn.com/problems/next-greater-element-i/solution/xia-yi-ge-geng-da-yuan-su-i-by-leetcode-bfcoj/
+     *
      * @return
      */
-    public static int[] nextGreaterElement(int[] nums1, int[] nums2){
-        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+    public static int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
         Stack<Integer> stack = new Stack<Integer>();
-        for(int i=0;i<nums2.length;i++){
-            while(!stack.isEmpty() && nums2[i] >= stack.peek()){
+        for (int i = 0; i < nums2.length; i++) {
+            while (!stack.isEmpty() && nums2[i] >= stack.peek()) {
                 stack.pop();
             }
-            map.put(nums2[i],stack.isEmpty() ? -1:stack.peek());
+            map.put(nums2[i], stack.isEmpty() ? -1 : stack.peek());
             stack.push(nums2[i]);
         }
-        for(int i = 0 ;i <nums1.length;i++){
-            nums1[i]=map.get(nums1[i]);
+        for (int i = 0; i < nums1.length; i++) {
+            nums1[i] = map.get(nums1[i]);
         }
         return nums1;
     }
 
     public static int divide(int dividend, int divisor) {
 
-        if(dividend == 0 ){
+        if (dividend == 0) {
             return 0;
         }
-        if(dividend<0){
-            if(divisor <0){
-                return num(-dividend,-divisor);
-            }else{
-                return -num(-dividend,divisor);
+        if (dividend < 0) {
+            if (divisor < 0) {
+                return num(-dividend, -divisor);
+            } else {
+                return -num(-dividend, divisor);
             }
-        }else{
-            if(divisor <0){
-                return -num(dividend,-divisor);
-            }else{
-                return num(dividend,divisor);
+        } else {
+            if (divisor < 0) {
+                return -num(dividend, -divisor);
+            } else {
+                return num(dividend, divisor);
             }
         }
     }
 
-    public static int num(int div,int dis){
+    public static int num(int div, int dis) {
         int num = 0;
-        while(div>=dis){
+        while (div >= dis) {
             num++;
-            div-=dis;
+            div -= dis;
         }
         return num;
     }
@@ -651,8 +1132,8 @@ public class Test {
     right.right=rightRight;*/
 
 
-    public static int findTilt(TreeNode root){
-        if(root == null){
+    public static int findTilt(TreeNode root) {
+        if (root == null) {
             return 0;
         }
 
@@ -661,57 +1142,58 @@ public class Test {
     }
 
     //root
-    public static int root(TreeNode root){
-        int result =0;
-        if(root.left!=null){
-            result+=root(root.left);
+    public static int root(TreeNode root) {
+        int result = 0;
+        if (root.left != null) {
+            result += root(root.left);
         }
-        if (root.right!=null){
-            result+=root(root.right);
+        if (root.right != null) {
+            result += root(root.right);
         }
-        int right =0;
-        if(root.right!=null){
-            right=root.right.val;
+        int right = 0;
+        if (root.right != null) {
+            right = root.right.val;
         }
         int left = 0;
-        if(root.left!=null){
+        if (root.left != null) {
             left = root.left.val;
         }
-        root.val=root.val+right+left;
-        result+=Math.abs(right-left);
+        root.val = root.val + right + left;
+        result += Math.abs(right - left);
         return result;
     }
 
 
-    public static int root2(TreeNode root){
-        int left =0;
-        if(root.left!=null){
-            left=root3(root.left);
+    public static int root2(TreeNode root) {
+        int left = 0;
+        if (root.left != null) {
+            left = root3(root.left);
         }
-        int right=0;
-        if(root.right!=null){
-            right=root3(root.right);
+        int right = 0;
+        if (root.right != null) {
+            right = root3(root.right);
         }
-        return Math.abs(left-right);
+        return Math.abs(left - right);
     }
-    public static int root3(TreeNode root){
-        if(root == null){
+
+    public static int root3(TreeNode root) {
+        if (root == null) {
             return 0;
         }
         int result = root.val;
-        if(root.left!=null){
-            result+=root3(root.left);
+        if (root.left != null) {
+            result += root3(root.left);
         }
-        if(root.right!=null){
-            result+=root3(root.right);
+        if (root.right != null) {
+            result += root3(root.right);
         }
         return result;
     }
 
-    public static List<String> getRpn(String str){
+    public static List<String> getRpn(String str) {
         char[] chars = str.toCharArray();
         List<String> ls = new ArrayList<>();
-        for (int i = 0; i < chars.length ; i++) {
+        for (int i = 0; i < chars.length; i++) {
             ls.add(String.valueOf(chars[i]));
         }
 
@@ -720,30 +1202,30 @@ public class Test {
         Stack<String> s1 = new Stack<>();
         //结果
         List<String> s2 = Lists.newArrayList();
-        for(String item: ls){
-            if(item.matches("\\d+")){
+        for (String item : ls) {
+            if (item.matches("\\d+")) {
                 s2.add(item);
-            }else if("(".equals(item)){
+            } else if ("(".equals(item)) {
                 s1.push(item);
-            }else if (")".equals(item)){
-                while(!s1.peek().equals("(")){
+            } else if (")".equals(item)) {
+                while (!s1.peek().equals("(")) {
                     s2.add(s1.pop());
                 }
                 s1.pop();
-            }else {
+            } else {
                 //while (s1.size()!=0&&Operation.getValue(s1.peek()) >= Operation.getValue(item))
             }
         }
-        while (s1.size() != 0 ){
+        while (s1.size() != 0) {
             s2.add(s1.pop());
         }
         return s2;
     }
 
 
-
     /**
-     *   链接：https://leetcode-cn.com/problems/ipo/solution/ipo-by-leetcode-solution-89zm/
+     * 链接：https://leetcode-cn.com/problems/ipo/solution/ipo-by-leetcode-solution-89zm/
+     *
      * @return
      */
     public static int findMaximizedCapital(int k, int w, int[] profits, int[] capital) {
@@ -772,7 +1254,6 @@ public class Test {
 
         return w;
     }
-
 
 
     public static String longestPalindrome(String s) {
@@ -824,26 +1305,25 @@ public class Test {
     }
 
 
-
     public static int getMaximumGenerated(int n) {
-        if(n == 0 || n==1){
+        if (n == 0 || n == 1) {
             return n;
         }
         List<Integer> list = new ArrayList<>();
         list.add(0);
         list.add(1);
-        for(int m=2;m<=n;m++){
-            
-            if( (m % 2) == 0){
-                list.add(list.get(m/2));
+        for (int m = 2; m <= n; m++) {
+
+            if ((m % 2) == 0) {
+                list.add(list.get(m / 2));
                 continue;
             }
-            if(((m+1)%2)==0){
-                list.add(list.get((m-1)/2)+list.get((m+1)/2));
+            if (((m + 1) % 2) == 0) {
+                list.add(list.get((m - 1) / 2) + list.get((m + 1) / 2));
                 continue;
             }
         }
-        return Math.max(list.get(list.size()-1),list.get(list.size()-2));
+        return Math.max(list.get(list.size() - 1), list.get(list.size() - 2));
     }
 
     public static int minAbsoluteSumDiff(int[] nums1, int[] nums2) {
@@ -2164,12 +2644,12 @@ public class Test {
         public TreeNode right;
     }
 
-    public static TreeNode setTreeNode(int rootIndex,List<Integer> list){
+    public static TreeNode setTreeNode(int rootIndex, List<Integer> list) {
         if (rootIndex >= list.size()) {
             return null;
         }
         TreeNode rootNode = new TreeNode();
-        if(list.get(rootIndex)==null){
+        if (list.get(rootIndex) == null) {
             return null;
         }
         rootNode.val = list.get(rootIndex);
@@ -2178,7 +2658,7 @@ public class Test {
         return rootNode;
     }
 
-    public static List<String> setList(TreeNode treeNode){
+    public static List<String> setList(TreeNode treeNode) {
         return null;
     }
 

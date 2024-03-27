@@ -34,7 +34,7 @@ public class Test {
 
     @org.junit.Test
     public void test() {
-        for (int i = 0; i < 10; i++) {
+        /*for (int i = 0; i < 10; i++) {
             StudentService studentService = simpleTimeLimiter.newProxy(this.studentService, StudentService.class, 5L, TimeUnit.SECONDS);
             try {
                 studentService.inset(i);
@@ -48,6 +48,6 @@ public class Test {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }

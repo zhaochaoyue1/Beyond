@@ -17,7 +17,7 @@ public class MergeSort {
         int[] arr = new int[]{4,6,8,8,4,6,3,3};
         mergeSort(arr,0,arr.length-1);
         System.out.println(JSONObject.toJSONString(arr));
-        //logarithm();
+        logarithm();
     }
 
     public static void logarithm(){

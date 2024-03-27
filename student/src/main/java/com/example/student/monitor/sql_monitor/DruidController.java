@@ -1,4 +1,4 @@
-package com.example.student.sqlMonitor;
+package com.example.student.monitor.sql_monitor;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -91,7 +91,7 @@ public class SearchSonStr {
     }
 
     private static int[] getNextArray2(char[] chars) {
-        if (chars == null || chars.length < 1) {
+        if (chars == null || chars.length <= 1) {
             return new int[]{-1};
         }
         int[] arr = new int[chars.length];

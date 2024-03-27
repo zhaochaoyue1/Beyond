@@ -7,6 +7,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -18,7 +19,7 @@ import javax.annotation.PostConstruct;
  * @version: 1.0
  */
 @Service
-public class StudentServiceImpl implements StudentService, InitializingBean, BeanPostProcessor {
+public class StudentServiceImpl implements StudentService{
     @Autowired
     private StudentDao studentDao;
     @Override
@@ -30,32 +31,8 @@ public class StudentServiceImpl implements StudentService, InitializingBean, Bea
         }
         Student zcy = Student.builder().age(age).id((long) age).name("zcy").build();
         //studentDao.insert(zcy);
+        System.out.println("测试ApplicationListener 监听");
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.println("initializingBean 的 afterPropertiesSet");
-    }
 
-    public StudentServiceImpl() {
-        System.out.println("自身工造方法");
-    }
-
-    @PostConstruct
-    public void postConstruct(){
-
-        System.out.println("spring postConstruct");
-    }
-
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        System.out.println("postProcessBeforeInitialization");
-        return null;
-    }
-
-    /*@Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        System.out.println("postProcessAfterInitialization");
-        return null;
-    }*/
 }

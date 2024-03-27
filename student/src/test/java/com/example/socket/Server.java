@@ -13,6 +13,10 @@ import java.net.Socket;
  * @version: 1.0
  */
 public class Server {
+    static {
+        b=0;
+    }
+    static  int b;
     public static void main(String[] args) throws Exception {
         String readLine = null;
         String inTemp = null;

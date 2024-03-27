@@ -1,6 +1,6 @@
 package com.example.mongodb;
 
-import com.alibaba.fastjson.JSONObject;
+/*import com.alibaba.fastjson.JSONObject;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
@@ -10,7 +10,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import org.apache.commons.lang3.StringUtils;
-import org.bson.Document;
+import org.bson.Document;*/
 
 /**
  * @description: Test
@@ -21,14 +21,14 @@ import org.bson.Document;
 public class Test {
     public static void main(String[] args) {
         //easyDriver();
-        String s = "012345678";
+        /*String s = "012345678";
         String s1 = StringUtils.substringBefore(s, "0");
-        System.out.println(s1);
+        System.out.println(s1);*/
     }
 
     //简单的链接到数据库
     private static void easyDriver(){
-        MongoClient mongoClient = new MongoClient("localhost",27017);
+        /*MongoClient mongoClient = new MongoClient("localhost",27017);
         //连接到数据库
         MongoDatabase col = mongoClient.getDatabase("table2");
         System.out.println("connect to database successfully");
@@ -50,7 +50,7 @@ public class Test {
 
         while(iterator1.hasNext()){
             System.out.println(JSONObject.toJSONString(iterator1.next()));
-        }
+        }*/
 
     }
 }

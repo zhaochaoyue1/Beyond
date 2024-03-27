@@ -61,17 +61,14 @@ public class BinarySearch {
         if(arr == null || arr.length == 0){
             return false;
         }
-        while(true){
-            if(i>j){
-                break;
-            }
-            int mid = i+ ((j-i)>>1);
-            if(arr[mid] == num){
+        while (i <= j) {
+            int mid = i + ((j - i) >> 1);
+            if (arr[mid] == num) {
                 return true;
-            }else if(arr[mid]>num){
-                j=mid-1;
-            }else if(arr[mid]<num){
-                i=mid+1;
+            } else if (arr[mid] > num) {
+                j = mid - 1;
+            } else if (arr[mid] < num) {
+                i = mid + 1;
             }
         }
         return false;

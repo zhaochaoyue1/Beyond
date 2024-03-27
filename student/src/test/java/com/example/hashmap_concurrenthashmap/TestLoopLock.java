@@ -1,8 +1,6 @@
-package com.example.hashmap;
+package com.example.hashmap_concurrenthashmap;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**

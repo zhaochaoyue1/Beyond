@@ -46,6 +46,7 @@ public class AdminServiceCglibProxy implements MethodInterceptor {
         //使用了反射，效率低
         //Object invoke = method.invoke(targetObject, objects);
         System.out.println("----------方法调用后----------");
+
         return invoke;
     }
 }
