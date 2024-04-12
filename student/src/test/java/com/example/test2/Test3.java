@@ -3,13 +3,16 @@ package com.example.test2;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.hashmap_concurrenthashmap.HashM;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.*;
 
 public class Test3 {
+
+
 
     public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
@@ -21,7 +24,193 @@ public class Test3 {
         //System.out.println(minIncrements(7,new int[]{1,5,2,2,3,3,1}));
         //System.out.println(validPartition(new int[]{1,1,1,2}));
         //System.out.println(countPaths2(7,new int[][]{{0,6,7},{0,1,2},{1,2,3},{1,3,3},{6,3,3},{3,5,1},{6,5,1},{2,5,1},{0,4,5},{4,6,2}}));
-        System.out.println(change(5, new int[]{5,5,2}));;
+        //System.out.println(firstDayBeenInAllRooms(new int[]{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}));
+        //List<String> list = new ArrayList<>();
+        //backtrack2("abc","",0,list,2);
+        //backtrack("abc".toCharArray(),0,list);
+        //System.out.println(JSONObject.toJSON(list));
+        System.out.println(maximumBinaryString("000110"));
+        Deque<Integer> deque = new ArrayDeque<>();
+
+    }
+
+    public String maximumBinaryString2(String binary) {
+        int n = binary.length(), i = binary.indexOf('0');
+        if (i < 0) {
+            return binary;
+        }
+        int zeros = 0;
+        StringBuilder s = new StringBuilder();
+        for (int j = 0; j < n; j++) {
+            if (binary.charAt(j) == '0') {
+                zeros++;
+            }
+            s.append('1');
+        }
+        s.setCharAt(i + zeros - 1, '0');
+        return s.toString();
+    }
+
+
+    public static String maximumBinaryString(String binary) {
+        int n = binary.length();
+        char[] s = binary.toCharArray();
+        int j = 0;
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '0') {
+                if(j<=i){
+                   j=i+1;
+                }
+                while (j < n && s[j] == '1') {
+                    j++;
+                }
+                if (j < n) {
+                    s[j] = '1';
+                    s[i] = '1';
+                    s[i + 1] = '0';
+                }
+            }
+        }
+        return new String(s);
+    }
+
+    public int lengthOfLIS(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        int[] dp = new int[nums.length];
+        dp[0] = 1;
+        int maxans = 1;
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            maxans = Math.max(maxans, dp[i]);
+        }
+        return maxans;
+    }
+
+
+    public int maximumCount(int[] nums) {
+        int positive = 0;
+        int negative = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if(nums[i]>0){
+                positive++;
+            }
+            if(nums[i]<0){
+                negative++;
+            }
+        }
+        return Math.max(positive, negative);
+    }
+
+    private static void backtrack2(String source,String s, int start, List<String> result,int end) {
+        if (start > end) {
+            result.add(s);
+            return;
+        }
+        backtrack2(source, s+source.charAt(start),start + 1, result,end);
+        backtrack2(source,s,start+1,result,end);
+    }
+
+    private static void backtrack(char[] chars, int start, List<String> result) {
+        if (start == chars.length - 1) {
+            result.add(new String(chars));
+            return;
+        }
+        Set<Character> set = new HashSet<>();
+        for (int i = start; i < chars.length; i++) {
+            if (set.contains(chars[i])) {
+                continue;
+            }
+            set.add(chars[i]);
+            swap(chars, start, i);
+            backtrack(chars, start + 1, result);
+            swap(chars, start, i);
+        }
+    }
+
+    private static void swap(char[] chars, int i, int j) {
+        char temp = chars[i];
+        chars[i] = chars[j];
+        chars[j] = temp;
+    }
+
+    public static int minOperations(int[] nums) {
+        int n = nums.length;
+        Set<Integer> set = new HashSet<Integer>();
+        for (int num : nums) {
+            set.add(num);
+        }
+        List<Integer> sortedUniqueNums = new ArrayList<Integer>(set);
+        Collections.sort(sortedUniqueNums);
+        int res = n;
+        int j = 0;
+        for (int i = 0; i < sortedUniqueNums.size(); i++) {
+            int left = sortedUniqueNums.get(i);
+            int right = left + n - 1;
+            while (j < sortedUniqueNums.size() && sortedUniqueNums.get(j) <= right) {
+                res = Math.min(res, n - (j - i + 1));
+                j++;
+            }
+        }
+        return res;
+    }
+
+    public static int minimumSum2(int[] nums) {
+        int n = nums.length, res = 1000, mn = 1000;
+        int[] left = new int[n];
+        for (int i = 1; i < n; i++) {
+            left[i] = mn = Math.min(nums[i - 1], mn);
+        }
+        System.out.println(JSONObject.toJSON(left));
+        int right = nums[n - 1];
+        for (int i = n - 2; i > 0; i--) {
+            if (left[i] < nums[i] && nums[i] > right) {
+                res = Math.min(res, left[i] + nums[i] + right);
+            }
+            right = Math.min(right, nums[i]);
+        }
+
+        return res < 1000 ? res : -1;
+    }
+
+    public static int minimumSum(int[] nums) {
+        int sum = -1;
+        for (int i = 0; i < nums.length-2; i++) {
+            for (int j = i+1; j < nums.length-1; j++) {
+                for (int k = j+1; k < nums.length; k++) {
+                    if(nums[i]<nums[j]&&nums[k]<nums[j]){
+                        int i1 = nums[i] + nums[j] + nums[k];
+                        sum = sum>0?Math.min(i1,sum):i1;
+                    }
+                }
+            }
+        }
+        return sum;
+    }
+
+    public static int firstDayBeenInAllRooms(int[] nextVisit) {
+
+        int mod = 1000000007;
+        int len = nextVisit.length;
+        int[] dp = new int[len];
+
+        dp[0] = 2; //初始化原地待一天 + 访问下一个房间一天
+        for (int i = 1; i < len; i++) {
+            int to = nextVisit[i];
+            dp[i] = 2 + dp[i - 1];
+            if (to != 0) {
+                dp[i] = (dp[i] - dp[to - 1] + mod) % mod; //避免负数
+            }
+
+            dp[i] = (dp[i] + dp[i - 1]) % mod;
+        }
+        return dp[len - 2]; //题目保证n >= 2
     }
 
     public static int change(int amount, int[] coins) {

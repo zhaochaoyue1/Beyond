@@ -1,5 +1,6 @@
 package com.example.student.config;
 
+import com.example.student.interceptor.RateLimitInterceptor;
 import com.example.student.interceptor.UserInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Autowired
     private UserInterceptor userInterceptor;
+    @Autowired
+    private RateLimitInterceptor rateLimitInterceptor;
 
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         log.info("初始化Interceptor");
+        //registry.addInterceptor(rateLimitInterceptor).addPathPatterns("/**");
         registry.addInterceptor(userInterceptor).addPathPatterns("/index");
        // super.addInterceptors(registry);
     }
